@@ -1,8 +1,29 @@
 ======================================================================
-H_003 training driver — SMOKE (wiring only) · d=64 L=2
+H_003 training driver — SMOKE (wiring only) · d=64 L=2 · 1 seeds × 3 arms
 ======================================================================
+    encoding CPT for 'atom' (1500 lines)…
+/Users/mini/dancinlab/anima-v4/state/h003_atomicity_fixed_codec_drill_2026-07-16/train_h003.py:160: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:823.)
+  print(f"    {arm} s{seed} {label} step {step}/{steps} loss={float(out['loss']):.3f}",
+    A-atom s0 cpt step 0/30 loss=5.644
+    A-atom s0 cpt step 7/30 loss=4.725
+    A-atom s0 cpt step 14/30 loss=4.381
+    A-atom s0 cpt step 21/30 loss=4.030
+    A-atom s0 cpt step 28/30 loss=3.833
   A-atom   s0  f2'=0.5  f1'=0.5
+    encoding CPT for 'shat' (1500 lines)…
+    A-shat s0 cpt step 0/30 loss=5.623
+    A-shat s0 cpt step 7/30 loss=4.743
+    A-shat s0 cpt step 14/30 loss=4.384
+    A-shat s0 cpt step 21/30 loss=4.073
+    A-shat s0 cpt step 28/30 loss=3.855
   A-shat   s0  f2'=0.5  f1'=0.5
+    encoding CPT for 'plc' (1500 lines)…
+    C-plc s0 cpt step 0/30 loss=5.567
+    C-plc s0 cpt step 7/30 loss=4.688
+    C-plc s0 cpt step 14/30 loss=4.455
+    C-plc s0 cpt step 21/30 loss=4.060
+    C-plc s0 cpt step 28/30 loss=3.880
   C-plc    s0  f2'=0.5  f1'=0.5
 
 falsifier readout (per seed):

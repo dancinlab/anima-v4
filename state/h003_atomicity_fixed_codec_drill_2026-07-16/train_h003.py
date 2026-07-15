@@ -120,7 +120,26 @@ def _panel_with_labels(items):
     return out
 
 
-def train_arm(arm, seed, cfg, m, cpt_lines, merge_rank, tok2id, drill, panels):
+def _enc_key(arm):
+    """CPT encoding depends only on the SPAN POLICY, not the seed nor the training
+    schedule. A-atom / C-scaf / C-perm all use shatter=False → identical CPT stream,
+    so the 5 arms need only 3 distinct CPT encodings (cached across seeds)."""
+    return {"A-atom": "atom", "C-scaf": "atom", "C-perm": "atom",
+            "A-shat": "shat", "C-plc": "plc"}[arm]
+
+
+def _stack_windows(streams, torch):
+    wins = []
+    for s in streams:
+        w = _windows(s, cfg_seq, torch)
+        if w:
+            wins.append(w)
+    if not wins:
+        return None
+    return torch.cat([w[0] for w in wins]), torch.cat([w[1] for w in wins])
+
+
+def train_arm(arm, seed, cfg, m, merge_rank, tok2id, drill, panels, cpt_cache, cpt_lines):
     torch, M = _load_torch_model()
     dev = "mps" if torch.backends.mps.is_available() else "cpu"
     torch.manual_seed(seed)
@@ -128,25 +147,26 @@ def train_arm(arm, seed, cfg, m, cpt_lines, merge_rank, tok2id, drill, panels):
     opt = torch.optim.Adam(model.parameters(), lr=3e-4)
     model.train()
 
-    def train_on(streams, steps):
-        wins = []
-        for s in streams:
-            w = _windows(s, cfg_seq, torch)
-            if w:
-                wins.append(w)
-        if not wins:
+    def train_on(xy, steps, label):
+        if xy is None:
             return
-        xs = torch.cat([w[0] for w in wins]); ys = torch.cat([w[1] for w in wins])
+        xs, ys = xy
         n = xs.size(0)
         for step in range(steps):
             idx = torch.randint(0, n, (cfg_batch,))
-            xb, yb = xs[idx].to(dev), ys[idx].to(dev)
-            out = model(xb, targets=yb)
+            out = model(xs[idx].to(dev), targets=ys[idx].to(dev))
             opt.zero_grad(); out["loss"].backward(); opt.step()
+            if step % max(1, steps // 8) == 0:
+                print(f"    {arm} s{seed} {label} step {step}/{steps} loss={out['loss'].item():.3f}",
+                      flush=True)
 
-    # CPT
-    cpt_streams = [_arm_encode(m, l, merge_rank, tok2id, arm) for l in cpt_lines]
-    train_on(cpt_streams, cfg_cpt_steps)
+    # CPT — reuse the cached windows for this arm's encoding key
+    key = _enc_key(arm)
+    if key not in cpt_cache:
+        print(f"    encoding CPT for '{key}' ({len(cpt_lines)} lines)…", flush=True)
+        streams = [_arm_encode(m, l, merge_rank, tok2id, arm) for l in cpt_lines]
+        cpt_cache[key] = _stack_windows(streams, torch)
+    train_on(cpt_cache[key], cfg_cpt_steps, "cpt")
     # drill (skip for C-scaf; permute gold for C-perm)
     if arm != "C-scaf":
         import random
@@ -157,7 +177,7 @@ def train_arm(arm, seed, cfg, m, cpt_lines, merge_rank, tok2id, drill, panels):
             ditems = [{**d, "gold": g} for d, g in zip(ditems, golds)]
         drill_streams = [_arm_encode(m, d["surface"] + d["gold"], merge_rank, tok2id, arm)
                          for d in ditems]
-        train_on(drill_streams, cfg_drill_steps)
+        train_on(_stack_windows(drill_streams, torch), cfg_drill_steps, "drill")
 
     model.eval()
     ctx_line = cpt_lines[0]
@@ -194,15 +214,17 @@ def main() -> int:
     panels = {p: _panel_with_labels(json.load(open(os.path.join(_HERE, f"panel_{p}.json"))))
               for p in ["f2prime", "f1prime"]}
 
-    print("=" * 70)
-    print(f"H_003 training driver — {'SMOKE (wiring only)' if a.smoke else 'FULL run'} · d={d} L={L}")
-    print("=" * 70)
+    print("=" * 70, flush=True)
+    print(f"H_003 training driver — {'SMOKE (wiring only)' if a.smoke else 'FULL run'} · d={d} L={L}"
+          f" · {len(seeds)} seeds × {len(arms)} arms", flush=True)
+    print("=" * 70, flush=True)
     results = {}
+    cpt_cache = {}  # {enc_key: (xs, ys)} — CPT windows reused across seeds/schedule-variant arms
     for seed in seeds:
         for arm in arms:
-            r = train_arm(arm, seed, cfg, m, cpt_lines, merge_rank, tok2id, drill, panels)
+            r = train_arm(arm, seed, cfg, m, merge_rank, tok2id, drill, panels, cpt_cache, cpt_lines)
             results[f"{arm}.s{seed}"] = r
-            print(f"  {arm:8s} s{seed}  f2'={r['f2prime']}  f1'={r['f1prime']}")
+            print(f"  {arm:8s} s{seed}  f2'={r['f2prime']}  f1'={r['f1prime']}", flush=True)
 
     # falsifiers (per seed where available)
     def g(arm, seed, p):
