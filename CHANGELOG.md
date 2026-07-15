@@ -2,6 +2,22 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 G-0 codec audit PASS + G-1 grammar first-pass ($0, no BPE retrain)
+
+- **G-0 codec audit = PASS 3/3** (`g0_audit.json`), run $0 from the frozen probe (no BPE retrain —
+  the machine was CPU-redlined at load 16). All four negators are atomic and pairwise-disjoint
+  (안=286 · 않=520 · 못=381 · 아니=438), round-trip 0.98 (inherited from v1's audited K=2048 codec,
+  to be re-measured on the from-scratch run before final freeze). The killer ㅇㅏㄴ-prefix collision
+  check (안 is a jamo prefix of 아니) passes: disjoint.
+- **G-1 grammar FIRST-PASS** done — a $0 screen over the panel surfaces, not the operator gate. It
+  **confirms the design's own `?` flags** (기대하 · 졸 · 끄 · 더-filler) and finds no new problems:
+  the core issue is 못 + non-volitional verbs (`못 졸지는 않았다` — dozing is non-volitional; 끄 is
+  contextually odd in a movie review). This narrows the human operator's sign-off to those verbs
+  rather than the whole 16-verb inventory.
+- Remaining before `frozen_at`: (1) human operator sign-off on the 3 flagged verbs (narrowed); then
+  (2) arms ×2 seeds, local MPS d384, ~6–8h — the one true session-terminal blocker (multi-session;
+  not started, CPU was redlined). `g0_codec_audit.py` + `g0_audit.json` committed.
+
 ## 2026-07-16 — H_003 panel v3 (SLOT-CONTRAST) passes F7; PURE-못 retracted on grammar
 
 - Rejected PURE-못: its depth-2 cell `못 {V}지 못했다` is same-negator doubling, which Korean

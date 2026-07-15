@@ -597,7 +597,7 @@
             },
             {
               "id": "ng.slot.remaining",
-              "role": "REMAINING before frozen_at (unchanged in kind, human/compute-blocked): G-1 operator grammar pass over verb x filler x cell (`?` flags: 기대하 · 졸 · 끄 · 더-filler), G-0 codec audit, then arms x2 seeds."
+              "role": "REMAINING before frozen_at. G-0 codec audit = PASS 3/3 ($0, g0_audit.json): all 4 negators atomic + pairwise-disjoint, round-trip 0.98 (v1-inherited). G-1 grammar FIRST-PASS done ($0 screen, not the operator gate): it CONFIRMS the design's own `?` flags (기대하·졸·끄·더-filler) and finds no new problems — the core issue is 못 + non-volitional verbs (`못 졸지는` — dozing is non-volitional; 끄 is odd in a movie review). Human operator sign-off now narrowed to those 3 verbs. Then the only true session-terminal blocker: arms x2 seeds, local MPS d384, ~6-8h (multi-session; not started, CPU was redlined)."
             }
           ]
         }
