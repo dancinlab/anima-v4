@@ -2,6 +2,23 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 encoding layer COMPLETE: all 3 arm-encodings built + smoke-verified ($0)
+
+- Added the placebo (C-plc) encoder path and smoke-verified it, completing the arm-encoding layer.
+  All three encode paths are now built and checked $0: **A-atom** (span policy off), **A-shat**
+  (syntactic negation spans → base jamo, the GREEN 67/67 one-variable lever), **C-plc** (shatters a
+  frequency-matched non-negator 진짜 the same way).
+- C-plc smoke (`placebo_smoke.json`): 진짜 lines differ from A-atom **263/263**, 진짜-free non-negation
+  lines **all identical**, and — the crucial check — negation-but-진짜-free lines are **left untouched**.
+  So the F6 placebo cleanly isolates "shattering a frequent morpheme" from "shattering the negator":
+  if A-atom − C-plc > 0.05, the F1 pass is generic-disruption, not atomicity.
+- `encode()` generalized with an optional `placebo_jamo` (default = negation spans), so the verified
+  A-shat path is untouched. C-scaf/C-perm are training-SCHEDULE variants (CPT-only / permuted gold),
+  no new encoding.
+- Remaining build: the CPT+drill training loop consuming v1's CLMConvMoE (`anima/cli/train.py`), then
+  the ~6–8h run — freeze-gated on the native G-1 confirm. `span_policy_encode.py` + `placebo_smoke.py`
+  + `placebo_smoke.json` committed.
+
 ## 2026-07-16 — H_003 G-0 codec audit PASS + G-1 grammar first-pass ($0, no BPE retrain)
 
 - **G-0 codec audit = PASS 3/3** (`g0_audit.json`), run $0 from the frozen probe (no BPE retrain —

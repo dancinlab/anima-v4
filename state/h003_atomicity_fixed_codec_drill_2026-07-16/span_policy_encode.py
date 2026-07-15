@@ -95,12 +95,42 @@ def negation_spans(eojeols):
     return spans
 
 
-def encode(m, line, merge_rank, tok2id, shatter: bool):
-    """2-byte token stream. shatter=True suppresses merges only inside matched
-    negation spans; everything else merges normally (byte-identical to A-atom)."""
+def placebo_spans(eojeols, morpheme_jamo):
+    """Per eojeol index, the jamo range(s) of a PLACEBO morpheme (a frequency-matched
+    NON-negator, e.g. 진짜) wherever it appears. The C-plc arm (F6) shatters this the
+    same way A-shat shatters negation — if shattering ANY frequent morpheme degrades
+    the model as much as shattering the negator, the F1 pass is a generic-disruption
+    artifact, not atomicity. Matches the morpheme's atomic jamo run inside each eojeol."""
+    spans = {}
+    for ei, syms in enumerate(eojeols):
+        found = []
+        i = 0
+        n = len(syms)
+        L = len(morpheme_jamo)
+        while i <= n - L:
+            if syms[i:i + L] == morpheme_jamo:
+                found.append((i, i + L))
+                i += L
+                continue
+            i += 1
+        if found:
+            spans[ei] = sorted(set(found))
+    return spans
+
+
+def encode(m, line, merge_rank, tok2id, shatter: bool, placebo_jamo=None):
+    """2-byte token stream. shatter=True suppresses merges inside matched spans;
+    everything else merges normally (byte-identical to A-atom). Default spans are
+    the syntactic NEGATION spans (A-shat); pass placebo_jamo to shatter a
+    non-negator morpheme instead (C-plc)."""
     pieces = list(m.eojeol_split(line))
     eojeols = [syms for syms, sp in pieces if not sp]
-    spans = negation_spans(eojeols) if shatter else {}
+    if not shatter:
+        spans = {}
+    elif placebo_jamo is not None:
+        spans = placebo_spans(eojeols, placebo_jamo)
+    else:
+        spans = negation_spans(eojeols)
     out = bytearray()
     ei = 0
     for syms, sp in pieces:

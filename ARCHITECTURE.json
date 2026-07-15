@@ -600,6 +600,10 @@
               "role": "REMAINING before frozen_at. G-0 codec audit = PASS 3/3 (g0_audit.json). G-1 grammar: first-pass confirmed the design's flags, then the 3 flagged verbs were SWAPPED for clearly volitional +못-compatible review actions (기대하→감상하, 졸→야유하, 끄→참) — a PROVISIONAL LLM pass (build_panels.py note), F7 still PASS. The human operator gate now narrows to CONFIRMING those 3 swaps (not judging borderline cases). Then the one true session-terminal blocker: arms x2 seeds, local MPS d384, ~6-8h (multi-session, not started)."
             }
           ]
+        },
+        {
+          "id": "ng.arm-encodings-verified",
+          "role": "ENCODING LAYER COMPLETE — all 3 arm-encoding paths built + smoke-verified $0 (span_policy_encode.py, placebo_smoke.json). A-atom (shatter off) · A-shat (syntactic negation spans, GREEN 67/67) · C-plc placebo (shatters 진짜 only: 263/263 진짜 lines differ, 진짜-free lines identical, and crucially it LEAVES NEGATION UNTOUCHED — so F6 cleanly isolates 'shattering a frequent morpheme' from 'shattering the negator'). C-scaf/C-perm are training-SCHEDULE variants (CPT-only / permuted-gold), no new encoding. Remaining build = the CPT+drill training loop consuming v1's CLMConvMoE (cli/train.py), then the 6-8h run — freeze-gated on the native G-1 confirm."
         }
       ]
     },
