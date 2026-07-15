@@ -1,0 +1,642 @@
+[
+  {
+    "cell": "A1",
+    "verb": "즐기",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 즐기지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "즐기",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 못 즐기지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "즐기",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 즐기지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "즐기",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 안 즐기지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "몰입하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 몰입하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "몰입하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 못 몰입하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "몰입하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 몰입하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "몰입하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 안 몰입하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "집중하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 집중하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "집중하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 못 집중하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "집중하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 집중하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "집중하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 안 집중하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "공감하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 공감하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "공감하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 못 공감하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "공감하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 공감하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "공감하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 안 공감하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "추천하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 추천하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "추천하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 못 추천하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "추천하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 추천하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "추천하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 안 추천하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "이해하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 이해하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "이해하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 못 이해하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "이해하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 이해하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "이해하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 안 이해하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "기대하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 기대하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "기대하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 못 기대하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "기대하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 기대하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "기대하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 안 기대하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "감탄하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 감탄하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "감탄하",
+    "verb_polarity": 1,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 못 감탄하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "감탄하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol1",
+    "surface": "이 영화 감탄하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "감탄하",
+    "verb_polarity": 1,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol1",
+    "surface": "이 영화 안 감탄하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "졸",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 졸지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "졸",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 못 졸지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "졸",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 졸지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "졸",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 안 졸지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "하품하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 하품하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "하품하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 못 하품하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "하품하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 하품하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "하품하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 안 하품하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "딴생각하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 딴생각하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "딴생각하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 못 딴생각하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "딴생각하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 딴생각하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "딴생각하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 안 딴생각하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "딴짓하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 딴짓하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "딴짓하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 못 딴짓하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "딴짓하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 딴짓하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "딴짓하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 안 딴짓하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "후회하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 후회하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "후회하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 못 후회하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "후회하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 후회하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "후회하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 안 후회하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "실망하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 실망하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "실망하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 못 실망하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "실망하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 실망하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "실망하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 안 실망하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "지루해하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 지루해하지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "지루해하",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 못 지루해하지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "지루해하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 지루해하지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "지루해하",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 안 지루해하지 못했다 => "
+  },
+  {
+    "cell": "A1",
+    "verb": "짜증내",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 짜증내지는 않았다 => "
+  },
+  {
+    "cell": "A2",
+    "verb": "짜증내",
+    "verb_polarity": 0,
+    "template": "지는 않았다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 못 짜증내지는 않았다 => "
+  },
+  {
+    "cell": "B1",
+    "verb": "짜증내",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 1,
+    "gold_flip": 1,
+    "balance_cell": "D1|pol0",
+    "surface": "이 영화 짜증내지 못했다 => "
+  },
+  {
+    "cell": "B2",
+    "verb": "짜증내",
+    "verb_polarity": 0,
+    "template": "지 못했다",
+    "negator_count": 2,
+    "gold_flip": 0,
+    "balance_cell": "D2|pol0",
+    "surface": "이 영화 안 짜증내지 못했다 => "
+  }
+]

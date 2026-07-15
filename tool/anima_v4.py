@@ -140,6 +140,56 @@ def template_heuristic_score(items: list) -> float:
     return correct / len(items)
 
 
+def worst_suffix_leak(items: list, max_len: int = 24) -> dict:
+    """The strongest surface-suffix shortcut available on the panel. For every
+    suffix length L up to max_len, group items by the last L characters of their
+    `surface` string and score the best majority-guess strategy over those groups
+    (as template_heuristic does, but on REAL surface suffixes rather than an
+    assigned template field). Returns the worst (highest) such score and the L that
+    achieves it. A heuristic-neutral panel keeps this at 0.5: no suffix of any
+    length may correlate with the parity bit, or a model can read it instead of
+    individuating the negator. This is the honest, assignment-free version of
+    template_heuristic — a panel passes F7 only if BOTH sit at 0.5."""
+    if not items:
+        raise ValueError("empty panel")
+    from collections import defaultdict
+
+    best = 0.0
+    best_len = 0
+    for L in range(1, max_len + 1):
+        by_suf = defaultdict(list)
+        for it in items:
+            s = it["surface"]
+            by_suf[s[-L:]].append(it["gold_flip"])
+        correct = 0
+        for flips in by_suf.values():
+            maj = 1 if sum(flips) * 2 >= len(flips) else 0
+            correct += sum(1 for f in flips if f == maj)
+        score = correct / len(items)
+        if score > best:
+            best, best_len = score, L
+    return {"worst_suffix_score": round(best, 4), "suffix_len": best_len}
+
+
+def held_out_blind_score(items: list) -> float:
+    """The semantically correct F7 check. A panel is admissible only if a strategy
+    that sees everything EXCEPT it cannot individuate the held-out negator token —
+    i.e. it counts only the DRILLED negators and predicts flip from their parity —
+    is pinned to chance. Each item carries `drilled_negator_count`. The strategy is
+    correct when (drilled_count % 2) == gold_flip, which happens exactly when the
+    held-out negator count is even. Returns max(score, 1 - score): a score of 0.25
+    is as leaky as 0.75, because the model can invert an anti-correlated cue. Only
+    0.5 means the held-out token carries information no drilled-only reader can
+    recover — which is what forces the model to detect it. This supersedes
+    worst_suffix_leak, whose raw-surface grouping both over-counts singleton verb
+    groups AND scores detecting the target token (the mechanism) as a leak."""
+    if not items:
+        raise ValueError("empty panel")
+    hits = sum(1 for it in items if (it["drilled_negator_count"] % 2) == it["gold_flip"])
+    s = hits / len(items)
+    return max(s, 1.0 - s)
+
+
 def label_balance(items: list, cell_key: str = "cell") -> dict:
     """Per-cell fraction of gold_flip==1. A recombination panel must be 50/50 per
     cell or a constant-guess strategy beats chance on the imbalanced cell. Returns

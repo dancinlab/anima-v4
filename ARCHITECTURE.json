@@ -538,6 +538,20 @@
         {
           "id": "ng.the-free-re-analysis",
           "role": "CHEAPEST OF ALL, and it tests a premise the whole Korean lane rests on: L5 says composition must be visible at the token boundary because `안` is free and `지 않다` is bound. That number — do models handle `안` vs `지 않다` differently — does not exist in the literature. Thunder-KoNUBench (2601.04693, UNVERIFIED id) publishes the short/long-form split but never crosses it with model accuracy. It is a re-analysis of an already-annotated public corpus: zero training, zero GPU. Run this before spending anything on codecs."
+        },
+        {
+          "id": "ng.f7-caught-the-panel-not-yet-admissible",
+          "role": "F7 (the pre-training panel audit) did its job — it BLOCKED the run twice before any GPU spend, and the panel is NOT yet admissible. The drill cannot freeze until F7 passes. Two leaks caught, see children.",
+          "children": [
+            {
+              "id": "ng.f7.leak1-template",
+              "role": "First depth-parity grid had a template leak — each cell had a unique surface tail, so a suffix reader recovered parity without the negator. Fixed by shared-tail minimal pairs: the extra negator of a depth-2 item is pre-posed as a FREE prefix, leaving the tail byte-identical to its depth-1 partner."
+            },
+            {
+              "id": "ng.f7.leak2-drilled-blind",
+              "role": "The corrected grid failed a subtler check: a strategy counting only DRILLED negators (안/않), ignoring the held-out 못, scored 0.25 — anti-correlated, so invertible to 0.75. The admissibility bar is held_out_blind_score = 0.5 exactly (tool/anima_v4.py), which forces the model to detect the held-out token. Redesign delegated with crisp constraints (pure-못 depth via a grammatical double-못 form, or a balanced drilled/held mix with held-cell eval slicing)."
+            }
+          ]
         }
       ]
     },

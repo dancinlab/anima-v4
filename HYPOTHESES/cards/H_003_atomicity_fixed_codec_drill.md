@@ -1,5 +1,6 @@
 ---
 id: H_003
+ssot: ARCHITECTURE.json → next-gate.*, salvage.L4.*  (this card is the pre-register, not the SSOT)
 slug: atomicity-fixed-codec-drill
 title: an ATOMIC negator token in a fixed jamo-BPE codec CAUSES held-out negation recombination — the one variable is the encoder's span policy (atomic vs shattered), same vocabulary, same corpus, same model, same seed; predicted Δd_acc ≥ 0.15 (A-atom − A-shat) on an OOD panel whose control sits near 0.5
 domain: verification-design (causal drill · pre-register)
@@ -117,9 +118,13 @@ Expected: control (A-shat f2′) E=0.55; ceiling (A-atom f1′) E=0.90; n=192 �
   (CI ±0.14 > 0.10 → 2-seed-sign-gated; honest limit).
 - **F6 (placebo)**: `d_acc(A-atom) − d_acc(C-plc) > 0.05` ⇒ effect is generic encode-disruption, F1
   pass **VOID** by pre-registration. The most important non-primary falsifier (Honest Limits L1).
-- **F7 (panel bounds, closed-form, PRE-TRAINING)**: presence-heuristic score on frozen f2′ ≠ 0.500 ±
-  0.02, OR per-cell balance ≠ 50/50 ⇒ grid rebuilt, **nothing trains**. Runs in `tool/anima_v4.py`
-  (`presence_heuristic_score` · `template_heuristic_score` · `label_balance`).
+- **F7 (panel bounds, closed-form, PRE-TRAINING)**: three checks, each must equal 0.500 ± 0.02 or the
+  grid is rebuilt and **nothing trains** — (a) `presence_heuristic_score` (defeated by depth parity),
+  (b) `held_out_blind_score` (a drilled-only reader must not recover the held-out negator — the
+  semantically correct bar), (c) surface-suffix neutrality via shared-tail pairs. Plus per-cell 50/50
+  `label_balance`. **STATUS: F7 currently FAILS** — it blocked the run twice (a template leak, then a
+  held_out_blind = 0.25 drilled-detection leak); the panel is being redesigned before freeze. This is
+  the gate working as intended (`state/h003.../build_panels.py`, `f7_audit.json`).
 - **F8 (exposure match)**: |BPB(A-atom) − BPB(A-shat)| on held-out NSMC > 0.15 ⇒ arms not
   difficulty-matched, confound flag. BPB and d_acc reported **separately, never summed** (p7).
 
