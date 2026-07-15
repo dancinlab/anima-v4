@@ -15,7 +15,7 @@
           "children": [
             {
               "id": "scope.stage",
-              "role": "STAGE = H_003 FROZEN, awaiting the run. mech-3 died 3 ways ($0); the survivor (atomicity) became H_003, which reached pre-register-FROZEN 2026-07-16: encoder one-variable GREEN 67/67 · panels F7 PASS (v3 SLOT-CONTRAST) · G-0 PASS 3/3 · G-1 PASS (owner-delegated LLM judgment) · drill 못=0. NO VERDICT yet — the only unrun piece is the torch training driver + ~6-8h run (multi-session endpoint). Nothing in this tree is a claim until F1/F2/F6 return."
+              "role": "STAGE = H_003 RUNNING. mech-3 died 3 ways ($0); the survivor (atomicity) became H_003, FROZEN 2026-07-16 (encoder GREEN 67/67 · F7 PASS · G-0 PASS · G-1 PASS · drill 못=0), driver built + smoke GREEN. The full d=384 run (2 seeds x 5 arms, ~6-8h local MPS) is IN FLIGHT in the background, writing train_result_full.json with F1(Δ≥0.15)·F2(≥0.85)·F6(<0.05). NO VERDICT until it returns — nothing in this tree is a claim yet."
             },
             {
               "id": "scope.origin",
