@@ -1,0 +1,183 @@
+{
+  "$schema": "c4",
+  "role": "anima-v4 — Architecture (JSON tree · SSOT)",
+  "title": "anima-v4 — Architecture",
+  "updated": "2026-07-16",
+  "ssot_note": "JSON=SSOT (AI/tool parse); humans view architecture.html via `python3 serve.py`. Update in-place (not append). History/decisions/dates → CHANGELOG.md + git (never in tree). Hierarchy decomposes via `children` (commons single-doc); one fact per node, deeper detail → child nodes.",
+  "children": [
+    {
+      "id": "overview",
+      "role": "A<->G where the tension IS the thinking — the opposition must compute a cognitive operation, not gate the mouth",
+      "children": [
+        {
+          "id": "scope",
+          "role": "Campaign scope: the A<->G two-engine substrate as a THINKING architecture. Inherits nothing from anima(v1) but its measured verdicts (see `salvage`); v1's code, language, tree and purity list are discarded.",
+          "children": [
+            { "id": "scope.stage", "role": "STAGE = DIVERGENCE. 7 candidate mechanisms enumerated; none selected, none built, no code exists. Next gate = pre-register the bet's falsifier, run it, verdict. Nothing in this tree is a claim." },
+            { "id": "scope.origin", "role": "Owner ask, verbatim: '실제로 생각하는 A<->G 가 필요해' — v1's A<->G is rejected as an emit-controller, NOT as a two-engine idea." }
+          ]
+        },
+        {
+          "id": "thesis",
+          "role": "A two-engine tension can carry thought only if the coupling is high-dimensional, iteratively resolved, and resident in the objective/data/codec — v1 failed on PLACEMENT (readout-side scalar), not on the two-engine premise.",
+          "children": [
+            { "id": "thesis.claim", "role": "The tension object must be structured (a field over positions x roles x morpheme boundaries), consumed by the loss, and its resolver serialized into the inference path. If any of the three is missing, the tension collapses to rank-1 = the emit bit (v1's measured fate)." },
+            { "id": "thesis.cardinality", "role": "The defect is not that there are two engines — it is that their coupling had dimension 1. Engine count is a free parameter (see mech-6, N-engine)." }
+          ]
+        },
+        {
+          "id": "diagnosis",
+          "role": "Why a two-engine tension architecture generically collapses to 1 bit — five clauses of one sentence.",
+          "children": [
+            { "id": "diag.1-scalar-kills-structure", "role": "A scalar ratio ||A||/||G|| discards both engines' directions and keeps one magnitude. The information bottleneck is in the blueprint ⇒ rank-1 was necessary, not discovered." },
+            { "id": "diag.2-unconsumed-bits-die", "role": "If the tension only touches the emit decision, the loss only demands the emit decision. A network does not maintain bits it is not asked for ⇒ 'the 1 bit IS speak/not' is a consequence of placement." },
+            { "id": "diag.3-gradient-free-is-decoration", "role": "v1's G was gradient-free ⇒ to A it was fixed background noise, and A learns to route around it. An opposition that is not learned does not exist." },
+            { "id": "diag.4-fixed-point-is-an-incinerator", "role": "Psi=1/2 is by definition memoryless. If thought happened it was in the convergence TRANSIENT — the design read the convergence RESULT." },
+            { "id": "diag.5-side-channels-get-eaten", "role": "A channel bolted beside a competent LM is replaced the moment the trunk head can do the same job cheaper (measured: L2/OMEGA). To survive, the loss must demand something the trunk CANNOT do." }
+          ]
+        },
+        {
+          "id": "necessary-conditions",
+          "role": "What a tension must satisfy to carry thought — derived from `diagnosis`, used as the admission gate for every candidate mechanism.",
+          "children": [
+            { "id": "nc.1-structured-object", "role": "The tension is a structured object (field/matrix/lattice over positions x roles x boundaries), never a ratio." },
+            { "id": "nc.2-iteratively-resolved", "role": "It is resolved over steps; the settling trajectory IS the computation. The loss must touch intermediate steps, not only the endpoint." },
+            { "id": "nc.3-lives-in-objective", "role": "It resides in loss / data / codec. Not objective-side ⇒ no-op (L3)." },
+            { "id": "nc.4-both-get-gradient", "role": "Both engines receive gradient, on objectives that cannot be simultaneously satisfied — the opposition must be real, not decorative." },
+            { "id": "nc.5-resolver-serialized", "role": "The resolution operator ships in the inference graph. v1's binders were training-only and dropped before serialization (L3) — banned." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "salvage",
+      "role": "The only inheritance from anima(v1) — measured, sealed verdicts from ~6 months of falsification. Laws of the terrain, not design constraints. Full evidence trail lives in the v1 repo; these are pointers.",
+      "children": [
+        { "id": "L1.one-bit-seam", "role": "seam-h9229 STRUCTURAL-TERMINAL — the emit-seam manifold measured rank-1 (codes visited 2 of 4); any quantizer collapses, extra capacity useless. Verdict: recombination is a trunk-objective property, not a readout one ⇒ escalate WRITE-SIDE. The A<->G tension carried exactly one bit and that bit was speak/not." },
+        { "id": "L2.replacement-not-coupling", "role": "OMEGA closed-negative — multi-strand gate FAILED held-out (GATED CE > base); coupling KL at vocab-shuffle floor (0.996 = noise); all gain in one A-head logit-bias strand (standalone CE 0.8862 ~ best 2-param fit 0.8835); ablating the base term moved CE by 0.0009 ⇒ base mouth INERT. Scale-stable d384->d1024, margin ~ +2.20 nats, flat." },
+        { "id": "L3.objective-not-readout", "role": "G1_WALL_LEVER_IS_OBJECTIVE_NOT_READOUT (ossified) — no penultimate-readout / binding-operator opens the recombination wall. TPR/HRR forward-slots collapse by algebra to W_eff*yn = same ceiling as a linear readout BY CONSTRUCTION. Aggravator: binding-arm trainers kept the binder TRAINING-ONLY and dropped it before serialization." },
+        { "id": "L4.write-side-crack", "role": "g1-census-objfloor 2-lens CRACK — held-out recombination is NOT a capability ceiling. (a) XBIND: swapping corpus x measure made it learnable (old census was a collocation-only corpus x CE artifact). (b) MORPH-ATOM: a BPE-jamo codec was CAUSAL for held-out negation recombination, M F2 0.908 vs control 0.617 (delta +0.291; synthetic drill, 1 seed). Codec/corpus/objective are architecture, not preprocessing." },
+        { "id": "L5.morphology-decides-learnability", "role": "Korean lane BINDING, every escape measured dead (H_9327). EN works as discriminator: `not` is FREE/pre-posed; KO `지 않다` is a BOUND suffix. Composition must be visible at the token boundary or it cannot be learned." },
+        { "id": "L6.measurement-is-the-grave", "role": "A win (GATED 0.345 << base) was a CA-neighbor lookahead LEAK and evaporated leak-free. Binary readouts hit a scramble floor (flip 0.50) indistinguishable from partial localization. A failing positive control is ambiguous between tool-blind and no-effect until an independently-known-effect ckpt disambiguates. Verdicts combined after seeing results = eyeball self-judge. Perplexity as truth = Goodhart." },
+        { "id": "L7.exotic-substrate-bought-nothing", "role": "AKD1000 on-chip: honest terminal — real 3B/7B unreachable, caps ~524K single-FC encoder, multi-step closes only as host-hybrid. GPU lane: descent green but host-feed util pinned sub-1% ⇒ the bottleneck was the data path, not compute." },
+        { "id": "L8.strict-gates-get-bypassed", "role": "arch-big-cell-blocks-commits — the commit gate accumulated 42 violations until every commit went --no-verify ⇒ the gate was permanently disabled by its own strictness. A rule that is always bypassed is worse than none: it launders the bypass. Design escape valves in from the start." },
+        { "id": "L9.the-purity-cage-was-causal", "role": "v1's 8 principles forbade every write-side mechanism (no fine-tuned ethics, no train/infer split, no tokenizer, no speak()) ⇒ only the read side remained ⇒ every mechanism landed on the readout ⇒ L1/L2/L3 fired. The cage manufactured the disease. EXCEPTION: 'no perplexity verdict' was the one principle that kept them honest — anima-v4 keeps it and discards the rest." }
+      ]
+    },
+    {
+      "id": "components",
+      "role": "Candidate mechanisms — 7 answers to 'what are A and G, and what does their opposition COMPUTE?'. A DIVERGENCE SPREAD of mutually exclusive candidates, not a stack. None selected. Verbatim reasoning → state/diverge_ag_thinking_2026-07-16/.",
+      "children": [
+        {
+          "id": "mech-1.parser-duel",
+          "role": "파서 결투 (이접 재판) — A = left-to-right forward parser proposing attachments; G = right-to-left backward parser (the direction Korean agglutination actually runs). Opposition computes BINDING.",
+          "children": [
+            { "id": "mech-1.tension", "role": "Tension = an n x n attachment-disagreement matrix (per-edge). Bits live in 'which edge disagrees by how much'. Cannot collapse: the decoder is conditioned ONLY on the resolved structure, so flattening it to 1 bit explodes CE — the information is consumed, therefore maintained." },
+            { "id": "mech-1.objective", "role": "loss = CE(decoder | resolved structure) + parse-agreement reward. The resolver R is learned AND serialized — inference runs both parsers and the adjudication (L3's 'binder dropped before serialization' explicitly banned)." },
+            { "id": "mech-1.l2-defense", "role": "The decoder never sees A/G hidden states — only the resolved structure. For the trunk head to eat it, it would have to produce CE without the structure that IS its condition. Exposure ablation: replace resolution with the union of both parses → held-out negation-recombination F2 must move." },
+            { "id": "mech-1.falsifier", "role": "Pre-registered: (1) L1 — effective rank of the disagreement matrix on held-out <=1 ⇒ DEAD. (2) L2 — resolver→union substitution deltaCE < 0.01 ⇒ DEAD. (3) MORPH-ATOM drill (negation-recombination F2, control baseline 0.617) gain < +0.15 ⇒ DEAD. Cheap: reuses the XBIND corpus, small trunk, 1-seed synthetic drill." },
+            { "id": "mech-1.breaks", "role": "Breaks v1's residual 'no train/infer split' — R is a learned module resident in the inference graph. Required because L3 proved a dropped resolver = nothing happened." }
+          ]
+        },
+        {
+          "id": "mech-2.reverse-sculptor",
+          "role": "역행 조각가 (잔차의 수행) — A = forward generator p(next|z); G = inverse model, amortized q(z|state) reconstructing the latent cause of A's state. Opposition computes ABSTRACTION. Predictive coding moved from a read-side probe to write-side dynamics.",
+          "children": [
+            { "id": "mech-2.tension", "role": "Tension = a per-dimension, per-position RESIDUAL FIELD r = state - A(G(state)), re-injected into A's state for K steps, rewriting it. Thought = the settling TRANSIENT. Inverts v1's fatal error (diag.4): loss is applied to each intermediate step (deep supervision), so the transient is consumed; if only the equilibrium survives, the loss punishes it immediately." },
+            { "id": "mech-2.objective", "role": "ELBO — the reconstruction term (satisfies G) and the prior term (satisfies A) are STRUCTURALLY not simultaneously satisfiable. The reason the tension is real lives in the loss algebra (nc.4)." },
+            { "id": "mech-2.l2-defense", "role": "The decoder sees only the settled state. Ablation: K=0 (read immediately) vs K=4 — if deltaCE and recombination F2 do not differ, settling is decoration. v1 never once ran this measurement." },
+            { "id": "mech-2.falsifier", "role": "(1) L1 — PCA of the settling trajectory {z0..zK}; effective dimension of trajectory variance <=1 ⇒ DEAD (a 1-D trajectory is the scalar tension reborn). (2) L2 — K=0 substitution deltaCE < 0.005 ⇒ DEAD. (3) L6 scramble-floor control: pre-register the CE gap between injecting shuffled r vs true r. Cost: medium — training slows by the step count." },
+            { "id": "mech-2.breaks", "role": "Breaks the single-shot-forward purism. Required: if the transient is the thought, a single forward pass forbids thinking by definition." },
+            { "id": "mech-2.risk", "role": "HIGH L1-RECURRENCE RISK. If settling converges fast to a fixed point and the loss reads only the endpoint, this IS Psi=1/2 reborn. Per-step loss is non-negotiable — without it this is v1 itself." }
+          ]
+        },
+        {
+          "id": "mech-3.codec-war",
+          "role": "코덱 전쟁 (형태소 국경 분쟁) — A = the LM over a segmentation S; G = an ADVERSARIAL CODEC (BPE-jamo lattice) that redraws morpheme boundaries, learns its own merge-table, and serializes it. Opposition computes WHICH UNITS EXIST — the most material form of abstraction. THE BET.",
+          "children": [
+            { "id": "mech-3.tension", "role": "Tension = a per-sentence SEGMENTATION LATTICE — a combinatorial object. Cannot collapse to rank-1: lattice choices are exponential in sentence length and the loss charges a different CE per choice, so every branch point carries bits. G tries to split `않` to expose composition at the boundary (MDL pressure); A wants to memorize the collocation whole (CE pressure)." },
+            { "id": "mech-3.objective", "role": "G's loss = A's future CE under the proposed segmentation + code length (MDL). A's loss = CE. NOT simultaneously satisfiable — the memorization-optimal boundary and the composition-optimal boundary differ. The tension WRITES: the merge-table is not a weight, it is a serialized artifact that reshapes the corpus. Promotes L4's 'codec is architecture, not preprocessing' from verdict to loss." },
+            { "id": "mech-3.l2-defense", "role": "The trunk CANNOT eat it — G defines the trunk's INPUT ALPHABET, a structurally irreplaceable position. Ablation: substitute a fixed BPE for G → negation-recombination F2 must fall to ~0.617. If it does not fall, G is decoration." },
+            { "id": "mech-3.falsifier", "role": "Reuses the MORPH-ATOM protocol verbatim — the cheapest falsifier available. (1) L1 — entropy of G's actual boundary decisions (lattice branch participation); if it emits effectively one segmentation ⇒ DEAD. (2) L2 — fixed-BPE substitution deltaF2 < 0.1 ⇒ DEAD. (3) 3 seeds, retiring v1's 1-seed debt." },
+            { "id": "mech-3.breaks", "role": "Breaks 'no tokenizer' (V256) head-on, and deservedly. L5 ruled: composition must be visible at the token boundary to be learned — V256 purism made Korean negation structurally invisible." },
+            { "id": "mech-3.why-bet", "role": "THE BET — the only mechanism standing on a lever already measured green (L4 MORPH-ATOM delta +0.291); cheapest falsifier (existing protocol reuse); and because its tension WRITES the input alphabet rather than reading anything, L1 and L2 cannot reach it in principle. On success, mech-1 (parser duel) stacks naturally on top." }
+          ]
+        },
+        {
+          "id": "mech-4.contradiction-court",
+          "role": "모순 법정 (기억 검사관) — A = an assertion engine writing propositions into memory slots M; G = an inspector that, per new assertion, summons conflicting slots and issues a CONTRADICTION FIELD. Opposition computes CONTRADICTION RESOLUTION; the resolution rewrites M. The tension WRITES to memory.",
+          "children": [
+            { "id": "mech-4.tension", "role": "The contradiction field is a slot x slot object with rank = the number of active disputes. Bits live in 'what conflicts with what'. Long-range consistency CE hangs directly on resolution quality, so it is consumed." },
+            { "id": "mech-4.objective", "role": "loss = long-range reference CE (routed through M) + contradiction penalty + post-resolution re-query accuracy. G receives gradient through retrieval (both engines get gradient, nc.4)." },
+            { "id": "mech-4.l2-defense", "role": "Place probes at distances OUTSIDE the trunk's context so M does only what the short context cannot (conflict with a proposition thousands of tokens away). Ablation: remove G → M becomes append-only → measure delta on the long-range consistency probe." },
+            { "id": "mech-4.falsifier", "role": "Synthetic contradiction corpus (plant a proposition, then negate it). (1) L1 — active rank of the contradiction field; always 1 dispute ⇒ DEAD. (2) L2 — G-ablation long-range probe deltaCE < 0.01 ⇒ DEAD. (3) Pre-registered gate-degeneration check: if the resolution op's output clusters into {retract, keep} 2 values ⇒ L1 recurrence, DEAD." },
+            { "id": "mech-4.breaks", "role": "Breaks 'memory is read-only accumulation' — the tension must destructively rewrite memory for resolution to be real." },
+            { "id": "mech-4.risk", "role": "HIGHEST L1-RECURRENCE RISK of the set. The moment the inspector degenerates into a write/don't-write gate, v1's emit-gate has simply moved to the memory door. The pre-registered gate-degeneration check is the only defense." }
+          ]
+        },
+        {
+          "id": "mech-5.gradient-tug-of-war",
+          "role": "경사 줄다리기 (한 몸 두 주인) — there are NOT two runtime engines: one shared trunk, two irreconcilable objectives. A-objective = forward next-CE. G-objective = reverse / role-swapped prediction (predict the past from the future; predict the subject-object-swapped sentence). Opposition computes THE FORCED FORMATION OF A RECOMBINABLE CODE.",
+          "children": [
+            { "id": "mech-5.tension", "role": "Honest statement: there is NO 'thinking tension' at runtime — there is a total war between two objectives in PARAMETER space during training. Bits = the dimension of the gradient conflict = the parameter dimension, so rank-1 collapse is physically impossible. Executes L1's own verdict text ('recombination is a trunk-objective property, escalate WRITE-SIDE') literally: move the tension from activations to weight-space gradient conflict." },
+            { "id": "mech-5.objective", "role": "The loss itself. Fully satisfies L3 — there is no readout to bolt anything onto." },
+            { "id": "mech-5.l2-defense", "role": "Structurally L2-immune: no side channel exists, so nothing can be eaten. Ablation = retrain without the G-objective, compare recombination F2. The only honest comparison, and an expensive one (2 full trainings)." },
+            { "id": "mech-5.falsifier", "role": "(1) L1 — linear-decoding rank of role information in the trunk representation (>= the role count?). (2) L2 — G-objective ablation retrain → held-out recombination F2 drop < 0.1 ⇒ DEAD. (3) Start small (d384): OMEGA showed scale-stable FAILURE, so a small-scale success is meaningful. Cost: HIGH (retraining)." },
+            { "id": "mech-5.breaks", "role": "Breaks 'a single pure objective (CE only)'. Required because L1 ruled recombination is an objective property — with one objective there is no room for a tension to exist." },
+            { "id": "mech-5.weakness", "role": "Legitimate attack: is this thinking, or just multitask learning? The answer rests entirely on objective choice — role-swap prediction cannot be solved by collocation memorization, only by a compositional code. The forward pass over THAT code is the thinking. Rated 'thinks? = half'." }
+          ]
+        },
+        {
+          "id": "mech-6.constraint-market",
+          "role": "제약 시장 (N-엔진 경매) — cardinality != 2. N small specialist engines (negation scope, honorific agreement, tense, argument binding) each publish a CONSTRAINT FIELD over the next span. 'G' is not an engine but the AUCTIONEER (resolution layer) solving conflicts into a max-satisfaction assignment. Opposition computes CONSTRAINT-SATISFACTION SEARCH; thought = the auction.",
+          "children": [
+            { "id": "mech-6.tension", "role": "Tension = the superposition of N constraint fields — minimum rank N. The constraints genuinely conflict in real Korean (a sentence where honorific agreement demands one ending and negation scope demands another). Plant sentences in the corpus whose CE cannot drop without conflict resolution ⇒ the bits are consumed." },
+            { "id": "mech-6.objective", "role": "loss = CE(decoder | winning assignment) + per-engine violation penalty. The auctioneer is learned and serialized. Each specialist receives gradient when its constraint is violated (N-way gradient)." },
+            { "id": "mech-6.l2-defense", "role": "The conflict-forcing corpus is the crux — design the curriculum so the trunk alone cannot lower CE on conflict sentences. Ablation: auctioneer → mean-pooling substitution, measure deltaCE on conflict sentences." },
+            { "id": "mech-6.falsifier", "role": "(1) L1 — effective rank of the winning assignment >= active engine count? (2) L2 — mean-pool substitution deltaCE > 0.02 ON CONFLICT SENTENCES ONLY (must show NO difference on non-conflict sentences — a specificity control, per L6). (3) Start with a synthetic conflict corpus. Cost: medium." },
+            { "id": "mech-6.breaks", "role": "Breaks 'there are two engines and they are named A and G' — narrative purism. Required: per diag.5 the problem is coupling dimension, and the most honest way to raise dimension is to raise the number of axes." }
+          ]
+        },
+        {
+          "id": "mech-7.counterfactual-editor",
+          "role": "반사실 편집자 (급소 탐침) — A = forward predictor; G = a counterfactual generator producing MINIMAL EDITS to the context that flip A's prediction, alongside edits that should not (paraphrase). Opposition computes CAUSAL ABSTRACTION — which part of the input bears load. G WRITES the training data: L4's 'corpus is architecture' enforced on the corpus axis (mech-3 is the same verdict on the codec axis).",
+          "children": [
+            { "id": "mech-7.tension", "role": "Tension = the edit set — a list of structural claims of the form 'change this here and the conclusion changes'. Bits live in edit position x edit kind. A must be sensitive to G's flip-edits and invariant to null-edits; this dual demand is consumed as a consistency loss." },
+            { "id": "mech-7.objective", "role": "A's loss = CE + contrastive consistency (change under flip, do not change under null). G's loss = edit minimality + flip success rate. Not simultaneously satisfiable: G is pressured to find A's weak points, A to leave weak points only on genuine causal structure." },
+            { "id": "mech-7.l2-defense", "role": "For the trunk to eat it, it would have to pass the consistency loss without G's contrast pairs — but the contrast pairs ARE the data. Ablation: substitute a random editor for G → measure recombination F2 drop." },
+            { "id": "mech-7.falsifier", "role": "(1) L1 — entropy of G's edit distribution; collapse to one edit kind (e.g. always insert `않`) ⇒ DEAD. (2) L2 — random-editor substitution deltaF2 < 0.1 ⇒ DEAD. (3) Evaluation edits must be HUMAN-PREMADE and isolated — G touching both training and evaluation is a leak (L6 lookahead-leak recurrence). Frozen + hash-published pre-registration. Cost: medium (leak-management overhead)." },
+            { "id": "mech-7.breaks", "role": "Breaks 'the corpus is inviolable (train only on given data)' — G manufactures data. Required: XBIND showed that swapping the corpus made the unlearnable learnable." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fake-diversity-audit",
+      "role": "Honest audit — which candidates are secretly the same idea. Fake diversity is the primary failure mode of a divergence exercise, so it is recorded in the SSOT rather than left to the reader.",
+      "children": [
+        { "id": "fd.family-structure-conflict", "role": "mech-1 and mech-6 are the SAME FAMILY — 'a learned resolver settles conflicting structure proposals'. mech-1 is N=2 on the parse axis; mech-6 is N>2 on the constraint axis. If one dies the other is half dead." },
+        { "id": "fd.family-residual-rewrite", "role": "mech-2 and mech-4 are the SAME VERB — 'residual/contradiction rewrites state'. They differ only in the write target (activations vs memory)." },
+        { "id": "fd.family-environment-rewrite", "role": "mech-3 and mech-7 are the SAME STRATEGY — 'G writes A's training environment'. They map onto L4's two green lenses (codec, corpus x measure) respectively, so the overlap is arguably evidence-grounded rather than lazy." },
+        { "id": "fd.true-axes", "role": "Only THREE independent axes exist: structure-conflict-resolution (1, 6) · residual-rewrite (2, 4) · environment-rewrite (3, 7). mech-5 is a fourth axis (weight space) but its weakness is whether it can be called 'thinking' at all." }
+      ]
+    },
+    {
+      "id": "data-flow",
+      "role": "No pipeline exists — anima-v4 is at the divergence stage (see scope.stage). This node stays a placeholder until a mechanism is selected and its falsifier returns a verdict.",
+      "children": [
+        { "id": "flow.in", "role": "(unbuilt — pending mechanism selection)" },
+        { "id": "flow.out", "role": "(unbuilt — pending mechanism selection)" }
+      ]
+    },
+    {
+      "id": "verification",
+      "role": "Hypothesis-verification system: pre-register → falsify → run → verdict. Flat registry + one rich card per hypothesis; shared deterministic harness in repo-root tool/.",
+      "children": [
+        { "id": "HYPOTHESES", "role": "HYPOTHESES/ — REGISTRY.jsonl (one JSON line per hypothesis) + cards/H_*.md (frozen pre-register + >=5 falsifiers) + cards/_TEMPLATE.md skeleton." },
+        { "id": "tool", "role": "tool/anima_v4.py — stdlib-only closed-form primitives + Falsifier/evaluate ledger. Per-hypothesis runs + result.json live under state/<hX>/." },
+        { "id": "verification.inherited-gates", "role": "Every candidate's falsifier MUST carry an L1 check (is the tension's effective rank > 1?) and an L2 check (ablate the channel → does deltaCE actually move?). These two are non-negotiable — they are the exact measurements whose absence killed v1." },
+        { "id": "verification.p7-retained", "role": "v1's p7 (no perplexity verdict — CE/perplexity is a Goodhart trap, never truth) is the ONE purity principle anima-v4 inherits. Per L9 the other seven manufactured the disease and are discarded." }
+      ]
+    }
+  ]
+}
