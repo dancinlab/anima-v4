@@ -2,13 +2,9 @@
   "vocab": 2314,
   "all_identical": 4743,
   "all_differ": 257,
-  "confounder_lines": 194,
-  "confounder_identical": 190,
-  "confounder_still_differ": 4,
-  "one_variable_holds": false,
-  "still_broken_examples": [
-    "안녕하세요. 저는 이 영화속 삶과 아주 흡사한 삶을 살고 있는 사람입니다",
-    "감독시점 카메라 너무 보기 거북했다. 굳이 고양이거처까지 가서 고양이 가",
-    "한석규..영화가 아니라 현실이라고 해도 의심치않게해줄 최고의배우"
-  ]
+  "confounder_lines": 67,
+  "confounder_identical": 67,
+  "confounder_still_differ": 0,
+  "one_variable_holds": true,
+  "still_broken_examples": []
 }

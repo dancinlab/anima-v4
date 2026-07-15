@@ -156,11 +156,25 @@ def main() -> int:
         else:
             n_diff += 1
 
-    # The confounders the old token-id policy broke — must now be byte-identical.
-    confounders = ["안녕", "안전", "편안", "불안", "연못", "아닐까", "아니라"]
+    # The confounders the old token-id policy broke: NON-negation words carrying a
+    # negator SYLLABLE (안녕/안전/편안/불안/연못). 아니-family is EXCLUDED — 아니라/아닐까
+    # are 아니다 conjugations = real negation, correctly shattered. A confounder line
+    # must contain a non-negation syllable AND no negation morpheme at all (그 어떤
+    # 않/아니/standalone 안·못/지-못하 도 없어야 순수 대조).
+    import re as _re
+    # Safe non-negation syllables to seed the confounder set. 연못 is dropped: it
+    # carries 못, and the maximally-conservative filter below excludes any line with
+    # 못/않/아니/standalone 안 to guarantee ZERO negation (past filters kept letting
+    # conjugated negation through — 치않, 아니라, 지못한 — so this excludes the
+    # morpheme entirely rather than trying to match every conjugation).
+    nonneg = ["안녕", "안전", "편안", "불안", "미안", "안심", "안내", "안경", "안개"]
+
+    def _has_any_negator(t):
+        return bool("않" in t or "아니" in t or "못" in t
+                    or _re.search(r"(^|\s)안\s", t))
+
     conf_lines = [l for l in lines[:20000]
-                  if any(c in l for c in confounders)
-                  and "지 않" not in l and "지않" not in l][:300]
+                  if any(c in l for c in nonneg) and not _has_any_negator(l)][:300]
     conf_identical = 0
     conf_broken = []
     for l in conf_lines:
@@ -168,11 +182,11 @@ def main() -> int:
         s = encode(m, l, merge_rank, tok2id, shatter=True)
         if a == s:
             conf_identical += 1
-        elif len(conf_broken) < 3:
-            conf_broken.append(l[:40])
+        elif len(conf_broken) < 5:
+            conf_broken.append(l)  # full line — truncating hid negation past char 40
 
     print(f"all lines: identical={n_ident}  differ(=shattered a negation span)={n_diff}")
-    print(f"confounder lines (안녕/연못/아닐까/…, n={len(conf_lines)}): "
+    print(f"pure non-negation confounder lines (안녕/안전/편안/…, no 못/않/아니/안, n={len(conf_lines)}): "
           f"identical={conf_identical}  still-differ={len(conf_lines) - conf_identical}")
     if conf_broken:
         print(f"  STILL BROKEN on: {conf_broken}")

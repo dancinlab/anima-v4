@@ -42,6 +42,24 @@ All notable changes to anima-v4. Append-only; newest on top.
   GPU only if F2 (liveness) fails at seed 0. `data-flow` promoted from placeholder to the specified
   pipeline. Fable spec + probe + brief preserved under `state/h003.../` as seeds of record.
 
+## 2026-07-16 — H_003 encoder: one-variable lever VERIFIED GREEN (67/67 confounders identical)
+
+- The position-keyed span policy now passes its $0 one-variable verifier cleanly: pure non-negation
+  confounder lines (안녕/안전/편안/미안/…, containing no 못/않/아니/standalone-안) encode
+  **byte-identical** between A-atom and A-shat, **67/67**, while real negation still shatters
+  (257/5000 lines). The one-variable lever holds — A-atom and A-shat differ ONLY inside syntactic
+  negation spans.
+- Every residual seen during the fix was a **verifier-filter** bug, never a policy bug. The policy
+  has been correct since the position-keyed rewrite; my confounder filter's negation detector was
+  incomplete three times running — it missed the contracted 치않, then the 아니다-conjugation
+  아니라/아닐까 (which ARE real negation, correctly shattered), then the 못하-conjugation 지못한.
+  Fixed by excluding any line containing 못/않/아니/standalone-안 outright, rather than trying to
+  match every conjugation — the confounder set is now guaranteed negation-free by construction.
+- Lesson (honest): a one-variable verifier is only as trustworthy as its independent
+  negation-detector. Matching morphology by surface regex under Korean conjugation is itself the
+  hard problem; the robust move was to make the control set exclude the morpheme entirely.
+- `span_policy_verify_positionkeyed.out` + `span_policy_verify.json` updated to the GREEN run.
+
 ## 2026-07-16 — H_003 encoder: position-keyed span policy fixes the confound 0 → 190/194
 
 - Rebuilt the A-atom/A-shat span encoder to key on SYNTACTIC negation position instead of token
