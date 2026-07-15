@@ -614,6 +614,10 @@
               "role": "All $0 deterministic pieces are built + verified: encoder (3 arm paths, GREEN 67/67 + placebo clean), panels (F7 PASS v3), G-0 (PASS 3/3), G-1 (provisional swap), drill grid (못=0). The ONLY remaining code is the torch training DRIVER: CLMConfig d64->d384, V=256 byte-level over the 2-byte codec stream, CPT+drill loop, embed/readout reinit for codec arms, forced-choice d_acc eval on f2'/f1'/f2b. Its sole scientific verification IS the ~6-8h run — the multi-session endpoint, gated on the native G-1 confirm."
             }
           ]
+        },
+        {
+          "id": "ng.training-driver-built-smoke-green",
+          "role": "TRAINING DRIVER built + smoke-verified (train_h003.py, train_result_smoke.json). Consumes v1 CLMConvMoE (forward→loss=ce+aux, embed_conv/readout, V=256 byte). All arms train FROM SCRATCH (no reinit — not warm-starting). Smoke (d=64, 3 arms, 30+20 steps) ran end-to-end: encode(A-atom/A-shat/C-plc) → CPT+drill train → forced-choice d_acc on f2'/f1' → F1/F2/F6 readout. All arms produced numbers (0.5, meaningless at smoke scale) = WIRING GREEN. The full d=384 run is the only remaining step = the ~6-8h verdict run (started in background); its output (train_result_full.json) yields the real F1(Δ≥0.15)·F2(≥0.85)·F6(<0.05)."
         }
       ]
     },

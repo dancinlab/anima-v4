@@ -1,0 +1,12 @@
+======================================================================
+H_003 training driver — SMOKE (wiring only) · d=64 L=2
+======================================================================
+  A-atom   s0  f2'=0.5  f1'=0.5
+  A-shat   s0  f2'=0.5  f1'=0.5
+  C-plc    s0  f2'=0.5  f1'=0.5
+
+falsifier readout (per seed):
+  s0: {'F1_delta_atom_minus_shat': 0.0, 'F2_liveness_f1prime': 0.5, 'F6_placebo_atom_minus_plc': 0.0}
+
+SMOKE: wiring verified iff every arm produced f2'/f1' numbers above (values are meaningless at d=64/30 steps). The full run is the verdict.
+wrote train_result_smoke.json

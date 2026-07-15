@@ -2,6 +2,21 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 training driver built + smoke GREEN; full d=384 run dispatched
+
+- Built the torch training driver (`train_h003.py`) — the last piece of code. It consumes v1's
+  CLMConvMoE (`forward → loss = ce + aux_loss`, `embed_conv`/`readout`, V=256 byte-level) and this
+  repo's verified pieces: `span_policy_encode.encode()` (arm streams), `drill_grid.json` (못=0),
+  the F7-PASS panels. All arms train FROM SCRATCH (C2 licenses it; no warm-start, so no reinit).
+- **Smoke GREEN** (`train_smoke.out`, `train_result_smoke.json`): d=64, 3 arms, 30 CPT + 20 drill
+  steps ran end-to-end — encode(A-atom/A-shat/C-plc) → train → forced-choice d_acc on f2'/f1' →
+  F1/F2/F6 readout. Every arm produced numbers (all 0.5, meaningless at smoke scale) = the pipeline
+  WIRES end-to-end. `verify-done` by output; `wire-to-prod` satisfied (not dead code).
+- The **full d=384 run** (8k CPT + 2.5k drill × 2 seeds × 5 arms, ~6–8h on local MPS) is dispatched
+  in the background — it survives past this session and writes `train_result_full.json` with the
+  real verdict: F1 (Δd_acc A-atom−A-shat ≥ 0.15 both seeds) · F2 (liveness f1' ≥ 0.85) · F6
+  (placebo A-atom−C-plc < 0.05). Until it returns, H_003 remains FROZEN-but-unrun (no claim).
+
 ## 2026-07-16 — H_003 FROZEN: G-1 grammar PASS by owner-delegated LLM judgment
 
 - Owner delegated the G-1 grammar gate to LLM judgment ("LLM 판정"). I read every unique verb×cell
