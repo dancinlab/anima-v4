@@ -84,9 +84,9 @@ VERBS = [
     (1, "c", "공감", "하", "한"),
     (1, "c", "추천", "하", "한"),
     (1, "c", "이해", "하", "한"),
-    (1, "c", "감상", "하", "한"),      # was 기대(stative·marginal 못); 감상하다=appreciate/view, volitional +못-compat
-    (0, "c", "야유", "하", "한"),      # was 졸(non-volitional); 야유하다=jeer, volitional negative
-    (0, "s", "참", "참은"),            # was 끄(odd context); 참다=endure, 못 참다=couldn't bear (a bad film)
+    (1, "c", "감상", "하", "한"),      # 감상하다=appreciate/view (G-1 PASS · volitional +못-compat)
+    (0, "c", "야유", "하", "한"),      # 야유하다=jeer (G-1 PASS · volitional negative)
+    (0, "s", "참", "참은"),            # 참다=endure, 못 참다=couldn't bear (G-1 PASS)
     (0, "s", "돌려보", "돌려본"),
     (0, "s", "건너뛰", "건너뛴"),
     (0, "c", "딴짓", "하", "한"),

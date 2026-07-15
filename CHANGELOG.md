@@ -2,6 +2,22 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 FROZEN: G-1 grammar PASS by owner-delegated LLM judgment
+
+- Owner delegated the G-1 grammar gate to LLM judgment ("LLM 판정"). I read every unique verb×cell
+  surface across f2'/f1'/f2b + drill and ruled **PASS**: the negation structure is grammatically
+  well-formed in every cell — `-지는 않았다` long negation, `-(으)ㄴ 것은 아니다` cleft, compound
+  split `{N} [slot] 하지는`, bound 못 `-지 못한 것은 아니다`, and the swapped verbs are 못-compatible
+  (감상 못 하다 · 야유 못 하다 · 못 참다). `g1_grammar_verdict.md` records it.
+- Two honest caveats, neither reversing the verdict and both ARM-SYMMETRIC (so non-confounding):
+  (1) `이 영화 웃다` reads as "the movie laughs" — v1's validated synthetic frame, identical across
+  A-atom/A-shat; (2) 더-filler implies a comparison baseline — grammatical, kept for CPT frequency.
+- With G-1 cleared, **the pre-register is FROZEN** (`frozen_at: 2026-07-16`, `pre_register_frozen:
+  true`). Every $0 pre-training gate PASSED: encoder GREEN 67/67 · F7 PASS · G-0 PASS 3/3 · G-1 PASS ·
+  drill 못=0. The card `## Status` and registry tier updated to FROZEN / NOT RUN. `?` flags cleared.
+- The ONLY unrun piece is the torch training driver + the ~6–8h run — the multi-session endpoint.
+  No verdict exists until F1 (Δd_acc ≥ 0.15) / F2 (liveness) / F6 (placebo) return.
+
 ## 2026-07-16 — H_003 drill grid built (held-out 못 = 0); all $0 pieces done
 
 - Built the drill-grid generator (`gen_drill.py`, `drill_grid.json`): 240 training items that teach

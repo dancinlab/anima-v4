@@ -7,8 +7,8 @@ domain: verification-design (causal drill · pre-register)
 status: pre-register-frozen
 exploration_method: design delegated to Fable 5 under fable-mode; span-policy lever derived independently and cross-checked; codec behaviour probed on the real decomposer
 verification_method: deterministic panel audits (F7 · closed-form, pre-training) + trained-arm falsifiers (F1–F8) with a placebo and a leak-ceiling arm
-pre_register_frozen: false
-frozen_at: PENDING — see Open Parameters; nothing is frozen until every `?` is resolved
+pre_register_frozen: true
+frozen_at: 2026-07-16 (encoder GREEN · panels F7 PASS · G-0 PASS · G-1 PASS by owner-delegated LLM judgment · drill 못=0; the only unrun piece is the training driver + 6-8h run)
 deterministic: false
 llm: none in the eval path (design only; the model is trained, the scoring is deterministic forced-choice)
 ---
@@ -19,11 +19,16 @@ llm: none in the eval path (design only; the model is trained, the scoring is de
 > and lever live at `next-gate.*`, `salvage.L4.what-was-actually-causal`, `salvage.L4.atomicity-was-
 > luck-not-method`. Human viewer: `python3 serve.py`.
 
-## Status — PRE-REGISTER, NOT YET FROZEN
+## Status — FROZEN 2026-07-16, NOT YET RUN
 
-This card is the frozen SPEC of a drill that has **not been run**. It carries no verdict. It is the
-first mechanism in the campaign that reaches the build stage, and it does so only because two prior
-gates ($0 each) cleared the ground: `H_001` killed the bet's falsifier, the literature gate killed
+The pre-register is now **FROZEN**: every $0 pre-training gate has PASSED —
+encoder one-variable lever GREEN 67/67, panels F7 PASS (v3 SLOT-CONTRAST), G-0 codec audit PASS 3/3,
+G-1 grammar PASS (owner-delegated LLM judgment, `g1_grammar_verdict.md`), drill grid built with the
+held-out 못 = 0 invariant. It carries **no verdict** — the arms are not trained. The only unrun piece
+is the torch training driver + the ~6–8h run (the multi-session endpoint).
+
+It is the first mechanism in the campaign that reaches the build stage, and it does so only because
+three prior $0 gates cleared the ground: `H_001` killed the bet's falsifier, the literature gate killed
 its objective, `H_002` killed the L5 premise — and all three left **one survivor**, atomicity
 (`salvage.L4.what-was-actually-causal`). H_003 tests that survivor directly.
 
