@@ -461,7 +461,17 @@
             },
             {
               "id": "ei.the-empirical-prior-is-against-it",
-              "role": "The field has run this and it loses. Nawrot et al., Dynamic Token Pooling (2211.09761, ACL 2023): end-to-end Gumbel-learned boundaries lost to a plain STATIC Unigram tokenizer on 6/6 corpora, were WORSE THAN NO POOLING on Hebrew, and lost to whitespace on all three English sets; the authors' own words — 'the approaches based on entropy spikes and Gumbel-Sigmoid are generally inferior to the alternatives' — and they retreated to supervised boundaries. Revealed preference at scale: BLT (2412.09871) takes patches from a SEPARATELY TRAINED, FROZEN byte-LM's entropy with zero gradient and lists end-to-end learning as future work. Learned-boundary collapse is universal, and every published fix is an exogenous hand-set compression prior — i.e. hand-setting the very rate G was supposed to discover."
+              "role": "The field has run this and it loses. Learned-boundary collapse is universal, and every published fix is an exogenous, hand-set compression prior — which means hand-setting the very rate G was supposed to discover.",
+              "children": [
+                {
+                  "id": "ei.prior.measured-loss",
+                  "role": "Nawrot et al., Dynamic Token Pooling (2211.09761, ACL 2023): end-to-end Gumbel-learned boundaries lost to a plain STATIC Unigram tokenizer on 6/6 corpora, were WORSE THAN NO POOLING on Hebrew, and lost to whitespace on all three English sets. The authors' own words: 'the approaches based on entropy spikes and Gumbel-Sigmoid are generally inferior to the alternatives' — and they retreated to supervised boundaries."
+                },
+                {
+                  "id": "ei.prior.revealed-preference",
+                  "role": "BLT (2412.09871) takes its patches from a SEPARATELY TRAINED, FROZEN byte-LM's entropy computed in the dataloader — zero gradient — and lists end-to-end learning as future work. An 8B/4T-byte effort declined to do what mech-3 assumes is the win."
+                }
+              ]
             },
             {
               "id": "ei.the-korean-premise-is-unsupported",
@@ -574,5 +584,6 @@
         "source": "ARCHITECTURE.json"
       }
     ]
-  }
+  },
+  "id": "anima-v4"
 }
