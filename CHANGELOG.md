@@ -42,6 +42,22 @@ All notable changes to anima-v4. Append-only; newest on top.
   GPU only if F2 (liveness) fails at seed 0. `data-flow` promoted from placeholder to the specified
   pipeline. Fable spec + probe + brief preserved under `state/h003.../` as seeds of record.
 
+## 2026-07-16 — H_003 encoder: position-keyed span policy fixes the confound 0 → 190/194
+
+- Rebuilt the A-atom/A-shat span encoder to key on SYNTACTIC negation position instead of token
+  id, and re-ran the $0 one-variable verifier. The confounders the token-id policy broke
+  (안녕/안전/편안/불안/연못) are now byte-identical between arms in **190/194** lines, up from
+  **0/194**. Real negation still shatters (257 lines differ). Kept in place (`span_policy_encode.py`);
+  the broken token-id version lives in git (`00ca7b2`) + `span_policy_verify_v1_BROKEN.out`.
+- **Not yet clean** — honest status: ~3 residual spurious matches remain (a 안녕 line with no
+  negation still differs). One of the 4 flagged was a FALSE confounder: `아니라`/`의심치않게` are
+  real 아니다-family negation, correctly shattered — my verifier's confounder list was contaminated
+  with negation. So the policy is effectively ≥191/194 correct against a contaminated test; the ~3
+  genuine residuals need span-level instrumentation before the encoder is drill-ready.
+- The matcher: BOUND 않 (negation-exclusive, always) · BOUND 지+못하 / 지+아니 (frame) · FREE
+  standalone 안/못 eojeol. Consumes v1's jamo-BPE codec, owns only the H_003 span policy
+  (CLAUDE.md). `state/h003.../span_policy_verify_positionkeyed.out` preserves the run.
+
 ## 2026-07-16 — the base ckpt was never missing, and the obvious drill design is not one-variable
 
 - **Retracted a blocker I recorded without checking it.** Last turn logged "`base.pt` (303M

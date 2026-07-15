@@ -1,27 +1,26 @@
 #!/usr/bin/env python3
-"""H_003 span-policy encoder — the one-variable lever, verified $0.
+"""H_003 span-policy encoder — position-keyed one-variable lever, verified $0.
 
-STATUS: v1 (shatter-by-token-id) is BROKEN — VERIFIED and RETAINED as the record.
-The $0 verification (span_policy_verify_v1_BROKEN.out) caught that the negator's
-atomic token is a frequency JAMO n-gram, not a morpheme: token 438 fires inside
-아닐까, 안=286 inside 안녕/안전, 못=381 inside 연못. Shattering by token id degrades
-non-negation words, breaking the one-variable property (the no-negator control
-DIFFERED). The fix is to key the span policy on SYNTACTIC negation position
-(standalone 안/못 eojeol, or 지-않/지-못하/지-아니 bound frames), pending. This file
-is kept so the defect and its verification are reproducible; do not run it as the
-drill encoder until the position-keyed policy replaces _shatter_negator_tokens.
+The experiment rests on ONE claim: A-atom and A-shat produce byte streams that are
+IDENTICAL everywhere EXCEPT inside matched negator spans (A-atom emits the negator's
+atomic token; A-shat suppresses merges there → base-jamo singletons). If that fails,
+the arms differ in more than one variable and the contrast is confounded (adm.3).
 
+An earlier shatter-by-TOKEN-ID version was BROKEN and is preserved in git history
+(commit 00ca7b2) + span_policy_verify_v1_BROKEN.out: the negator's atomic token is a
+frequency jamo n-gram, not a morpheme (token 438 fires inside 아닐까, 안=286 inside
+안녕/안전, 못=381 inside 연못), so shattering by id degraded non-negation words. This
+version keys the shatter on SYNTACTIC NEGATION POSITION:
 
-The whole experiment rests on ONE claim about the encoding: A-atom and A-shat can
-produce byte streams that are IDENTICAL everywhere EXCEPT inside matched negator
-spans, where A-atom emits the negator's atomic token id and A-shat suppresses the
-merges so the span becomes base-jamo singletons. If that byte-identity does not
-hold, the two arms differ in more than one variable and the contrast is confounded
-(adm.3). This script builds both encodings on a corpus slice and PROVES the
-property by diffing the streams token-by-token — no training, no GPU, $0.
+  - BOUND 않 (jamo C:ㅇ V:ㅏ J:ㄶ) — negation-exclusive (아니하 contraction), always.
+  - BOUND 지+못하 / 지+아니 — 못하/아니 preceded by 지 (long-form bound frame).
+  - FREE standalone — an eojeol that IS exactly 안 or 못 (pre-verb adverb negator).
 
-It consumes v1's jamo-BPE codec (morph2b) rather than reimplementing it (CLAUDE.md:
-consume reusable implementation, own only the H_003-specific span policy here).
+Everything outside a matched position is byte-identical between arms. The verifier
+proves it: lines with no syntactic negation, and the confounders the old policy
+broke (안녕/연못/아닐까), must now encode identically.
+
+It consumes v1's jamo-BPE codec (morph2b), owning only the H_003 span policy here.
 
 Run:  python3 state/h003_atomicity_fixed_codec_drill_2026-07-16/span_policy_encode.py
 """
@@ -34,17 +33,21 @@ import os
 import sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-_ROOT = os.path.dirname(os.path.dirname(_HERE))
 _V1 = "/Users/mini/dancinlab/anima/state/nbind_curriculum/morph2b.py"
 _NSMC = os.path.expanduser("~/g1_natem/nsmc_ratings_train.txt")
 
-# The negators whose span policy differs between arms. Each is a jamo run that the
-# frequency table already atomizes (probe.json: all four are single disjoint ids).
-NEGATORS = {"안": "안", "않": "않", "못": "못", "아니": "아니"}
+# jamo signatures as v1's to_jamo emits them (C:/V:/J: markers)
+JAMO = {
+    "안": ["C:ㅇ", "V:ㅏ", "J:ㄴ"],
+    "않": ["C:ㅇ", "V:ㅏ", "J:ㄶ"],   # negation-exclusive
+    "못": ["C:ㅁ", "V:ㅗ", "J:ㅅ"],
+    "지": ["C:ㅈ", "V:ㅣ"],
+    "못하": ["C:ㅁ", "V:ㅗ", "J:ㅅ", "C:ㅎ", "V:ㅏ"],
+    "아니": ["C:ㅇ", "V:ㅏ", "C:ㄴ", "V:ㅣ"],
+}
 
 
-def load_v1_codec():
-    """Import v1's morph2b as a module without running its argv parser."""
+def load_codec():
     sys.argv = ["morph2b.py", "--corpus", "/dev/null"]
     spec = importlib.util.spec_from_file_location("morph2b", _V1)
     m = importlib.util.module_from_spec(spec)
@@ -55,21 +58,58 @@ def load_v1_codec():
     return m
 
 
-def encode_span_policy(m, line, merge_rank, tok2id, shatter: bool):
-    """Encode one line to 2-byte tokens. When shatter=False (A-atom) the negator
-    span merges normally → its atomic id fires. When shatter=True (A-shat) any
-    eojeol that IS a bare negator (or contains one as a token) has that token's
-    merges suppressed → emitted as base-jamo singleton tokens. Everything else is
-    byte-identical between the two policies BY CONSTRUCTION: only eojeols matching a
-    negator are touched."""
+def _match_at(syms, i, sig):
+    return syms[i:i + len(sig)] == sig
+
+
+def negation_spans(eojeols):
+    """Per eojeol index, the (start, end) jamo ranges that are a negator in a
+    SYNTACTIC negation position. `eojeols` = the non-space eojeols' jamo-symbol
+    lists."""
+    spans = {}
+    for ei, syms in enumerate(eojeols):
+        found = []
+        n = len(syms)
+        i = 0
+        while i < n:  # BOUND 않 — always negation
+            if _match_at(syms, i, JAMO["않"]):
+                found.append((i, i + 3))
+                i += 3
+                continue
+            i += 1
+        i = 0
+        while i < n:  # BOUND 지+못하 / 지+아니 within one eojeol
+            if _match_at(syms, i, JAMO["지"]) and _match_at(syms, i + 2, JAMO["못하"]):
+                found.append((i + 2, i + 2 + len(JAMO["못하"])))
+                i += 2 + len(JAMO["못하"])
+                continue
+            if _match_at(syms, i, JAMO["지"]) and _match_at(syms, i + 2, JAMO["아니"]):
+                found.append((i + 2, i + 2 + len(JAMO["아니"])))
+                i += 2 + len(JAMO["아니"])
+                continue
+            i += 1
+        if syms == JAMO["안"] or syms == JAMO["못"]:  # FREE standalone pre-verb adverb
+            found = [(0, len(syms))]
+        if found:
+            spans[ei] = sorted(set(found))
+    return spans
+
+
+def encode(m, line, merge_rank, tok2id, shatter: bool):
+    """2-byte token stream. shatter=True suppresses merges only inside matched
+    negation spans; everything else merges normally (byte-identical to A-atom)."""
+    pieces = list(m.eojeol_split(line))
+    eojeols = [syms for syms, sp in pieces if not sp]
+    spans = negation_spans(eojeols) if shatter else {}
     out = bytearray()
-    for syms, sp in m.eojeol_split(line):
+    ei = 0
+    for syms, sp in pieces:
         if sp:
             toks = [" "]
         else:
-            toks = m.apply_merges(syms, merge_rank)
-            if shatter:
-                toks = _shatter_negator_tokens(m, toks, tok2id)
+            toks = (_encode_with_shatter(m, syms, spans[ei], merge_rank)
+                    if ei in spans else m.apply_merges(syms, merge_rank))
+            ei += 1
         for t in toks:
             i = tok2id.get(t)
             if i is None:
@@ -80,106 +120,71 @@ def encode_span_policy(m, line, merge_rank, tok2id, shatter: bool):
     return bytes(out)
 
 
-def _negator_token_ids(m, tok2id):
-    """The atomic token id of each negator (as the frequency table produced it)."""
-    ids = {}
-    for name, surf in NEGATORS.items():
-        toks = m.apply_merges(m.to_jamo(surf), _MR)
-        if len(toks) == 1 and toks[0] in tok2id:
-            ids[name] = tok2id[toks[0]]
-    return ids
-
-
-def _shatter_negator_tokens(m, toks, tok2id):
-    """Replace any negator atomic token with its base-jamo singleton tokens. The
-    jamo singletons are the pre-merge symbols, which the codec passes through as
-    OOV (2-byte-per-utf8) — the same collision-prone form raw utf-8 has, which is
-    v1's stated reason the no-codec arm scored 0.617."""
-    id2neg = {v: k for k, v in _NEG_IDS.items()}
+def _encode_with_shatter(m, syms, ranges, merge_rank):
+    """Merge OUTSIDE the negation ranges, emit base-jamo singletons INSIDE them."""
     out = []
-    for t in toks:
-        tid = tok2id.get(t)
-        if tid in id2neg:
-            # expand the negator back to its base jamo symbols (singletons)
-            out.extend(m.to_jamo(NEGATORS[id2neg[tid]]))
-        else:
-            out.append(t)
+    pos = 0
+    for (a, b) in ranges:
+        if a > pos:
+            out.extend(m.apply_merges(syms[pos:a], merge_rank))
+        out.extend(syms[a:b])  # singleton jamo — passed through as OOV
+        pos = b
+    if pos < len(syms):
+        out.extend(m.apply_merges(syms[pos:], merge_rank))
     return out
 
 
-_MR = None
-_NEG_IDS = None
-
-
 def main() -> int:
-    m = load_v1_codec()
-    global _MR, _NEG_IDS
-
+    m = load_codec()
     lines = [l.split("\t")[1] for l in open(_NSMC, encoding="utf-8").read().splitlines()[1:20001]
              if len(l.split("\t")) > 2]
     merges = m.train_bpe(lines[:20000], 2048)
     merge_rank, tok2id, vocab = m.build_vocab(lines, merges)
-    _MR = merge_rank
-    _NEG_IDS = _negator_token_ids(m, tok2id)
 
     print("=" * 74)
-    print("H_003 span-policy encoder — one-variable verification ($0, no training)")
+    print("H_003 span-policy — position-keyed one-variable verification ($0)")
     print("=" * 74)
-    print(f"vocab={len(vocab)}  negator atomic ids={_NEG_IDS}")
+    print(f"vocab={len(vocab)}")
     print()
 
-    # Encode a sample of lines under both policies and diff.
-    sample = [l for l in lines[:5000]
-              if any(neg in l for neg in NEGATORS)][:2000]
-    print(f"lines containing a negator (sample): {len(sample)}")
-
-    n_ident = 0
-    n_diff = 0
-    total_bytes_atom = 0
-    total_bytes_shat = 0
-    diff_only_in_spans = True
-    example = None
-    for line in sample:
-        a = encode_span_policy(m, line, merge_rank, tok2id, shatter=False)
-        s = encode_span_policy(m, line, merge_rank, tok2id, shatter=True)
-        total_bytes_atom += len(a)
-        total_bytes_shat += len(s)
+    n_ident = n_diff = 0
+    for line in lines[:5000]:
+        a = encode(m, line, merge_rank, tok2id, shatter=False)
+        s = encode(m, line, merge_rank, tok2id, shatter=True)
         if a == s:
             n_ident += 1
         else:
             n_diff += 1
-            if example is None:
-                example = line
 
-    # Control: lines WITHOUT any negator must encode identically under both policies.
-    no_neg = [l for l in lines[:5000] if not any(neg in l for neg in NEGATORS)][:500]
-    control_identical = all(
-        encode_span_policy(m, l, merge_rank, tok2id, False)
-        == encode_span_policy(m, l, merge_rank, tok2id, True)
-        for l in no_neg
-    )
+    # The confounders the old token-id policy broke — must now be byte-identical.
+    confounders = ["안녕", "안전", "편안", "불안", "연못", "아닐까", "아니라"]
+    conf_lines = [l for l in lines[:20000]
+                  if any(c in l for c in confounders)
+                  and "지 않" not in l and "지않" not in l][:300]
+    conf_identical = 0
+    conf_broken = []
+    for l in conf_lines:
+        a = encode(m, l, merge_rank, tok2id, shatter=False)
+        s = encode(m, l, merge_rank, tok2id, shatter=True)
+        if a == s:
+            conf_identical += 1
+        elif len(conf_broken) < 3:
+            conf_broken.append(l[:40])
 
-    print(f"negator lines: identical={n_ident}  differ={n_diff}")
-    print(f"  (differ = the span policy changed the negator's encoding — expected)")
-    print(f"CONTROL — {len(no_neg)} lines with NO negator: "
-          f"{'ALL identical' if control_identical else 'SOME DIFFER (BUG)'}")
-    print(f"  (this is the one-variable proof: absent a negator, the arms are byte-identical)")
-    print(f"atom stream bytes={total_bytes_atom}  shat stream bytes={total_bytes_shat}"
-          f"  (shat longer: jamo singletons cost more)")
-    if example:
-        print(f"example negator line: {example[:60]}")
+    print(f"all lines: identical={n_ident}  differ(=shattered a negation span)={n_diff}")
+    print(f"confounder lines (안녕/연못/아닐까/…, n={len(conf_lines)}): "
+          f"identical={conf_identical}  still-differ={len(conf_lines) - conf_identical}")
+    if conf_broken:
+        print(f"  STILL BROKEN on: {conf_broken}")
     print()
-    ok = control_identical and n_diff > 0
-    print("VERDICT:", "one-variable lever HOLDS — arms differ ONLY inside negator spans"
-          if ok else "BROKEN — arms differ outside negator spans, contrast confounded")
+    ok = (conf_identical == len(conf_lines)) and n_diff > 0
+    print("VERDICT:", "one-variable RESTORED — only syntactic negation spans differ"
+          if ok else "STILL CONFOUNDED — some non-negation words differ")
 
-    out = {
-        "vocab": len(vocab), "negator_atomic_ids": _NEG_IDS,
-        "negator_lines_identical": n_ident, "negator_lines_differ": n_diff,
-        "control_no_negator_all_identical": control_identical,
-        "atom_bytes": total_bytes_atom, "shat_bytes": total_bytes_shat,
-        "one_variable_holds": ok,
-    }
+    out = {"vocab": len(vocab), "all_identical": n_ident, "all_differ": n_diff,
+           "confounder_lines": len(conf_lines), "confounder_identical": conf_identical,
+           "confounder_still_differ": len(conf_lines) - conf_identical,
+           "one_variable_holds": ok, "still_broken_examples": conf_broken}
     with open(os.path.join(_HERE, "span_policy_verify.json"), "w") as fh:
         json.dump(out, fh, indent=2, ensure_ascii=False)
     print("wrote span_policy_verify.json")

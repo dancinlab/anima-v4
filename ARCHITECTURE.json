@@ -563,7 +563,7 @@
             },
             {
               "id": "ng.tok.fix-key-on-syntax",
-              "role": "FIX: the span policy must key on SYNTACTIC negation position — a standalone negator eojeol (안 V / 못 V) or a bound frame (지 않 / 지 못하 / 지 아니) — not on the token id. Then A-shat shatters negation-못 but leaves 연못 intact, restoring one-variable. This is a prerequisite the encoder must pass (its own no-negator control must be byte-identical) BEFORE F7."
+              "role": "FIX (implemented, 90%): key the span policy on SYNTACTIC negation position — standalone negator eojeol (안 V / 못 V) or a bound frame (지 않 / 지 못하 / 지 아니), and always the negation-exclusive 않 — not the token id. Measured (span_policy_verify.json): confounder lines identical 190/194, up from 0/194 with the token-id policy. NOT yet clean: ~3 residual spurious matches remain (e.g. a 안녕 line with no negation still differs); one of the 4 flagged was a FALSE confounder (아니라/의심치않게 = real 아니다-family negation, correctly shattered — the test's confounder list was contaminated). Next: span-level instrumentation to find the ~3 real spurious matches before the encoder is drill-ready."
             },
             {
               "id": "ng.tok.retro-caveat-on-L4b",
