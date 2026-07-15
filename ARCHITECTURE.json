@@ -499,7 +499,21 @@
         },
         {
           "id": "ng.the-one-variable",
-          "role": "The whole mechanism claim reduces to ONE pair: the same codec with `않` forcibly split vs not split, everything else identical. That is a one-variable causal contrast (adm.3), and it is the only comparison that isolates 'boundary exposed' from 'alphabet changed' and from 'a codec exists'. Arms: jamo / BPE / morpheme-aware BPE / whole-word / whole-word-with-`않`-split, x5 seeds."
+          "role": "The claim that survives is ATOMICITY (L4.what-was-actually-causal), so the contrast must vary ONLY whether the negator gets its own token — same alphabet, same corpus, same model, same steps, same seed. v1's M-vs-C1 is NOT that pair: it varies whether a codec exists at all.",
+          "children": [
+            {
+              "id": "ng.forcing-the-merge-table-is-not-one-variable",
+              "role": "MEASURED, and it kills the obvious design. Atomizing `않` = ['C:ㅇ','V:ㅏ','J:ㄶ'] needs the merge (C:ㅇ, V:ㅏ) — but that pair is shared by EVERY 아-initial word, including `안` ['C:ㅇ','V:ㅏ','J:ㄴ'] and `아니` ['C:ㅇ','V:ㅏ','C:ㄴ','V:ㅣ']. Injecting or removing it re-cuts the whole vocabulary, so 'force the merge table' perturbs thousands of unrelated words. It fails adm.3 (one-variable)."
+            },
+            {
+              "id": "ng.post-encode-split-is-the-clean-lever",
+              "role": "CANDIDATE, pending the design pass. v1's encoder applies merges per-eojeol (`apply_merges(syms, merge_rank)` inside `encode_to_bytes`), so the negator's span can be re-cut AFTER merging without touching the merge table. ATOMIC arm = emit the negator span as one reserved id; SHATTERED arm = force a boundary inside it. Same table, same vocab, byte-identical encoding for every other string — the difference is exactly one variable."
+            },
+            {
+              "id": "ng.the-collision-is-the-mechanism",
+              "role": "Why the shattered arm is a real treatment and not just noise: `안`/`않`/`아니` all share the jamo prefix ['C:ㅇ','V:ㅏ']. Shattered, the negator's pieces are shared with its neighbours and no clean slot can form — which is v1's stated reason raw utf-8 scored 0.617. So the shattered arm should reproduce the C1 floor WITHOUT removing the codec, isolating atomicity from the alphabet."
+            }
+          ]
         },
         {
           "id": "ng.control-and-headroom",

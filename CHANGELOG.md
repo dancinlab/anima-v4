@@ -2,6 +2,32 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — the base ckpt was never missing, and the obvious drill design is not one-variable
+
+- **Retracted a blocker I recorded without checking it.** Last turn logged "`base.pt` (303M
+  `clm303_clean`) exists in neither the v1 repo nor the weights dir — the only external blocker."
+  That came from a subagent report I cited without verifying. It is wrong:
+  `~/anima-weights/clm303_clean/clm303_clean.pt` (1.6G, 388M params, d=3784 · L=4 · V=256) is on
+  disk. The search had looked for the literal name `base.pt`, which is what `fire_cement.sh`
+  *renames* it to. `sidecar ing next` corrected. Nothing was blocked; `next-gate` can run.
+- **`ng.the-one-variable` has a confound, found before building it.** The obvious lever — "force the
+  merge table so `않` comes out atomic vs not" — fails `adm.3` (one-variable). Measured on the real
+  decomposer: `않` = `['C:ㅇ','V:ㅏ','J:ㄶ']`, and atomizing it requires the merge `(C:ㅇ, V:ㅏ)` —
+  a pair shared by **every 아-initial word**, including `안` `['C:ㅇ','V:ㅏ','J:ㄴ']` and `아니`
+  `['C:ㅇ','V:ㅏ','C:ㄴ','V:ㅣ']`. Touching that merge re-cuts thousands of unrelated words, so the
+  arm pair would vary the mechanism *and* the vocabulary.
+- **The clean lever is post-encode, not the merge table** (`ng.post-encode-split-is-the-clean-lever`,
+  candidate pending the design pass). v1's encoder applies merges per-eojeol —
+  `apply_merges(syms, merge_rank)` inside `encode_to_bytes` — so the negator's span can be re-cut
+  *after* merging without touching the table. ATOMIC arm = the span emits one reserved id;
+  SHATTERED arm = a boundary is forced inside it. Same table, same vocab, byte-identical encoding
+  for every other string.
+- **Why the shattered arm is a treatment and not noise** (`ng.the-collision-is-the-mechanism`):
+  `안`/`않`/`아니` all share the jamo prefix `['C:ㅇ','V:ㅏ']`. Shattered, the negator's pieces are
+  shared with its neighbours and no clean slot can form — v1's own stated reason raw utf-8 scored
+  0.617. So the shattered arm should reproduce the C1 floor **without removing the codec**,
+  isolating atomicity from the alphabet. That is the contrast L4b never ran.
+
 ## 2026-07-16 — the gate passes: 149 → 0, without mangling the tree and without a bypass
 
 - L8 said it: *"a rule that is always bypassed is worse than none — it launders the bypass. Design
