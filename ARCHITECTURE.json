@@ -552,6 +552,24 @@
               "role": "The corrected grid failed a subtler check: a strategy counting only DRILLED negators (안/않), ignoring the held-out 못, scored 0.25 — anti-correlated, so invertible to 0.75. The admissibility bar is held_out_blind_score = 0.5 exactly (tool/anima_v4.py), which forces the model to detect the held-out token. Redesign delegated with crisp constraints (pure-못 depth via a grammatical double-못 form, or a balanced drilled/held mix with held-cell eval slicing)."
             }
           ]
+        },
+        {
+          "id": "ng.the-negator-token-is-not-negator-exclusive",
+          "role": "THIRD defect caught $0 before training (span_policy_verify.json): shattering by TOKEN ID is not one-variable. The verification's no-negator control DIFFERED. See children for the mechanism and the fix.",
+          "children": [
+            {
+              "id": "ng.tok.is-a-jamo-gram",
+              "role": "The atomic 'negator' token is a frequency JAMO n-gram, not a morpheme — and it is not even syllable-aligned. Measured: token 438 (jamo ㅇㅏㄴㅣ) fires inside 아닐까 (jamo ㅇㅏㄴㅣㄹㄲㅏ), spanning the 아|닐 syllable boundary. So it hits any word whose jamo prefix is ㅇㅏㄴㅣ, and 안=286 fires inside 안녕/안전/편안, 못=381 inside 연못 — all non-negation. Only 않=520 (아니하 contraction) is negation-exclusive."
+            },
+            {
+              "id": "ng.tok.fix-key-on-syntax",
+              "role": "FIX: the span policy must key on SYNTACTIC negation position — a standalone negator eojeol (안 V / 못 V) or a bound frame (지 않 / 지 못하 / 지 아니) — not on the token id. Then A-shat shatters negation-못 but leaves 연못 intact, restoring one-variable. This is a prerequisite the encoder must pass (its own no-negator control must be byte-identical) BEFORE F7."
+            },
+            {
+              "id": "ng.tok.retro-caveat-on-L4b",
+              "role": "Retroactive caveat on salvage.L4b: the atomicity that worked there was atomicity of a jamo-gram that aligns with the negator ONLY because v1's SYNTHETIC drill controls the vocabulary (아니 appears solely as the negator). In natural corpus the token is not negator-exclusive, so part of L4b's effect may be a synthetic-drill artifact. Untested — a prediction the position-keyed A-shat arm would settle."
+            }
+          ]
         }
       ]
     },
