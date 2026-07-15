@@ -131,7 +131,25 @@
         },
         {
           "id": "L5.morphology-decides-learnability",
-          "role": "Korean lane BINDING, every escape measured dead (H_9327). EN works as discriminator: `not` is FREE/pre-posed; KO `지 않다` is a BOUND suffix. Composition must be visible at the token boundary or it cannot be learned."
+          "role": "Korean lane BINDING, every escape measured dead (H_9327) — the WALL is real and stands. But its stated MECHANISM does not: 'EN `not` is FREE, KO `지 않다` is BOUND, so composition must be visible at the token boundary or it cannot be learned' is NOT VISIBLE in v1's own measurements (H_002 🟢, $0 re-analysis). Keep the wall; stop citing the reason.",
+          "children": [
+            {
+              "id": "L5.bound-is-easier-not-harder",
+              "role": "Measured on v1's already-computed per-item margins, disaggregated by form for the first time (eval_f1 panel: 60 BOUND / 40 FREE). The arm with NO boundary at all (C1, raw utf-8) shows a free-minus-bound margin gap of +0.06 / -0.06 nats — it does not find BOUND harder. The codec arms lean the OTHER way: M is 0.81-1.11 nats MORE confident on BOUND than on FREE. No arm leans L5's way."
+            },
+            {
+              "id": "L5.the-sparsity-story-is-inverted",
+              "role": "On the drill's OWN pretraining corpus (NSMC, 150k lines) the BOUND form outnumbers the FREE one 5.73 : 1 (지않 5114 vs 안 892). The 'hard' form is the COMMON one, so no sparsity story explains why bound would be unlearnable — and frequency BPE atomizes it precisely BECAUSE it is frequent."
+            },
+            {
+              "id": "L5.no-panel-can-test-it-out-of-distribution",
+              "role": "HONEST LIMIT on the above, and a design requirement. f1 is the DRILLED panel (the model saw 안/않/못), so both forms are in-distribution and near ceiling; f2, the held-out panel, is 100% BOUND (지 아니하다) and carries no free/bound contrast at all. So NO panel in the v1 record can test the premise out-of-distribution. Any successor drill must carry both forms in its held-out cell or it inherits this blind spot."
+            },
+            {
+              "id": "L5.what-survives",
+              "role": "L4b's effect is untouched: the codec's +0.29/+0.34 on held-out recombination is real and replicated at 2 seeds. H_002 kills the REASON, not the result. The surviving explanation is L4.what-was-actually-causal — ATOMICITY of the negator token, not boundary visibility, not identity, not pretraining exposure."
+            }
+          ]
         },
         {
           "id": "L6.measurement-is-the-grave",

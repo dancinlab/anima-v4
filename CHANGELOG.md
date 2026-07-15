@@ -2,6 +2,33 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — L5's Korean premise is not in the measurement (H_002 🟢 · $0, no training, no GPU)
+
+- Ran `next-gate.the-free-re-analysis` — the cheapest gate in the campaign. It needed **no new
+  measurement at all**: v1's `eval_f1.json` panel already mixes FREE (`이 영화 안 어이없고`) with
+  BOUND (`이 영화 어이없지 않다`) negation, 60/40, and every arm's result json already carries a
+  per-item `margins` array aligned 1:1 with it. **Nobody had ever split it by form.**
+- **L5's discriminator does not appear.** The arm that cannot see the boundary at all (C1, raw
+  utf-8) shows a free-minus-bound margin gap of **+0.06 / −0.06 nats** — it does not find BOUND
+  harder. The codec arms lean the **opposite** way: M is **0.81–1.11 nats *more* confident on
+  BOUND** than on FREE. No arm leans L5's way, on either the threshold test or the sign test.
+- **The sparsity story is inverted** on the drill's own pretraining corpus: `지 않다` outnumbers
+  `안` **5.73 : 1** (5114 vs 892 in NSMC's 150k lines) — more extreme than the 2.1:1 the literature
+  reports. The "hard" form is the common one, and frequency BPE atomizes it *because* it is common.
+- **The card caught the same trap in its own first draft.** F-002-1 was keyed to a `d_acc` gap ≥
+  0.10 — but every arm scores ~1.0 on BOUND, so the gap had ≤0.017 of headroom and the falsifier
+  was **vacuous by H_001's own criterion**. Re-keyed to the MARGIN (an unbounded NLL difference).
+  F-002-6 now records the self-audit in the ledger. `verification.admissibility-gate` earned its
+  place by catching the person who wrote it.
+- `salvage.L5` updated in place — **the wall stands, the reason does not**. Four children:
+  bound-is-easier-not-harder · the-sparsity-story-is-inverted · no-panel-can-test-it-out-of-
+  distribution (f1 is drilled + near ceiling, f2 is 100% bound ⇒ no v1 panel can test the premise
+  OOD — a real limit on this verdict and a requirement on any successor drill) · what-survives
+  (L4b's +0.29/+0.34 is untouched; the surviving explanation is ATOMICITY, not boundary visibility).
+- Upstream: `sidecar` PR #413 merged + propagated (`ship`) — `architecture search` gated its walk on
+  `name`, so this repo's name-less `{id, role}` tree was entirely unsearchable. Convergence
+  `architecture-ts-3` recorded there; `architecture-json-1` here corrected to the true root cause.
+
 ## 2026-07-16 — literature gate: the bet's objective is tautological, so there was never a tension to test
 
 - Ran the **실측전 research** literature pass on mech-3 before building it. Verdict: **do not run as
