@@ -597,7 +597,7 @@
             },
             {
               "id": "ng.slot.remaining",
-              "role": "REMAINING before frozen_at. G-0 codec audit = PASS 3/3 ($0, g0_audit.json): all 4 negators atomic + pairwise-disjoint, round-trip 0.98 (v1-inherited). G-1 grammar FIRST-PASS done ($0 screen, not the operator gate): it CONFIRMS the design's own `?` flags (기대하·졸·끄·더-filler) and finds no new problems — the core issue is 못 + non-volitional verbs (`못 졸지는` — dozing is non-volitional; 끄 is odd in a movie review). Human operator sign-off now narrowed to those 3 verbs. Then the only true session-terminal blocker: arms x2 seeds, local MPS d384, ~6-8h (multi-session; not started, CPU was redlined)."
+              "role": "REMAINING before frozen_at. G-0 codec audit = PASS 3/3 (g0_audit.json). G-1 grammar: first-pass confirmed the design's flags, then the 3 flagged verbs were SWAPPED for clearly volitional +못-compatible review actions (기대하→감상하, 졸→야유하, 끄→참) — a PROVISIONAL LLM pass (build_panels.py note), F7 still PASS. The human operator gate now narrows to CONFIRMING those 3 swaps (not judging borderline cases). Then the one true session-terminal blocker: arms x2 seeds, local MPS d384, ~6-8h (multi-session, not started)."
             }
           ]
         }

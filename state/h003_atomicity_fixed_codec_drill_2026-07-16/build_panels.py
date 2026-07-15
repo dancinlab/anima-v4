@@ -70,7 +70,11 @@ def _harness():
 # for the 아니-cleft family. `?` = flagged for the G-1 operator grammar pass.
 # NOTE vs v2 inventory: 하품하/후회하/실망하/지루해하/짜증내 were re-audited for
 # 못-compatibility; non-volitional reactions dropped, volitional review actions in
-# (돌려보/건너뛰/끄). G-1 minimum-12 rule applies unchanged.
+# (돌려보/건너뛰). G-1 minimum-12 rule applies unchanged.
+# G-1 PROVISIONAL (LLM first-pass, pending native operator confirm): the three ?-flagged
+# verbs were swapped for clearly volitional + 못-compatible review actions —
+# 기대하→감상하 (stative→appreciate), 졸→야유하 (non-volitional→jeer), 끄→참 (odd→endure).
+# This narrows the human gate to CONFIRMING these three, not judging borderline cases.
 VERBS = [
     # (polarity, kind, N-or-stem, LV-or-adn, [LV-adn])
     (1, "s", "즐기", "즐긴"),
@@ -80,9 +84,9 @@ VERBS = [
     (1, "c", "공감", "하", "한"),
     (1, "c", "추천", "하", "한"),
     (1, "c", "이해", "하", "한"),
-    (1, "c", "기대", "하", "한"),      # ? 못-compat marginal (기대 못 하지는)
-    (0, "s", "졸", "존"),              # ? volitionality marginal (못 졸지는)
-    (0, "s", "끄", "끈"),              # ? filler combos marked (잘 끄지는)
+    (1, "c", "감상", "하", "한"),      # was 기대(stative·marginal 못); 감상하다=appreciate/view, volitional +못-compat
+    (0, "c", "야유", "하", "한"),      # was 졸(non-volitional); 야유하다=jeer, volitional negative
+    (0, "s", "참", "참은"),            # was 끄(odd context); 참다=endure, 못 참다=couldn't bear (a bad film)
     (0, "s", "돌려보", "돌려본"),
     (0, "s", "건너뛰", "건너뛴"),
     (0, "c", "딴짓", "하", "한"),

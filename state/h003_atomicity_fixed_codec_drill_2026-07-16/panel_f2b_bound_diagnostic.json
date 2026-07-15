@@ -547,7 +547,7 @@
   },
   {
     "cell": "Kb1",
-    "verb": "기대하",
+    "verb": "감상하",
     "verb_polarity": 1,
     "template": "것은 아니다 => ",
     "negator_count": 1,
@@ -556,11 +556,11 @@
     "gold_flip": 1,
     "gold_sent": 0,
     "eojeol_len": 6,
-    "surface": "이 영화 기대한 것은 아니다 => "
+    "surface": "이 영화 감상한 것은 아니다 => "
   },
   {
     "cell": "Kb2",
-    "verb": "기대하",
+    "verb": "감상하",
     "verb_polarity": 1,
     "template": "것은 아니다 => ",
     "negator_count": 2,
@@ -569,11 +569,11 @@
     "gold_flip": 0,
     "gold_sent": 1,
     "eojeol_len": 7,
-    "surface": "이 영화 기대하지 못한 것은 아니다 => "
+    "surface": "이 영화 감상하지 못한 것은 아니다 => "
   },
   {
     "cell": "Kb1",
-    "verb": "기대하",
+    "verb": "감상하",
     "verb_polarity": 1,
     "template": "것은 아니에요 => ",
     "negator_count": 1,
@@ -582,11 +582,11 @@
     "gold_flip": 1,
     "gold_sent": 0,
     "eojeol_len": 6,
-    "surface": "이 영화 기대한 것은 아니에요 => "
+    "surface": "이 영화 감상한 것은 아니에요 => "
   },
   {
     "cell": "Kb2",
-    "verb": "기대하",
+    "verb": "감상하",
     "verb_polarity": 1,
     "template": "것은 아니에요 => ",
     "negator_count": 2,
@@ -595,11 +595,11 @@
     "gold_flip": 0,
     "gold_sent": 1,
     "eojeol_len": 7,
-    "surface": "이 영화 기대하지 못한 것은 아니에요 => "
+    "surface": "이 영화 감상하지 못한 것은 아니에요 => "
   },
   {
     "cell": "Kb1",
-    "verb": "기대하",
+    "verb": "감상하",
     "verb_polarity": 1,
     "template": "것은 아님 => ",
     "negator_count": 1,
@@ -608,11 +608,11 @@
     "gold_flip": 1,
     "gold_sent": 0,
     "eojeol_len": 6,
-    "surface": "이 영화 기대한 것은 아님 => "
+    "surface": "이 영화 감상한 것은 아님 => "
   },
   {
     "cell": "Kb2",
-    "verb": "기대하",
+    "verb": "감상하",
     "verb_polarity": 1,
     "template": "것은 아님 => ",
     "negator_count": 2,
@@ -621,11 +621,11 @@
     "gold_flip": 0,
     "gold_sent": 1,
     "eojeol_len": 7,
-    "surface": "이 영화 기대하지 못한 것은 아님 => "
+    "surface": "이 영화 감상하지 못한 것은 아님 => "
   },
   {
     "cell": "Kb1",
-    "verb": "졸",
+    "verb": "야유하",
     "verb_polarity": 0,
     "template": "것은 아니다 => ",
     "negator_count": 1,
@@ -634,11 +634,11 @@
     "gold_flip": 1,
     "gold_sent": 1,
     "eojeol_len": 6,
-    "surface": "이 영화 존 것은 아니다 => "
+    "surface": "이 영화 야유한 것은 아니다 => "
   },
   {
     "cell": "Kb2",
-    "verb": "졸",
+    "verb": "야유하",
     "verb_polarity": 0,
     "template": "것은 아니다 => ",
     "negator_count": 2,
@@ -647,11 +647,11 @@
     "gold_flip": 0,
     "gold_sent": 0,
     "eojeol_len": 7,
-    "surface": "이 영화 졸지 못한 것은 아니다 => "
+    "surface": "이 영화 야유하지 못한 것은 아니다 => "
   },
   {
     "cell": "Kb1",
-    "verb": "졸",
+    "verb": "야유하",
     "verb_polarity": 0,
     "template": "것은 아니에요 => ",
     "negator_count": 1,
@@ -660,11 +660,11 @@
     "gold_flip": 1,
     "gold_sent": 1,
     "eojeol_len": 6,
-    "surface": "이 영화 존 것은 아니에요 => "
+    "surface": "이 영화 야유한 것은 아니에요 => "
   },
   {
     "cell": "Kb2",
-    "verb": "졸",
+    "verb": "야유하",
     "verb_polarity": 0,
     "template": "것은 아니에요 => ",
     "negator_count": 2,
@@ -673,11 +673,11 @@
     "gold_flip": 0,
     "gold_sent": 0,
     "eojeol_len": 7,
-    "surface": "이 영화 졸지 못한 것은 아니에요 => "
+    "surface": "이 영화 야유하지 못한 것은 아니에요 => "
   },
   {
     "cell": "Kb1",
-    "verb": "졸",
+    "verb": "야유하",
     "verb_polarity": 0,
     "template": "것은 아님 => ",
     "negator_count": 1,
@@ -686,11 +686,11 @@
     "gold_flip": 1,
     "gold_sent": 1,
     "eojeol_len": 6,
-    "surface": "이 영화 존 것은 아님 => "
+    "surface": "이 영화 야유한 것은 아님 => "
   },
   {
     "cell": "Kb2",
-    "verb": "졸",
+    "verb": "야유하",
     "verb_polarity": 0,
     "template": "것은 아님 => ",
     "negator_count": 2,
@@ -699,11 +699,11 @@
     "gold_flip": 0,
     "gold_sent": 0,
     "eojeol_len": 7,
-    "surface": "이 영화 졸지 못한 것은 아님 => "
+    "surface": "이 영화 야유하지 못한 것은 아님 => "
   },
   {
     "cell": "Kb1",
-    "verb": "끄",
+    "verb": "참",
     "verb_polarity": 0,
     "template": "것은 아니다 => ",
     "negator_count": 1,
@@ -712,11 +712,11 @@
     "gold_flip": 1,
     "gold_sent": 1,
     "eojeol_len": 6,
-    "surface": "이 영화 끈 것은 아니다 => "
+    "surface": "이 영화 참은 것은 아니다 => "
   },
   {
     "cell": "Kb2",
-    "verb": "끄",
+    "verb": "참",
     "verb_polarity": 0,
     "template": "것은 아니다 => ",
     "negator_count": 2,
@@ -725,11 +725,11 @@
     "gold_flip": 0,
     "gold_sent": 0,
     "eojeol_len": 7,
-    "surface": "이 영화 끄지 못한 것은 아니다 => "
+    "surface": "이 영화 참지 못한 것은 아니다 => "
   },
   {
     "cell": "Kb1",
-    "verb": "끄",
+    "verb": "참",
     "verb_polarity": 0,
     "template": "것은 아니에요 => ",
     "negator_count": 1,
@@ -738,11 +738,11 @@
     "gold_flip": 1,
     "gold_sent": 1,
     "eojeol_len": 6,
-    "surface": "이 영화 끈 것은 아니에요 => "
+    "surface": "이 영화 참은 것은 아니에요 => "
   },
   {
     "cell": "Kb2",
-    "verb": "끄",
+    "verb": "참",
     "verb_polarity": 0,
     "template": "것은 아니에요 => ",
     "negator_count": 2,
@@ -751,11 +751,11 @@
     "gold_flip": 0,
     "gold_sent": 0,
     "eojeol_len": 7,
-    "surface": "이 영화 끄지 못한 것은 아니에요 => "
+    "surface": "이 영화 참지 못한 것은 아니에요 => "
   },
   {
     "cell": "Kb1",
-    "verb": "끄",
+    "verb": "참",
     "verb_polarity": 0,
     "template": "것은 아님 => ",
     "negator_count": 1,
@@ -764,11 +764,11 @@
     "gold_flip": 1,
     "gold_sent": 1,
     "eojeol_len": 6,
-    "surface": "이 영화 끈 것은 아님 => "
+    "surface": "이 영화 참은 것은 아님 => "
   },
   {
     "cell": "Kb2",
-    "verb": "끄",
+    "verb": "참",
     "verb_polarity": 0,
     "template": "것은 아님 => ",
     "negator_count": 2,
@@ -777,7 +777,7 @@
     "gold_flip": 0,
     "gold_sent": 0,
     "eojeol_len": 7,
-    "surface": "이 영화 끄지 못한 것은 아님 => "
+    "surface": "이 영화 참지 못한 것은 아님 => "
   },
   {
     "cell": "Kb1",
