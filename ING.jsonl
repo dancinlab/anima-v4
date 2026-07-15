@@ -1,1 +1,2 @@
 {"kind":"work","id":"1","ts":"2026-07-15T19:32:05.007Z","text":"divergence 완료(7기제) — 다음 게이트: mech-3 코덱전쟁 최소반증 사전등록(MORPH-ATOM 프로토콜 재사용·3 seed). 카드에 L1(격자 경계결정 엔트로피)·L2(고정BPE 치환 ΔF2<0.1=사망) 필수."}
+{"kind":"work","id":"2","ts":"2026-07-15T19:56:04.362Z","text":"anima-v4 설계→구현: mech-3 codec-war 게이트. 발견=mech-3의 pre-registered L2 ablation(고정BPE치환→0.617)이 confound — L4b의 0.908을 낸 것이 이미 fixed BPE-자모 코덱이므로 green lever는 mech-3의 null(정적 코덱)을 지지함. next=문헌게이트+MORPH-ATOM 프로토콜 수령 → H_001(L4b 3-seed 복제 = 강한 대조군 ARM-1 확보)부터 구현"}
