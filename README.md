@@ -3,8 +3,11 @@
 **A⇄G where the tension IS the thinking** — the opposition must compute a cognitive operation,
 not gate the mouth.
 
-> **STAGE = DIVERGENCE.** 7 candidate mechanisms are enumerated. None is selected, none is
-> built, no code exists. Nothing in this repo is a claim.
+> **STAGE = FALSIFIER REPAIR.** 7 candidate mechanisms are enumerated. None is selected, none is
+> built. The bet's falsifier was pre-registered and audited *before* being built, and the audit
+> killed it — **H_001 🟢 SUPPORTED** (7/7, closed-form, $0): mech-3's L2 clause returns DEAD for
+> every possible mechanism. Next gate = repair the falsifiers against the corrected evidence
+> (`ARCHITECTURE.json` → `evidence-integrity`), then re-select. Nothing in this repo is a claim.
 
 ## The ask
 
@@ -77,11 +80,26 @@ memorization-optimal boundary and the composition-optimal boundary differ.
               └────── A의 미래-CE가 G의 손실 (경사) ◄───────┘
 ```
 
-It is the bet because: it is the only mechanism standing on a lever already measured 🟢 (a
-BPE-jamo codec was **causal** for held-out negation recombination — F2 0.908 vs control 0.617,
-Δ+0.291); its falsifier reuses that existing protocol verbatim, making it the cheapest; and
-because its tension **writes the input alphabet** rather than reading anything, L1 and L2 cannot
-reach it in principle. On success, mech-1 (파서 결투) stacks naturally on top.
+> ⚠️ **UN-BET — H_001 🟢.** The three grounds below were audited before the mechanism was built
+> and two of them are false. The falsifier is **not** the cheapest — it needs a 303M `base.pt`
+> that exists nowhere plus a rented 4090 (~2h/arm). L2 **does** reach it: the clause ablates G
+> down to a fixed BPE-jamo codec, but that codec *is* v1's arm M at d_acc 0.9083–0.9167, and
+> d_acc is bounded at 1.0 — so the largest delta any mechanism can show is 0.0833–0.0917, below
+> the 0.1 the clause demands. It returns DEAD for a working mechanism and an imaginary one alike.
+> The third ground is true but fatal: the 🟢 was produced by a **fixed, frequency-trained,
+> label-blind** codec — no adversary, no learning, no tension — so the lever is mech-3's *null
+> hypothesis*, already measured, sitting on the panel's leak ceiling (0.9167). And "control
+> 0.617" is arm C1 = **no codec at all** (raw utf-8), not a fixed codec, so the ablation as
+> written varies whether a codec *exists*, not whether it is *learned*.
+> mech-3 is **un-bet, not refuted** — H_001 kills a falsifier, not an idea. See
+> `ARCHITECTURE.json` → `evidence-integrity` and `HYPOTHESES/cards/H_001_*.md`.
+
+It *was* the bet because: it is the only mechanism standing on a lever already measured 🟢 (a
+BPE-jamo codec was **causal** for held-out negation recombination — d_acc 0.9083/0.9167 vs a
+no-codec control at 0.6167/0.5750, Δ+0.29/+0.34, cemented at 2 seeds); its falsifier reuses that
+existing protocol verbatim, making it the cheapest; and because its tension **writes the input
+alphabet** rather than reading anything, L1 and L2 cannot reach it in principle. On success,
+mech-1 (파서 결투) stacks naturally on top.
 
 It breaks `no tokenizer` (V256) head-on, and deservedly — composition must be visible at the
 token boundary to be learned, and V256 purism made Korean negation structurally invisible.
@@ -92,6 +110,17 @@ Two measurements are mandatory in every falsifier, because their absence is what
 
 - **L1 check** — does the tension's effective rank exceed 1, or is it the emit bit again?
 - **L2 check** — ablate the channel; does ΔCE actually move, or is it decoration?
+
+And one that comes **before** them, because it is what H_001 caught — a falsifier is admissible
+only if it can return **both** answers, and that is decidable on arithmetic before any code exists:
+
+- **reachable** — is the threshold ≤ (metric ceiling − control score)? If not it is vacuous.
+- **not free** — does the scaffolding alone clear the bar without the mechanism? Then it certifies
+  the scaffolding.
+- **one variable** — the ablation must vary exactly one thing. "Learned codec vs no codec" varies
+  the alphabet *and* the learning.
+- **name the arm** — cite a number only with the arm that produced it and its source path.
+  "control 0.617" is not a control; it is a number that lost its experiment.
 
 One inherited principle, and only one: **p7 — perplexity/CE is never truth** (Goodhart). Per L9
 the other seven purity principles manufactured the disease and are discarded. Each mechanism
