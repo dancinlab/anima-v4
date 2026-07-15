@@ -1,15 +1,44 @@
 #!/usr/bin/env python3
-"""H_003 panel builder + F7 audit — the pre-training don't-run gate.
+"""H_003 panel builder + F7 audit — v3 (SLOT-CONTRAST), the pre-training don't-run gate.
 
-Deterministic, stdlib-only, $0. Builds the H_003 depth-parity panels (f1', f2')
-from a frozen verb inventory and template set, then runs the F7 audit from
-`tool/anima_v4.py`: a panel is admissible only if the presence heuristic and the
-template-shape heuristic BOTH score exactly 0.5 on it, and every polarity cell is
-50/50. If F7 fails, NOTHING trains — the grid is rebuilt.
+History: v1 leaked via unique tails (template heuristic 1.0). v2 fixed the tails but
+let a DRILLED negator (안) carry the depth-2 bit in one family, so a drilled-only
+reader recovered parity without touching 못 (held_out_blind 0.25). v3 removes the
+whole possibility class:
 
-This runs BEFORE any GPU spend and BEFORE `frozen_at` is stamped. It does not
-train anything; it validates that the panel cannot be solved without individuating
-the negator token.
+SLOT-CONTRAST — every minimal pair holds the drilled scaffold CONSTANT (않- or 아니-,
+exactly one drilled negator per item) and varies ONLY a pre-verbal slot eojeol:
+held-out 못 (depth-2) vs a 1-syllable sentiment-neutral filler 잘/더/꽤 (depth-1).
+Closed-form consequences:
+  * presence   : a negator is present in every item, D1:D2 = 50:50   -> 0.5
+  * held_out_blind: drilled_negator_count == 1 on every item          -> 0.5 exactly
+  * tails      : byte-identical within a pair (incl. the verb eojeol) -> 0.5
+  * eojeol count: the filler fills the slot in D1, so pair lengths match -> 0.5
+  * slot char length: fillers are 1 syllable, like 못                  -> uninformative
+The ONLY discriminator left inside a pair is the identity of the slot eojeol —
+못 vs a transparent adverb — i.e. exactly the individuation the hypothesis is about.
+The filler side of that coin (knowing 잘/더/꽤 are NOT negators) is arm-SYMMETRIC:
+fillers are never in the shatter list, so their encoding is identical in A-atom and
+A-shat, and any arm delta still routes through 못's encoding alone.
+
+PURE-못 (depth-2 as double 못: `못 {V}지 못했다`) was REJECTED as ungrammatical —
+Korean forbids same-negator doubling (*안 가지 않았다 / *못 가지 못했다).
+
+Bound 못 (`-지 못하-`) cannot be a clean sole discriminator: it drags the -지
+scaffold and an extra eojeol in with it (a 지-reader or eojeol-counter recovers the
+depth bit without individuating 못). So f2' verdicts FREE 못 only; a bound
+diagnostic panel f2b rides along NON-VERDICT (documented length leak; its use is the
+arm CONTRAST per cell, sign-gated across seeds, F5 becomes directional-only).
+
+worst_suffix_leak is reported capped at L=10: past the shared pair-region it groups
+singleton (verb,cell) surfaces and returns 1.0 mechanically, and it would score
+detecting the target token itself as a leak — held_out_blind_score supersedes it as
+the gate (see its docstring in tool/anima_v4.py). Gates per panel:
+  f2prime : presence + held_out_blind + template + suffix(<=10) + eojeol-length
+            + per-cell SENTIMENT balance -> ALL 0.5 +/- 0.02 -> verdict panel
+  f1prime : same minus held_out_blind (drilled-solvable BY DESIGN — liveness/ceiling
+            panel; blind score reported, expected 1.0)
+  f2b     : report-only, verdict_eligible=false
 
 Run:  python3 state/h003_atomicity_fixed_codec_drill_2026-07-16/build_panels.py
 """
@@ -19,6 +48,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+from collections import defaultdict
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(os.path.dirname(_HERE))
@@ -31,175 +61,237 @@ def _harness():
     return anima_v4
 
 
-# --- FROZEN inventory (resolved from measurement, see openparams.json) ---------
+# --- FROZEN inventory -----------------------------------------------------------
 #
-# Verbs: 8 positive-polarity + 8 negative-polarity stems, each rendered with a
-# predicate span. Polarity is the review sentiment the bare predicate carries.
-# These are the G-1 survivors; every stem must be 못-compatible (volitional) and
-# read naturally in every template cell. Marked provisional until an operator
-# grammar pass — but the F7 audit does not depend on the verbs' naturalness, only
-# on the parity structure, so it can run now and gate the grid.
-POS_VERBS = ["즐기", "몰입하", "집중하", "공감하", "추천하", "이해하", "기대하", "감탄하"]
-NEG_VERBS = ["졸", "하품하", "딴생각하", "딴짓하", "후회하", "실망하", "지루해하", "짜증내"]
+# Verbs: 8 positive + 8 negative review-sentiment stems, every one 못-compatible
+# (volitional) in EVERY cell. kind "s" = simple stem (slot pre-posed: `잘/못 {V}`);
+# kind "c" = N + light-verb compound (slot split: `{N} 잘/못 {LV}` — the prescriptive
+# short-negation form, and it keeps pair eojeol-counts equal). adn = past adnominal
+# for the 아니-cleft family. `?` = flagged for the G-1 operator grammar pass.
+# NOTE vs v2 inventory: 하품하/후회하/실망하/지루해하/짜증내 were re-audited for
+# 못-compatibility; non-volitional reactions dropped, volitional review actions in
+# (돌려보/건너뛰/끄). G-1 minimum-12 rule applies unchanged.
+VERBS = [
+    # (polarity, kind, N-or-stem, LV-or-adn, [LV-adn])
+    (1, "s", "즐기", "즐긴"),
+    (1, "s", "웃", "웃은"),
+    (1, "c", "몰입", "하", "한"),
+    (1, "c", "집중", "하", "한"),
+    (1, "c", "공감", "하", "한"),
+    (1, "c", "추천", "하", "한"),
+    (1, "c", "이해", "하", "한"),
+    (1, "c", "기대", "하", "한"),      # ? 못-compat marginal (기대 못 하지는)
+    (0, "s", "졸", "존"),              # ? volitionality marginal (못 졸지는)
+    (0, "s", "끄", "끈"),              # ? filler combos marked (잘 끄지는)
+    (0, "s", "돌려보", "돌려본"),
+    (0, "s", "건너뛰", "건너뛴"),
+    (0, "c", "딴짓", "하", "한"),
+    (0, "c", "딴생각", "하", "한"),
+    (0, "c", "딴청", "부리", "부린"),
+    (0, "c", "짜증", "내", "낸"),
+]
 
-# Negators by attachment. FREE = pre-posed standalone adverb; BOUND = fused suffix.
-# Held-out stem for f2' = 못 (measured 888 occurrences in NSMC ≥ 500; 아니 bound
-# form measured 32 = too rare, so 못 is the held-out negator per the source
-# contingency comment). Drilled = 안/않/아니.
-
-# A panel item's gold_flip = number of negators mod 2. depth-2 = net no-flip.
-# The template is the surface tail SHARED across depths so shape cannot leak parity.
-
-
-def render(verb, cell):
-    """Surface + (total_neg_count, drilled_neg_count, template) for a (verb, cell).
-
-    PURE-못 CONSTRUCTION — the only design that satisfies all three F7 checks at
-    once. The eval panel contains ONLY the held-out negator 못 (no 안/않/아니), so a
-    strategy that reads only DRILLED negators sees nothing → held_out_blind is 0.5
-    by construction. Depth comes from stacking 못, and the depth-1/depth-2 pair
-    SHARES its tail so no suffix leaks the parity bit — the sole difference is the
-    pre-posed free 못, which is exactly the held-out token the model must detect.
-
-    f2' verdict panel (2 cells, shared tail `…지 못했다`):
-      SB (D1, bound 못):        이 영화 {V}지 못했다        flip1 — tests BOUND 못
-      DB (D2, free+bound 못):   이 영화 못 {V}지 못했다     flip0 — tests FREE 못 prefix
-    ⚠️ GRAMMATICALITY of the double-못 (DB) is a G-1 operator gate (human input):
-      "못 {V}지 못했다" (couldn't-fail-to-V = did V) is a marked double negative;
-      each verb×DB must be operator-judged natural before freeze. F7 admissibility
-      is independent of this and can be verified now.
-
-    f1' liveness panel uses drilled 안/않 (allowed to be drilled-solvable — it only
-    checks the model learned the task), same shared-tail trick.
-    """
-    # SB is length-matched to DB with a NON-negator pre-verb adverb (참 = "really"),
-    # so DB's extra token is 못 vs 참 — same length, same position, same tail. This
-    # removes the one real confound (a length/position reader distinguishing D1 from
-    # D2 by DB being longer); the ONLY remaining difference is 참-vs-못 = the held-out
-    # token the model must individuate. 참 carries no polarity so the flip is unchanged.
-    if cell == "SB":  # D1 bound 못 (length-matched): 1 negator, 0 drilled
-        return f"이 영화 참 {verb}지 못했다 => ", 1, 0, "지 못했다"
-    if cell == "DB":  # D2 free+bound 못: 2 negators, 0 drilled
-        return f"이 영화 못 {verb}지 못했다 => ", 2, 0, "지 못했다"
-    if cell == "L1":  # liveness D1 (drilled 않)
-        return f"이 영화 {verb}지는 않았다 => ", 1, 1, "지는 않았다"
-    if cell == "L2":  # liveness D2 (drilled 안 + 않)
-        return f"이 영화 안 {verb}지는 않았다 => ", 2, 2, "지는 않았다"
-    raise ValueError(f"unknown cell {cell}")
+# Fillers: 1-syllable (matches 못's char length), CPT-frequent, drill-absent,
+# no ㅁ-initial jamo (막 rejected: shares onset ㅁ with 못). Bound to the register so
+# every verb crosses every filler and filler||flip independence is exact.
+# A-family register tails / K-family register tails, each with its filler.
+REG_A = [("않았다", "잘"), ("않았어요", "더"), ("않았음", "꽤")]
+REG_K = [("아니다", "잘"), ("아니에요", "더"), ("아님", "꽤")]
+REG_A_LIVE = [("않았네요", "잘")]   # f1' held-out 4th register
+REG_K_LIVE = [("아니네요", "잘")]
 
 
-def build_panel(cells):
-    """One item per (verb, polarity, cell). gold_flip = total_neg_count % 2. F7
-    audits the FLIP structure; the sentiment gold is pol XOR flip at eval time."""
+def render_A(v, slot, tail):
+    """않-scaffold family: `이 영화 [SLOT] {V}지는 않았-REG`."""
+    if v[1] == "s":
+        return f"이 영화 {slot} {v[2]}지는 {tail} => "
+    return f"이 영화 {v[2]} {slot} {v[3]}지는 {tail} => "
+
+
+def render_K(v, slot, tail):
+    """아니-cleft family: `이 영화 [SLOT] {V-adn} 것은 아니-REG`."""
+    if v[1] == "s":
+        return f"이 영화 {slot} {v[3]} 것은 {tail} => "
+    return f"이 영화 {v[2]} {slot} {v[4]} 것은 {tail} => "
+
+
+def render_Kb1(v, tail):
+    """bound-diagnostic D1: plain 아니-cleft, no slot."""
+    if v[1] == "s":
+        return f"이 영화 {v[3]} 것은 {tail} => "
+    return f"이 영화 {v[2]}{v[4]} 것은 {tail} => "
+
+
+def render_Kb2(v, tail):
+    """bound-diagnostic D2: BOUND 못 (`-지 못한`) under the 아니-cleft."""
+    stem = v[2] if v[1] == "s" else v[2] + v[3]
+    return f"이 영화 {stem}지 못한 것은 {tail} => "
+
+
+def item(cell, v, surface, template, heldout, drilled):
+    total = heldout + drilled
+    flip = total % 2
+    return {
+        "cell": cell,
+        "verb": v[2] if v[1] == "s" else v[2] + v[3],
+        "verb_polarity": v[0],
+        "template": template,
+        "negator_count": total,
+        "drilled_negator_count": drilled,
+        "heldout_negator_count": heldout,
+        "gold_flip": flip,
+        "gold_sent": v[0] ^ flip,
+        "eojeol_len": len(surface.split()),
+        "surface": surface,
+    }
+
+
+def build_f2prime():
     items = []
-    for pol, verbs in ((1, POS_VERBS), (0, NEG_VERBS)):
-        for v in verbs:
-            for cell in cells:
-                surface, ncount, drilled, tail = render(v, cell)
-                items.append({
-                    "cell": cell,
-                    "verb": v,
-                    "verb_polarity": pol,
-                    "template": tail,
-                    "drilled_negator_count": drilled,
-                    "negator_count": ncount,
-                    "gold_flip": ncount % 2,
-                    # sentiment gold = pol XOR flip — what the model actually predicts
-                    # (긍정=1/부정=0). The balance check keys on THIS per cell: a
-                    # constant-guess must not beat chance on any cell. (Keying balance
-                    # on depth would be 1.0/0.0 since depth fixes flip — see the card.)
-                    "sentiment_gold": pol ^ (ncount % 2),
-                    "balance_cell": cell,
-                    "surface": surface,
-                })
+    for v in VERBS:
+        for tail, filler in REG_A:
+            t = f"지는 {tail} => "
+            items.append(item("A1", v, render_A(v, filler, tail), t, 0, 1))
+            items.append(item("A2", v, render_A(v, "못", tail), t, 1, 1))
+        for tail, filler in REG_K:
+            t = f"것은 {tail} => "
+            items.append(item("K1", v, render_K(v, filler, tail), t, 0, 1))
+            items.append(item("K2", v, render_K(v, "못", tail), t, 1, 1))
     return items
 
 
-# f2' = OOD verdict: PURE-못, held-out 못 as bound (SB) and free-prefix (DB),
-# a shared-tail minimal pair. 1 D1 (SB) : 1 D2 (DB) → presence = 0.5.
-F2_CELLS = ["SB", "DB"]
-# f1' = liveness/ceiling: drilled negators only (allowed to be drilled-solvable).
-F1_CELLS = ["L1", "L2"]
+def build_f1prime():
+    items = []
+    for v in VERBS:
+        for tail, filler in REG_A_LIVE:
+            t = f"지는 {tail} => "
+            items.append(item("L1", v, render_A(v, filler, tail), t, 0, 1))
+            items.append(item("L2", v, render_A(v, "안", tail), t, 0, 2))
+        for tail, filler in REG_K_LIVE:
+            t = f"것은 {tail} => "
+            items.append(item("L3", v, render_K(v, filler, tail), t, 0, 1))
+            items.append(item("L4", v, render_K(v, "안", tail), t, 0, 2))
+    return items
+
+
+def build_f2b():
+    items = []
+    for v in VERBS:
+        for tail, _f in REG_K:
+            t = f"것은 {tail} => "
+            items.append(item("Kb1", v, render_Kb1(v, tail), t, 0, 1))
+            items.append(item("Kb2", v, render_Kb2(v, tail), t, 1, 1))
+    return items
+
+
+def majority_score(items, key):
+    """Best majority-guess strategy over groups of `key` — same machinery as the
+    harness template heuristic, applied to an arbitrary grouping."""
+    g = defaultdict(list)
+    for it in items:
+        g[key(it)].append(it["gold_flip"])
+    correct = 0
+    for flips in g.values():
+        maj = 1 if sum(flips) * 2 >= len(flips) else 0
+        correct += sum(1 for f in flips if f == maj)
+    return correct / len(items)
+
+
+def audit(h, items, gate_blind=True, gated=True):
+    presence = h.presence_heuristic_score(items)
+    blind = h.held_out_blind_score(items)
+    template = h.template_heuristic_score(items)
+    suffix = h.worst_suffix_leak(items, max_len=10)
+    length = majority_score(items, lambda it: it["eojeol_len"])
+    sent_bal = {}
+    by_c = defaultdict(list)
+    for it in items:
+        by_c[it["cell"]].append(it["gold_sent"])
+    for c, v in sorted(by_c.items()):
+        sent_bal[c] = sum(v) / len(v)
+    d1 = sum(1 for it in items if it["negator_count"] == 1)
+    d2 = sum(1 for it in items if it["negator_count"] == 2)
+    checks = [
+        abs(presence - 0.5) <= 0.02,
+        abs(template - 0.5) <= 0.02,
+        abs(suffix["worst_suffix_score"] - 0.5) <= 0.02,
+        abs(length - 0.5) <= 0.02,
+        all(abs(b - 0.5) <= 0.02 for b in sent_bal.values()),
+        d1 == d2,
+    ]
+    if gate_blind:
+        checks.append(abs(blind - 0.5) <= 0.02)
+    ok = all(checks) if gated else False
+    return {
+        "n": len(items),
+        "presence_heuristic": round(presence, 4),
+        "held_out_blind": round(blind, 4),
+        "held_out_blind_gated": gate_blind,
+        "template_heuristic": round(template, 4),
+        "worst_suffix_leak_L<=10": suffix,
+        "eojeol_length_heuristic": round(length, 4),
+        "sentiment_balance_per_cell": {k: round(x, 4) for k, x in sent_bal.items()},
+        "depth_split_D1_D2": [d1, d2],
+        "F7_pass": ok,
+        "verdict_eligible": gated,
+    }
 
 
 def main() -> int:
     h = _harness()
-    f2 = build_panel(F2_CELLS)
-    f1 = build_panel(F1_CELLS)
+    f2 = build_f2prime()
+    f1 = build_f1prime()
+    f2b = build_f2b()
 
-    report = {}
-    ok = True
-    from collections import defaultdict
-    for name, items in (("f2prime", f2), ("f1prime", f1)):
-        # Per-cell SENTIMENT balance (긍정/부정): a constant-guess must score 0.5 on
-        # every cell. Keyed on sentiment_gold, not gold_flip (flip is fixed by depth).
-        _by = defaultdict(list)
-        for it in items:
-            _by[it["balance_cell"]].append(it["sentiment_gold"])
-        bal = {c: sum(v) / len(v) for c, v in _by.items()}
-        presence = h.presence_heuristic_score(items)
-        suffix = h.worst_suffix_leak(items)
-        blind = h.held_out_blind_score(items)  # the semantically correct check
-        d1 = sum(1 for it in items if it["negator_count"] == 1)
-        d2 = sum(1 for it in items if it["negator_count"] == 2)
-        # f1' is the LIVENESS panel — it is ALLOWED to be drilled-solvable (its job
-        # is to confirm the model learned the task), so held_out_blind is not gated
-        # on it. Only f2' (the verdict) must force held-out detection.
-        # F7 GATES on the two checks that prevent a FALSE POSITIVE — presence and
-        # (on f2') held_out_blind — plus per-cell balance. worst_suffix_leak is
-        # REPORTED but NOT gated: for a panel whose intended solution IS detecting
-        # the target token, any suffix that reaches that token distinguishes the
-        # cells, so worst_suffix_leak sits at 1.0 by the mechanism itself (it also
-        # over-counts singleton verb groups). It cannot separate "must detect 못"
-        # (wanted) from a shortcut, so held_out_blind_score supersedes it (see the
-        # primitive's docstring). The one real confound it hinted at — DB longer
-        # than SB — is removed by length-matching SB with 참.
-        checks = [abs(presence - 0.5) <= 0.02,
-                  all(abs(b - 0.5) <= 0.02 for b in bal.values())]
-        if name == "f2prime":
-            checks.append(abs(blind - 0.5) <= 0.02)
-        panel_ok = all(checks)
-        ok = ok and panel_ok
-        report[name] = {
-            "n": len(items),
-            "presence_heuristic": round(presence, 4),
-            "held_out_blind": round(blind, 4),
-            "worst_suffix_leak": suffix,
-            "depth_split_D1_D2": [d1, d2],
-            "balance_per_polarity_cell": {k: round(v, 4) for k, v in bal.items()},
-            "F7_pass": panel_ok,
-        }
+    report = {
+        "f2prime": audit(h, f2, gate_blind=True, gated=True),
+        "f1prime": audit(h, f1, gate_blind=False, gated=True),
+        "f2b_bound_diagnostic": audit(h, f2b, gate_blind=True, gated=False),
+    }
+    # cross-panel union: at eval one model sees all panels — no tail may leak
+    # across panel boundaries either (f2b shares the 아니-cleft tails with K cells).
+    union_template = h.template_heuristic_score(f2 + f1 + f2b)
+    report["union_template_heuristic"] = round(union_template, 4)
+
+    ok = (report["f2prime"]["F7_pass"] and report["f1prime"]["F7_pass"]
+          and abs(union_template - 0.5) <= 0.02)
 
     print("=" * 74)
-    print("H_003 F7 panel audit — pre-training don't-run gate ($0, closed-form)")
+    print("H_003 F7 panel audit v3 (SLOT-CONTRAST) — pre-training don't-run gate")
     print("=" * 74)
-    for name, r in report.items():
-        blind_note = "  (f2' only — must be 0.500 ± 0.02)" if name == "f2prime" else "  (not gated on liveness)"
+    for name in ("f2prime", "f1prime", "f2b_bound_diagnostic"):
+        r = report[name]
         print()
-        print(f"[{name}] n={r['n']}  D1:D2={r['depth_split_D1_D2']}")
-        print(f"  presence-heuristic score  = {r['presence_heuristic']}  (must be 0.500 ± 0.02)")
-        print(f"  held_out_blind score      = {r['held_out_blind']}{blind_note}")
-        print(f"  worst surface-suffix leak = {r['worst_suffix_leak']['worst_suffix_score']}"
-              f" (at len {r['worst_suffix_leak']['suffix_len']}, must be 0.500 ± 0.02)")
-        print(f"  balance per polarity×depth cell: {r['balance_per_polarity_cell']}")
-        print(f"  F7 {'PASS' if r['F7_pass'] else 'FAIL — grid must be rebuilt, nothing trains'}")
+        print(f"[{name}] n={r['n']}  D1:D2={r['depth_split_D1_D2']}"
+              f"  verdict_eligible={r['verdict_eligible']}")
+        print(f"  presence-heuristic       = {r['presence_heuristic']}")
+        print(f"  held_out_blind (max s,1-s)= {r['held_out_blind']}"
+              f"  (gated: {r['held_out_blind_gated']})")
+        print(f"  template-heuristic       = {r['template_heuristic']}")
+        print(f"  worst-suffix leak (L<=10) = {r['worst_suffix_leak_L<=10']}")
+        print(f"  eojeol-length heuristic  = {r['eojeol_length_heuristic']}")
+        print(f"  sentiment balance / cell = {r['sentiment_balance_per_cell']}")
+        print(f"  F7 {'PASS' if r['F7_pass'] else ('n/a (diagnostic, non-verdict)' if not r['verdict_eligible'] else 'FAIL')}")
     print()
+    print(f"union template heuristic (f2'+f1'+f2b) = {report['union_template_heuristic']}")
     print("F7 VERDICT:", "PASS — panel is heuristic-neutral, arms may be built"
           if ok else "FAIL — panel leaks a countable cue, DO NOT TRAIN")
-    print("NOTE: F7 checks ADMISSIBILITY only. Double-못 (DB) grammaticality is a"
-          " separate G-1 operator gate (human input) before freeze.")
 
     out = {"F7_pass": ok, "panels": report,
+           "strategy": "SLOT-CONTRAST v3 — drilled scaffold constant within pair; "
+                       "slot eojeol = held-out 못 (D2) vs 1-syllable filler 잘/더/꽤 (D1)",
            "note": "gold_flip audited here = negator parity; sentiment gold = pol XOR flip at eval"}
     with open(os.path.join(_HERE, "f7_audit.json"), "w") as fh:
         json.dump(out, fh, indent=2, ensure_ascii=False)
-    # also emit the panels themselves for the freeze
     with open(os.path.join(_HERE, "panel_f2prime.json"), "w") as fh:
         json.dump(f2, fh, indent=2, ensure_ascii=False)
     with open(os.path.join(_HERE, "panel_f1prime.json"), "w") as fh:
         json.dump(f1, fh, indent=2, ensure_ascii=False)
+    with open(os.path.join(_HERE, "panel_f2b_bound_diagnostic.json"), "w") as fh:
+        json.dump(f2b, fh, indent=2, ensure_ascii=False)
     print()
-    print("wrote f7_audit.json, panel_f2prime.json, panel_f1prime.json")
+    print("wrote f7_audit.json, panel_f2prime.json, panel_f1prime.json,"
+          " panel_f2b_bound_diagnostic.json")
     return 0 if ok else 1
 
 

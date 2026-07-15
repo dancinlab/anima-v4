@@ -572,20 +572,32 @@
           ]
         },
         {
-          "id": "ng.panel-passes-f7-pure-mot",
-          "role": "PANEL F7-ADMISSIBLE (build_panels.py, f7_audit.json). Built inline after the Fable delegation hung (API stall, killed). PURE-못 design: 2 verdict cells sharing tail `지 못했다` — SB (D1, bound 못, length-matched with 참) vs DB (D2, free+bound 못). See children.",
+          "id": "ng.panel-passes-f7-slot-contrast",
+          "role": "PANEL F7-ADMISSIBLE at v3 SLOT-CONTRAST (build_panels.py, f7_audit.json F7_pass=true) — SUPERSEDES the PURE-못 record, which was rejected as ungrammatical. Design + honest scope in children.",
           "children": [
             {
-              "id": "ng.panel.f7-numbers",
-              "role": "f2' PASSES all three admissibility checks — presence=0.5, held_out_blind=0.5 (a drilled-only reader is at chance because the eval contains ONLY 못, no 안/않/아니), sentiment balance {SB:0.5, DB:0.5}. So beating chance REQUIRES detecting the held-out 못 — bound in SB, free-prefix in DB (H_002's OOD bound+free requirement met)."
+              "id": "ng.slot.why-pure-mot-died",
+              "role": "PURE-못's depth-2 cell `못 {V}지 못했다` is same-negator doubling, which Korean forbids (*안 가지 않았다 / *못 가지 못했다) — the G-1 grammaticality flag I raised, now confirmed rejected. Delayed Fable design delivered the replacement."
             },
             {
-              "id": "ng.panel.suffix-not-gated",
-              "role": "worst_suffix_leak is REPORTED, not gated: for a panel whose intended solution IS detecting 못, any suffix reaching 못 distinguishes the cells, so it sits at 1.0 by the mechanism itself (and over-counts singleton verb groups). held_out_blind_score supersedes it (tool docstring). The one real confound it hinted at — DB longer than SB — is removed by length-matching SB with the non-negator adverb 참."
+              "id": "ng.slot.the-design",
+              "role": "SLOT-CONTRAST: hold the drilled scaffold CONSTANT (않- or 아니-cleft, exactly one drilled negator per item) and vary ONLY a pre-verbal slot eojeol — held-out FREE 못 (D2) vs a 1-syllable neutral filler 잘/더/꽤 (D1). 4 cells x 16 verbs x 3 registers = 192. Fillers are never shattered, so any arm delta routes through 못's encoding alone."
             },
             {
-              "id": "ng.panel.remaining-before-freeze",
-              "role": "REMAINING before frozen_at: (1) G-1 operator gate — double-못 `못 {V}지 못했다` grammaticality (human input; it is a marked double negative, each verb×DB judged natural); (2) verb inventory G-1 (16 stems, 못-compatible); then (3) arms train A-atom/A-shat/C-plc/C-scaf/C-perm ×2seed."
+              "id": "ng.slot.f7-green",
+              "role": "f2' F7 all-green at 0.5 exactly: presence · held_out_blind · template · suffix(L<=10) · eojeol-length · per-cell sentiment. held_out_blind is 0.5 because drilled_count==1 on every item (not 0 as in PURE-못), and worst_suffix is 0.5 (not 1.0) because filler and 못 are both 1-syllable at the same slot. Plus f1' liveness (n=64) and a cross-panel union-tail check."
+            },
+            {
+              "id": "ng.panel.filler-transparency",
+              "role": "The filler side of the slot contrast (knowing 잘/더/꽤 are NOT negators) is arm-SYMMETRIC — fillers are never in the shatter list, so any arm delta still routes through 못's encoding alone. Fillers are drill-absent; f1' (n=64, held-out -네요 register, slot 잘 vs 안) certifies filler-transparency + drilled reading, so F2's liveness gate catches a model that cannot handle the slot at all. Residual false positive: A-shat losing to generic jamo-run anomaly (neon sign) rather than failed individuation — caught by C-plc (F6, mandatory) and C-syl monotonicity."
+            },
+            {
+              "id": "ng.panel.bound-form-scope",
+              "role": "HONEST SCOPE NARROWING vs L5's bound+free requirement: bound 못 (`-지 못하-`) CANNOT be a blind-proof sole discriminator — it drags the -지 scaffold and an extra eojeol with it (a 지-reader or eojeol-counter recovers depth without individuating 못), and its double-못 depth-2 partner is ungrammatical. So the f2' VERDICT covers FREE 못 only; bound 못 rides in f2b (n=96, non-verdict, documented eojeol-length leak): F5's bound/free claim becomes directional-only via the per-cell arm CONTRAST Δ(A-atom−A-shat) on Kb2, sign-gated across both seeds."
+            },
+            {
+              "id": "ng.slot.remaining",
+              "role": "REMAINING before frozen_at (unchanged in kind, human/compute-blocked): G-1 operator grammar pass over verb x filler x cell (`?` flags: 기대하 · 졸 · 끄 · 더-filler), G-0 codec audit, then arms x2 seeds."
             }
           ]
         }
@@ -601,7 +613,7 @@
         },
         {
           "id": "flow.out",
-          "role": "Forced-choice d_acc on OOD panel f2' (held-out 못, 4 cells bound×free × 16 verbs, n=192, control pinned near 0.5 by depth-parity) + BPB reported separately (p7). Verdict = Δd_acc(A-atom − A-shat), gated by placebo C-plc and liveness f1'."
+          "role": "Forced-choice d_acc on OOD panel f2' (held-out free 못 vs 1-syllable filler in a fixed slot, 2 scaffold families x depth = 4 cells x 16 verbs x 3 registers, n=192, every non-individuating strategy pinned to 0.5 by construction) + BPB reported separately (p7). Verdict = Δd_acc(A-atom − A-shat), gated by placebo C-plc and liveness f1'; bound-못 evidence is directional-only via f2b."
         }
       ]
     },

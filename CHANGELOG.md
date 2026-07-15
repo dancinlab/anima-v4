@@ -2,6 +2,24 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 panel v3 (SLOT-CONTRAST) passes F7; PURE-못 retracted on grammar
+
+- Rejected PURE-못: its depth-2 cell `못 {V}지 못했다` is same-negator doubling, which Korean
+  forbids (*안 가지 않았다 / *못 가지 못했다). The tree's earlier "F7-admissible (PURE-못)" node
+  had also drifted from disk — `f7_audit.json` on disk was the v2 FAIL. Both corrected.
+- New f2' = SLOT-CONTRAST: the drilled scaffold is CONSTANT within each minimal pair (않- or
+  아니-cleft, exactly one drilled negator per item); only a pre-verbal slot eojeol varies —
+  held-out free 못 (D2) vs a 1-syllable neutral filler 잘/더/꽤 (D1). 4 cells × 16 verbs ×
+  3 registers = 192. Compounds use the split form (`몰입 못 하지는 않았다`).
+- F7 all-green at 0.5 exactly: presence · held_out_blind · template · suffix(L≤10) ·
+  eojeol-length · sentiment balance; plus f1' (n=64, -네요 register, 잘 vs 안) and the
+  cross-panel union tail check. `state/h003_atomicity_fixed_codec_drill_2026-07-16/f7_audit.json`.
+- Honest scope narrowing vs L5's bound+free requirement: bound 못 cannot be a blind-proof sole
+  discriminator (drags -지 + an eojeol with it), so the verdict covers FREE 못 only; bound 못
+  rides in the non-verdict f2b diagnostic (n=96), F5 downgraded to a sign-gated arm contrast.
+- Remaining before frozen_at: G-1 operator grammar pass (verb×filler×cell, `?` flags:
+  기대하·졸·끄·더-filler), G-0 codec audit, then arms ×2 seeds.
+
 ## 2026-07-16 — H_003 pre-registered: atomicity isolated to one variable (the drill that reaches build)
 
 - First mechanism in the campaign to reach the BUILD stage — and only because three $0 gates cleared
