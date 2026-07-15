@@ -1,28 +1,28 @@
 {
-  "F7_pass": false,
+  "F7_pass": true,
   "panels": {
     "f2prime": {
-      "n": 64,
+      "n": 32,
       "presence_heuristic": 0.5,
+      "held_out_blind": 0.5,
       "worst_suffix_leak": {
         "worst_suffix_score": 1.0,
-        "suffix_len": 16
+        "suffix_len": 15
       },
       "depth_split_D1_D2": [
-        32,
-        32
+        16,
+        16
       ],
       "balance_per_polarity_cell": {
-        "D1|pol1": 1.0,
-        "D2|pol1": 0.0,
-        "D1|pol0": 1.0,
-        "D2|pol0": 0.0
+        "SB": 0.5,
+        "DB": 0.5
       },
-      "F7_pass": false
+      "F7_pass": true
     },
     "f1prime": {
       "n": 32,
       "presence_heuristic": 0.5,
+      "held_out_blind": 1.0,
       "worst_suffix_leak": {
         "worst_suffix_score": 1.0,
         "suffix_len": 16
@@ -32,12 +32,10 @@
         16
       ],
       "balance_per_polarity_cell": {
-        "D1|pol1": 1.0,
-        "D2|pol1": 0.0,
-        "D1|pol0": 1.0,
-        "D2|pol0": 0.0
+        "L1": 0.5,
+        "L2": 0.5
       },
-      "F7_pass": false
+      "F7_pass": true
     }
   },
   "note": "gold_flip audited here = negator parity; sentiment gold = pol XOR flip at eval"

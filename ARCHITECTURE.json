@@ -570,6 +570,24 @@
               "role": "Retroactive caveat on salvage.L4b: the atomicity that worked there was atomicity of a jamo-gram that aligns with the negator ONLY because v1's SYNTHETIC drill controls the vocabulary (아니 appears solely as the negator). In natural corpus the token is not negator-exclusive, so part of L4b's effect may be a synthetic-drill artifact. Untested — a prediction the position-keyed A-shat arm would settle."
             }
           ]
+        },
+        {
+          "id": "ng.panel-passes-f7-pure-mot",
+          "role": "PANEL F7-ADMISSIBLE (build_panels.py, f7_audit.json). Built inline after the Fable delegation hung (API stall, killed). PURE-못 design: 2 verdict cells sharing tail `지 못했다` — SB (D1, bound 못, length-matched with 참) vs DB (D2, free+bound 못). See children.",
+          "children": [
+            {
+              "id": "ng.panel.f7-numbers",
+              "role": "f2' PASSES all three admissibility checks — presence=0.5, held_out_blind=0.5 (a drilled-only reader is at chance because the eval contains ONLY 못, no 안/않/아니), sentiment balance {SB:0.5, DB:0.5}. So beating chance REQUIRES detecting the held-out 못 — bound in SB, free-prefix in DB (H_002's OOD bound+free requirement met)."
+            },
+            {
+              "id": "ng.panel.suffix-not-gated",
+              "role": "worst_suffix_leak is REPORTED, not gated: for a panel whose intended solution IS detecting 못, any suffix reaching 못 distinguishes the cells, so it sits at 1.0 by the mechanism itself (and over-counts singleton verb groups). held_out_blind_score supersedes it (tool docstring). The one real confound it hinted at — DB longer than SB — is removed by length-matching SB with the non-negator adverb 참."
+            },
+            {
+              "id": "ng.panel.remaining-before-freeze",
+              "role": "REMAINING before frozen_at: (1) G-1 operator gate — double-못 `못 {V}지 못했다` grammaticality (human input; it is a marked double negative, each verb×DB judged natural); (2) verb inventory G-1 (16 stems, 못-compatible); then (3) arms train A-atom/A-shat/C-plc/C-scaf/C-perm ×2seed."
+            }
+          ]
         }
       ]
     },

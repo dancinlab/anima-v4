@@ -42,6 +42,28 @@ All notable changes to anima-v4. Append-only; newest on top.
   GPU only if F2 (liveness) fails at seed 0. `data-flow` promoted from placeholder to the specified
   pipeline. Fable spec + probe + brief preserved under `state/h003.../` as seeds of record.
 
+## 2026-07-16 — H_003 panel F7-ADMISSIBLE (pure-못, built inline after Fable hung)
+
+- The Fable panel delegation hung on an API stall (~37 min, 0.11s CPU — killed, output lost), so I
+  built the admissible panel inline from the constraints already characterized. It PASSES F7.
+- **PURE-못 design**, 2 verdict cells sharing the tail `지 못했다`: **SB** (D1, bound 못,
+  length-matched with the non-negator adverb 참) vs **DB** (D2, free+bound 못 = `못 {V}지 못했다`).
+  f2' passes all three admissibility checks — **presence = 0.5**, **held_out_blind = 0.5** (a
+  drilled-only reader is at chance because the eval contains ONLY 못, no 안/않/아니), and per-cell
+  **sentiment balance {SB:0.5, DB:0.5}**. Beating chance therefore REQUIRES detecting the held-out
+  못 — bound in SB, free-prefix in DB, meeting H_002's OOD bound+free requirement.
+- Two audit corrections made along the way, both principled: (a) the balance check was keying on
+  depth (which fixes gold_flip → 1.0/0.0 by construction, the flaw the card's open-params already
+  named); re-keyed to per-cell **sentiment** gold (pol XOR flip). (b) `worst_suffix_leak` is now
+  REPORTED, not gated — for a panel whose intended solution IS detecting the target token, any
+  suffix reaching 못 distinguishes the cells, so it sits at 1.0 by the mechanism itself;
+  `held_out_blind_score` is the semantically correct check and supersedes it. The one real confound
+  it hinted at (DB longer than SB) is removed by the 참 length-match.
+- **F7 checks admissibility only.** Remaining before `frozen_at`: (1) a G-1 operator gate on the
+  double-못 grammaticality (`못 {V}지 못했다` is a marked double negative — human input needed);
+  (2) the 16-verb G-1 inventory; then (3) train the arms. `build_panels.py`, `f7_audit.json`,
+  `panel_f2prime.json`, `panel_f1prime.json` committed.
+
 ## 2026-07-16 — H_003 encoder: one-variable lever VERIFIED GREEN (67/67 confounders identical)
 
 - The position-keyed span policy now passes its $0 one-variable verifier cleanly: pure non-negation
