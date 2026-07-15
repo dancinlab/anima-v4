@@ -2,6 +2,46 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 pre-registered: atomicity isolated to one variable (the drill that reaches build)
+
+- First mechanism in the campaign to reach the BUILD stage — and only because three $0 gates cleared
+  the ground first (H_001, the literature gate, H_002), leaving exactly one survivor: atomicity
+  (`salvage.L4.what-was-actually-causal`). H_003 tests that survivor directly. No run, no verdict yet —
+  `pre_register_frozen: false`, open parameters still to resolve.
+- **Design delegated to Fable 5** (fable-mode) with the campaign's own gates in the brief; I derived
+  the post-encode span-policy lever independently first and Fable converged on it, sharpened: ONE
+  shared vocabulary V\*, vary ONLY the encoder's span policy — **A-atom** (negator emits its atomic
+  id) vs **A-shat** (merges suppressed inside the span → base jamo singletons). Same vocab, corpus,
+  model, steps, seed; byte-identical everywhere except inside matched negator spans. That is the
+  one-variable contrast L4b's M-vs-C1 never was (it varied whether a codec exists at all).
+- **Probed the real codec and corrected my own prior claim.** Last turn I wrote that atomizing `않`
+  needs the merge `(C:ㅇ, V:ㅏ)`. The probe (`state/h003.../probe.json`) shows that is FALSE: that
+  merge does not exist at K=2048 (`ca_merge_present=false`), yet all four negators are atomic and
+  pairwise-disjoint by frequency alone (안=286 · 않=520 · 못=381 · 아니=438). Corrected
+  `ng.forcing-the-merge-table-is-not-one-variable` and `salvage.L4.atomicity-was-luck-not-method` in
+  place — the conclusions stand, the cited mechanism was wrong. (honesty · name-the-arm.)
+- The probe also confirms atomicity was **frequency luck, not method**: K=2048 happens to atomize all
+  four, exactly as v1's source contingency comment feared it might not. So the natural experiment is
+  not "force atomic" (frequency already did) but "force SHATTERED", and A-shat should reproduce the
+  C1 floor (~0.617) WITHOUT removing the codec — isolating atomicity from the alphabet.
+- **The ceiling trap is designed out.** v1's panel saturated at 0.90 (0.083 headroom); H_003's panel
+  is heuristic-neutral by construction — depth-parity minimal pairs (D1/D2 share the template tail,
+  differ only in the inner negator) pin both the presence heuristic and the template-shape heuristic
+  to exactly 0.500. Verified closed-form by **F7**, a pre-training don't-run gate, now in the harness
+  (`presence_heuristic_score` · `template_heuristic_score` · `label_balance` · `binom_sigma`, all
+  unit-checked). Expected control ~0.55, ceiling ~0.90 → **~0.35 headroom** vs v1's 0.083.
+- **The OOD requirement H_002 imposed is met**: the held-out panel f2′ carries BOTH bound and free
+  forms of the held-out negator (못), 4 cells × 16 verbs, n=192, predicate identity held constant
+  across bound/free so the contrast is morphology — the blind spot `L5.no-panel-can-test-it-out-of-
+  distribution` named.
+- **The placebo is load-bearing, not decorative** (F6, C-plc). The most likely convincing false
+  positive is that shattering *any* frequent morpheme degrades it generically (embedding
+  interference), which would replicate at both seeds and look exactly like the result. C-plc shatters
+  a frequency-matched non-negator; F6 voids the F1 pass by pre-registration if A-atom − C-plc > 0.05.
+- Cost: d=384 from scratch (C2 licenses it), 2 seeds, local MPS, ~6–8h, **$0**. Escalate to rented
+  GPU only if F2 (liveness) fails at seed 0. `data-flow` promoted from placeholder to the specified
+  pipeline. Fable spec + probe + brief preserved under `state/h003.../` as seeds of record.
+
 ## 2026-07-16 — the base ckpt was never missing, and the obvious drill design is not one-variable
 
 - **Retracted a blocker I recorded without checking it.** Last turn logged "`base.pt` (303M

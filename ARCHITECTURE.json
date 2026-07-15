@@ -125,7 +125,13 @@
             },
             {
               "id": "L4.atomicity-was-luck-not-method",
-              "role": "The atomicity that carried the whole result was NOT engineered — it was searched for and got lucky. v1's codec picks the smallest K in a ladder {2048,4096,8192,16384} that PASSES a G-0 audit (round-trip >=0.98 + the 4 stems pairwise token-disjoint); K=2048 happened to pass. The protocol's own source comments the contingency: 'If 아니 ... can't fuse even at K=16384 -> switch primary held-out to 못'. That is a static frequency method with no way to TARGET atomicity: when it fails, the recourse is to change the question. This is the crack a learned codec would have to earn its keep in — see `evidence-integrity.the-bet-rests-on-its-own-null`."
+              "role": "The atomicity that carried the whole result was NOT engineered — it was searched for. v1's codec picks the smallest K in a ladder {2048,4096,8192,16384} passing a G-0 audit (round-trip >=0.98 + the 4 stems pairwise token-disjoint); K=2048 passed. That is a static frequency method with no way to TARGET atomicity: the source comments the contingency 'if 아니 can't fuse even at K=16384 -> switch primary held-out to 못' — when it fails, the recourse is to change the question.",
+              "children": [
+                {
+                  "id": "L4.luck.probe-confirms",
+                  "role": "Probe-confirmed (state/h003_atomicity_fixed_codec_drill_2026-07-16/probe.json): at K=2048 all 4 negators ARE atomic and pairwise-disjoint by frequency alone — 안=286 · 않=520 · 못=381 · 아니=438. So the atomic tokens exist without engineering; the open question is whether that atomicity is CAUSAL, which next-gate tests by forcing it OFF (A-shat), not on."
+                }
+              ]
             }
           ]
         },
@@ -503,7 +509,13 @@
           "children": [
             {
               "id": "ng.forcing-the-merge-table-is-not-one-variable",
-              "role": "MEASURED, and it kills the obvious design. Atomizing `않` = ['C:ㅇ','V:ㅏ','J:ㄶ'] needs the merge (C:ㅇ, V:ㅏ) — but that pair is shared by EVERY 아-initial word, including `안` ['C:ㅇ','V:ㅏ','J:ㄴ'] and `아니` ['C:ㅇ','V:ㅏ','C:ㄴ','V:ㅣ']. Injecting or removing it re-cuts the whole vocabulary, so 'force the merge table' perturbs thousands of unrelated words. It fails adm.3 (one-variable)."
+              "role": "MEASURED, and it corrects my own earlier claim. I had written that atomizing `않` needs the merge (C:ㅇ, V:ㅏ); the probe shows that is FALSE — that merge does not exist in the K=2048 table (ca_merge_present=false), yet all four negators come out atomic by frequency. See the child for what survives.",
+              "children": [
+                {
+                  "id": "ng.merge.what-survives",
+                  "role": "The general point stands despite the wrong mechanism: to make ONE negator non-atomic via the merge table you must remove the merges that build its token, and those are shared with other words — so it fails adm.3 (one-variable). And the natural experiment is not 'force atomic' (frequency already did) but 'force SHATTERED' = ng.post-encode-split-is-the-clean-lever."
+                }
+              ]
             },
             {
               "id": "ng.post-encode-split-is-the-clean-lever",
@@ -531,15 +543,15 @@
     },
     {
       "id": "data-flow",
-      "role": "No pipeline exists — anima-v4 is at the divergence stage (see scope.stage). This node stays a placeholder until a mechanism is selected and its falsifier returns a verdict.",
+      "role": "First pipeline reaches the build stage — H_003 (atomicity drill). Still no RUN: the flow is specified and pre-registered, arms not yet trained. Placeholder until the F7 panel audit passes and the arms return a verdict.",
       "children": [
         {
           "id": "flow.in",
-          "role": "(unbuilt — pending mechanism selection)"
+          "role": "NSMC ratings_train (150k) -> jamo-BPE K=2048 shared vocab V* -> per-arm span policy (A-atom emits the atomic negator id; A-shat suppresses merges inside the negator span) -> 2-byte codec stream -> CLMConvMoE d384 from scratch."
         },
         {
           "id": "flow.out",
-          "role": "(unbuilt — pending mechanism selection)"
+          "role": "Forced-choice d_acc on OOD panel f2' (held-out 못, 4 cells bound×free × 16 verbs, n=192, control pinned near 0.5 by depth-parity) + BPB reported separately (p7). Verdict = Δd_acc(A-atom − A-shat), gated by placebo C-plc and liveness f1'."
         }
       ]
     },

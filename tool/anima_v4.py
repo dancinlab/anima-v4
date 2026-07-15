@@ -97,6 +97,70 @@ def bpe_merge_reachable(pair_count: int, min_pair_count: int) -> bool:
     return pair_count >= min_pair_count
 
 
+# --- panel-audit primitives (closed-form, pre-training) -----------------------
+#
+# A recombination panel is only a valid test if a strategy that does NOT do the
+# thing being tested scores chance on it. H_003's panel is built to pin the two
+# cheap strategies — "any negator flips polarity" (presence) and "read the
+# template shape" — to exactly 0.5, so that beating 0.5 requires individuating
+# the negator token. These primitives verify that BY CONSTRUCTION, before any
+# GPU spend (F7 · the don't-run gate). Panel items are dicts carrying at least
+# {"gold_flip": int (0/1 = net parity), "negator_count": int, "template": str}.
+
+def presence_heuristic_score(items: list) -> float:
+    """Score of the strategy 'any negator present => flip polarity' against the
+    panel's own gold. Returns the fraction of items where (negator_count > 0)
+    matches gold_flip. A well-built recombination panel pins this to 0.5: depth-2
+    items carry two negators (net no-flip) yet the heuristic still flips, so it is
+    wrong exactly on them. Deviation from 0.5 means the panel leaks a countable
+    cue and beating chance no longer requires the mechanism under test."""
+    if not items:
+        raise ValueError("empty panel")
+    hits = sum(1 for it in items if int(it["negator_count"] > 0) == it["gold_flip"])
+    return hits / len(items)
+
+
+def template_heuristic_score(items: list) -> float:
+    """Score of the best strategy that reads ONLY the template shape, ignoring
+    which tokens fill it. For each distinct template it predicts that template's
+    majority gold_flip; the score is how often that majority is right. If two
+    depths share a template tail (H_003's D1/D2 minimal pairs), the template is
+    50/50 and this returns 0.5 — the panel cannot be solved by shape alone."""
+    if not items:
+        raise ValueError("empty panel")
+    from collections import defaultdict
+
+    by_t = defaultdict(list)
+    for it in items:
+        by_t[it["template"]].append(it["gold_flip"])
+    correct = 0
+    for flips in by_t.values():
+        maj = 1 if sum(flips) * 2 >= len(flips) else 0
+        correct += sum(1 for f in flips if f == maj)
+    return correct / len(items)
+
+
+def label_balance(items: list, cell_key: str = "cell") -> dict:
+    """Per-cell fraction of gold_flip==1. A recombination panel must be 50/50 per
+    cell or a constant-guess strategy beats chance on the imbalanced cell. Returns
+    {cell: fraction_positive}."""
+    from collections import defaultdict
+
+    by_c = defaultdict(list)
+    for it in items:
+        by_c[it[cell_key]].append(it["gold_flip"])
+    return {c: sum(v) / len(v) for c, v in by_c.items()}
+
+
+def binom_sigma(p: float, n: int) -> float:
+    """Standard error of a binomial proportion — sqrt(p(1-p)/n). Used to state a
+    falsifier threshold in sigma above chance so 'reachable only by a real effect,
+    not luck' is arithmetic, not assertion."""
+    if n <= 0:
+        raise ValueError(f"n must be > 0: {n}")
+    return math.sqrt(p * (1.0 - p) / n)
+
+
 # --- falsifier harness --------------------------------------------------------
 
 @dataclass
