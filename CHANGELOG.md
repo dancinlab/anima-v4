@@ -2,6 +2,21 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 first full run was a WINDOWER BUG (quarantined); fixed + re-dispatched
+
+- The first full d=384 run "finished" in minutes with EVERY arm at exactly 0.5 and NO per-step loss
+  lines — the tell that the model never trained. verify-done (missing loss) + verdict-integrity
+  (suspect the harness on divergence) caught it: NOT H_003's verdict.
+- Cause, measured: the driver windowed each corpus LINE individually at seq_len, but NSMC lines
+  encode to ~53 bytes (min 2, max 244), all below seq_len=512 → per-line windowing dropped 500/500
+  lines → 0 training windows → 0.5 is a no-train artifact. (The smoke had "passed" only because at
+  seq_len=128 a few long lines squeaked through.)
+- Fix: `_stack_windows` now CONCATENATES the corpus into one continuous byte stream (0x0a separator)
+  then windows once — v1 trains on a continuous stream the same way. Re-smoke GREEN: CPT loss
+  5.7→4.0 AND drill loss 3.5→2.7 = the model now actually learns. Buggy output quarantined as
+  `train_result_full_INVALID_windowbug.json` (infra-wall-noneval).
+- Full run re-dispatched. H_003 stays FROZEN-but-unrun; verdict only from a cleanly-measured run.
+
 ## 2026-07-16 — H_003 training driver built + smoke GREEN; full d=384 run dispatched
 
 - Built the torch training driver (`train_h003.py`) — the last piece of code. It consumes v1's

@@ -129,14 +129,16 @@ def _enc_key(arm):
 
 
 def _stack_windows(streams, torch):
-    wins = []
+    """CONCATENATE the per-line byte streams into ONE continuous stream, then
+    window. NSMC lines are ~53 bytes (min 2, max 244) — far shorter than seq_len,
+    so per-LINE windowing dropped every line (0 windows → the model never trained,
+    the 0.5-everywhere harness artifact). A byte-level LM trains on a continuous
+    stream (v1 does the same, with sentinels); we join lines with a 0x0a separator."""
+    big = bytearray()
     for s in streams:
-        w = _windows(s, cfg_seq, torch)
-        if w:
-            wins.append(w)
-    if not wins:
-        return None
-    return torch.cat([w[0] for w in wins]), torch.cat([w[1] for w in wins])
+        big += s
+        big += b"\n"
+    return _windows(bytes(big), cfg_seq, torch)
 
 
 def train_arm(arm, seed, cfg, m, merge_rank, tok2id, drill, panels, cpt_cache, cpt_lines):
