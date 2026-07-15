@@ -2,6 +2,21 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 drill grid built (held-out 못 = 0); all $0 pieces done
+
+- Built the drill-grid generator (`gen_drill.py`, `drill_grid.json`): 240 training items that teach
+  the negation→polarity-flip rule with the DRILLED negators 안/않/아니 across the 16 verbs, with the
+  held-out negator **못 appearing 0 times** — the transfer target the atomicity test hinges on.
+  Label-balanced 120/120. Reuses build_panels' verbs + renderers (one source of truth). Verified $0.
+- With this, **every $0 deterministic piece of H_003 is built and verified**: encoder (3 arm paths —
+  A-atom, A-shat GREEN 67/67, C-plc placebo clean), panels (F7 PASS v3 SLOT-CONTRAST), G-0 codec
+  audit (PASS 3/3), G-1 grammar (provisional swap, F7 re-pass), drill grid (못 held out).
+- The ONLY remaining code is the torch training DRIVER — CLMConfig (fields recorded) d64→d384,
+  V=256 byte-level over the 2-byte codec stream, CPT+drill loop, embed/readout reinit for codec arms,
+  forced-choice d_acc eval on f2'/f1'/f2b. v1's `core.model.CLMConvMoE` imports cleanly from the local
+  venv. Its sole scientific verification IS the ~6–8h run — the multi-session endpoint, gated on the
+  native G-1 confirm. `gen_drill.py` + `drill_grid.json` committed.
+
 ## 2026-07-16 — H_003 encoding layer COMPLETE: all 3 arm-encodings built + smoke-verified ($0)
 
 - Added the placebo (C-plc) encoder path and smoke-verified it, completing the arm-encoding layer.
