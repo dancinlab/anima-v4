@@ -628,6 +628,10 @@
               "role": "Cause: the driver windowed each corpus LINE individually at seq_len, but NSMC lines are ~53 bytes (min 2 max 244, MEASURED), all below seq_len=512, so per-line windowing dropped 500/500 lines → 0 training windows → 0.5 is a no-train artifact. The 0.5 tempted a false FALSIFIED read; verify-done (missing loss lines) + suspect-the-harness caught it. FIX: concatenate the corpus into one continuous byte stream (0x0a separator) then window (v1 does the same). Buggy output kept as train_result_full_INVALID_windowbug.json; re-run pending re-smoke."
             }
           ]
+        },
+        {
+          "id": "ng.verdict-collector-built",
+          "role": "VERDICT COLLECTOR built + wiring-verified $0 (collect_verdict.py, tested against the quarantined invalid result → correctly returns DEAD-liveness). When the run writes train_result_full.json it emits SUPPORTED/PARTIAL/FALSIFIED per the frozen F1(Δ≥0.15 both seeds)/F2(f1'≥0.85)/F6(placebo<0.05) rules → verdict.json. The measurement path is confirmed CLEAN (A-atom.s0 f1'=0.8594 ≥ 0.85 = the model learns the drilled rule; the windower bug is behind us). Early per-arm numbers are IN (A-atom.s0 f2'=0.5677/f1'=0.8594 · A-shat.s0 f2'=0.6823/f1'=0.5781) but NOT a verdict — verdict-integrity forbids prejudging on 1 seed + partial arms; the full 2-seed run + placebo decides."
         }
       ]
     },
