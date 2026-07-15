@@ -2,6 +2,51 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — literature gate: the bet's objective is tautological, so there was never a tension to test
+
+- Ran the **실측전 research** literature pass on mech-3 before building it. Verdict: **do not run as
+  specified** — and the reason is prior to, and independent of, H_001's arithmetic kill.
+- **`CE + MDL` is one term written twice.** MDL's two-part code is `L(model) + L(data|model)`, and
+  `L(data|model) = −log P(data|model)` = cross-entropy. So "A's future CE + code length" *is* the
+  textbook MDL objective, not CE held in tension *with* MDL. G's loss has one sign, not two, and
+  **no term in it represents composition** — so "not simultaneously satisfiable" is false. A and G
+  minimize the same functional. This is `diag.3` (an opposition not in the objective does not
+  exist) landing on the bet itself.
+- Its argmin is a frequency segmenter — i.e. it converges *toward* the static control it was built
+  to beat. That argmin is a solved 1990s technique with no adversary: de Marcken 1995
+  (`cmp-lg/9512002`), Brent 1999 (`cs/9905007`), Creutz & Lagus 2002 Morfessor (`cs/0205057`).
+  mech-3's G ≈ a neural Morfessor with an LM in the loop.
+- **The empirical prior is against it.** Nawrot et al., Dynamic Token Pooling (`2211.09761`, ACL
+  2023): end-to-end learned boundaries lost to a plain *static* Unigram tokenizer 6/6, were worse
+  than no pooling on Hebrew, and lost to *whitespace* on English. BLT (`2412.09871`) takes patches
+  from a separately-trained frozen byte-LM with zero gradient and lists end-to-end as future work.
+- **CE is self-scored across segmentations** (coarser tokens → fewer steps → lower CE). The fix is
+  bits-per-byte — but BPB *completes* the reduction rather than rescuing it: normalized,
+  `min_S(CE + code length)` is exactly "find the best compressor".
+- **The one known escape**: OpTok (`2105.12410`) trains a segmenter against a **downstream task
+  loss** and does not collapse, because its target is a fixed label — *invariant* to the
+  segmentation. A segmenter cannot be trained against CE over its own output sequence. Any repaired
+  mech-3 must take its target from the task metric, never from likelihood.
+- **The Korean premise did not survive.** Truong et al. (`2404.02421`, NAACL 2024): tokenizers do
+  mis-segment negative affixes in English yet models still infer negation — effect "minimal". It is
+  frequency-*inverted* too: bound `지 않다` outnumbers free `안` ~2.1:1, so no sparsity story
+  explains why bound would be hard. Jamo as the *sole* unit is measured harmful for Korean (Park et
+  al. 2020, `2010.02534`: −12.75 F1 KorQuAD); it helps only as an auxiliary signal.
+- **The one green is an intervention, not a mechanism**: Truong forcibly split the affix boundary
+  (`unintended` → `un-intended`) and it *helped*. Every observational alignment study is null or
+  negative (Ismayilzada `2410.12656`: "tokenization may not be the underlying issue"; Arnett
+  `2507.06378`, 70 langs incl. Korean: small **negative** correlation, R²=0.024). Exposing a
+  boundary by fiat works; discovering it by likelihood does not.
+- **Clean null on the decisive question** — nobody trains a segmenter against a compositional
+  signal, and no SCAN/COGS/CFQ study varies tokenization as an IV. The campaign's question is
+  genuinely open; the open part is the **measurement**, not the adversary.
+- New `next-gate` section: **drop G entirely.** The claim reduces to a one-variable fixed-codec
+  contrast (`않` forcibly split vs not, everything else identical, ×5 seeds), with a fixed-codec
+  control (never raw utf-8), a task hardened until the control sits near the 0.5 chance floor, and
+  BPB + the recombination metric reported **separately** (p7). Cheapest of all: a zero-training
+  re-analysis testing whether models actually handle `안` vs `지 않다` differently — the number L5
+  assumes and the literature has never published.
+
 ## 2026-07-16 — the bet's falsifier was audited before it was built, and it failed (H_001 🟢)
 
 - Ran the **실측전 research** rule against `mech-3.falsifier` before renting anything. The audit is

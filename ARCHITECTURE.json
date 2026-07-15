@@ -13,38 +13,80 @@
           "id": "scope",
           "role": "Campaign scope: the A<->G two-engine substrate as a THINKING architecture. Inherits nothing from anima(v1) but its measured verdicts (see `salvage`); v1's code, language, tree and purity list are discarded.",
           "children": [
-            { "id": "scope.stage", "role": "STAGE = FALSIFIER REPAIR. 7 candidate mechanisms enumerated; none selected, none built. The bet's (mech-3) falsifier was pre-registered and audited BEFORE being built, and the audit killed it: H_001 SUPPORTED (7/7, closed-form, $0) — clause (2) returns DEAD for every possible mechanism. Next gate = repair the falsifiers against the corrected evidence (see `evidence-integrity`), then re-select. Nothing in this tree is a claim." },
-            { "id": "scope.origin", "role": "Owner ask, verbatim: '실제로 생각하는 A<->G 가 필요해' — v1's A<->G is rejected as an emit-controller, NOT as a two-engine idea." }
+            {
+              "id": "scope.stage",
+              "role": "STAGE = THE ADVERSARY IS OFF THE CRITICAL PATH. 7 mechanisms enumerated; none selected, none built — and the bet (mech-3) was killed twice before a line of it was written, for $0. H_001 SUPPORTED: its falsifier returns DEAD for every possible mechanism. The literature gate: its objective is tautological (CE *is* MDL's data term), so it has no tension to test. Neither kills the IDEA — both kill the instrument. Next gate = `next-gate`: a fixed-codec contrast with no G at all. Nothing in this tree is a claim."
+            },
+            {
+              "id": "scope.origin",
+              "role": "Owner ask, verbatim: '실제로 생각하는 A<->G 가 필요해' — v1's A<->G is rejected as an emit-controller, NOT as a two-engine idea."
+            }
           ]
         },
         {
           "id": "thesis",
           "role": "A two-engine tension can carry thought only if the coupling is high-dimensional, iteratively resolved, and resident in the objective/data/codec — v1 failed on PLACEMENT (readout-side scalar), not on the two-engine premise.",
           "children": [
-            { "id": "thesis.claim", "role": "The tension object must be structured (a field over positions x roles x morpheme boundaries), consumed by the loss, and its resolver serialized into the inference path. If any of the three is missing, the tension collapses to rank-1 = the emit bit (v1's measured fate)." },
-            { "id": "thesis.cardinality", "role": "The defect is not that there are two engines — it is that their coupling had dimension 1. Engine count is a free parameter (see mech-6, N-engine)." }
+            {
+              "id": "thesis.claim",
+              "role": "The tension object must be structured (a field over positions x roles x morpheme boundaries), consumed by the loss, and its resolver serialized into the inference path. If any of the three is missing, the tension collapses to rank-1 = the emit bit (v1's measured fate)."
+            },
+            {
+              "id": "thesis.cardinality",
+              "role": "The defect is not that there are two engines — it is that their coupling had dimension 1. Engine count is a free parameter (see mech-6, N-engine)."
+            }
           ]
         },
         {
           "id": "diagnosis",
           "role": "Why a two-engine tension architecture generically collapses to 1 bit — five clauses of one sentence.",
           "children": [
-            { "id": "diag.1-scalar-kills-structure", "role": "A scalar ratio ||A||/||G|| discards both engines' directions and keeps one magnitude. The information bottleneck is in the blueprint ⇒ rank-1 was necessary, not discovered." },
-            { "id": "diag.2-unconsumed-bits-die", "role": "If the tension only touches the emit decision, the loss only demands the emit decision. A network does not maintain bits it is not asked for ⇒ 'the 1 bit IS speak/not' is a consequence of placement." },
-            { "id": "diag.3-gradient-free-is-decoration", "role": "v1's G was gradient-free ⇒ to A it was fixed background noise, and A learns to route around it. An opposition that is not learned does not exist." },
-            { "id": "diag.4-fixed-point-is-an-incinerator", "role": "Psi=1/2 is by definition memoryless. If thought happened it was in the convergence TRANSIENT — the design read the convergence RESULT." },
-            { "id": "diag.5-side-channels-get-eaten", "role": "A channel bolted beside a competent LM is replaced the moment the trunk head can do the same job cheaper (measured: L2/OMEGA). To survive, the loss must demand something the trunk CANNOT do." }
+            {
+              "id": "diag.1-scalar-kills-structure",
+              "role": "A scalar ratio ||A||/||G|| discards both engines' directions and keeps one magnitude. The information bottleneck is in the blueprint ⇒ rank-1 was necessary, not discovered."
+            },
+            {
+              "id": "diag.2-unconsumed-bits-die",
+              "role": "If the tension only touches the emit decision, the loss only demands the emit decision. A network does not maintain bits it is not asked for ⇒ 'the 1 bit IS speak/not' is a consequence of placement."
+            },
+            {
+              "id": "diag.3-gradient-free-is-decoration",
+              "role": "v1's G was gradient-free ⇒ to A it was fixed background noise, and A learns to route around it. An opposition that is not learned does not exist."
+            },
+            {
+              "id": "diag.4-fixed-point-is-an-incinerator",
+              "role": "Psi=1/2 is by definition memoryless. If thought happened it was in the convergence TRANSIENT — the design read the convergence RESULT."
+            },
+            {
+              "id": "diag.5-side-channels-get-eaten",
+              "role": "A channel bolted beside a competent LM is replaced the moment the trunk head can do the same job cheaper (measured: L2/OMEGA). To survive, the loss must demand something the trunk CANNOT do."
+            }
           ]
         },
         {
           "id": "necessary-conditions",
           "role": "What a tension must satisfy to carry thought — derived from `diagnosis`, used as the admission gate for every candidate mechanism.",
           "children": [
-            { "id": "nc.1-structured-object", "role": "The tension is a structured object (field/matrix/lattice over positions x roles x boundaries), never a ratio." },
-            { "id": "nc.2-iteratively-resolved", "role": "It is resolved over steps; the settling trajectory IS the computation. The loss must touch intermediate steps, not only the endpoint." },
-            { "id": "nc.3-lives-in-objective", "role": "It resides in loss / data / codec. Not objective-side ⇒ no-op (L3)." },
-            { "id": "nc.4-both-get-gradient", "role": "Both engines receive gradient, on objectives that cannot be simultaneously satisfied — the opposition must be real, not decorative." },
-            { "id": "nc.5-resolver-serialized", "role": "The resolution operator ships in the inference graph. v1's binders were training-only and dropped before serialization (L3) — banned." }
+            {
+              "id": "nc.1-structured-object",
+              "role": "The tension is a structured object (field/matrix/lattice over positions x roles x boundaries), never a ratio."
+            },
+            {
+              "id": "nc.2-iteratively-resolved",
+              "role": "It is resolved over steps; the settling trajectory IS the computation. The loss must touch intermediate steps, not only the endpoint."
+            },
+            {
+              "id": "nc.3-lives-in-objective",
+              "role": "It resides in loss / data / codec. Not objective-side ⇒ no-op (L3)."
+            },
+            {
+              "id": "nc.4-both-get-gradient",
+              "role": "Both engines receive gradient, on objectives that cannot be simultaneously satisfied — the opposition must be real, not decorative."
+            },
+            {
+              "id": "nc.5-resolver-serialized",
+              "role": "The resolution operator ships in the inference graph. v1's binders were training-only and dropped before serialization (L3) — banned."
+            }
           ]
         }
       ]
@@ -53,24 +95,60 @@
       "id": "salvage",
       "role": "The only inheritance from anima(v1) — measured, sealed verdicts from ~6 months of falsification. Laws of the terrain, not design constraints. Full evidence trail lives in the v1 repo; these are pointers.",
       "children": [
-        { "id": "L1.one-bit-seam", "role": "seam-h9229 STRUCTURAL-TERMINAL — the emit-seam manifold measured rank-1 (codes visited 2 of 4); any quantizer collapses, extra capacity useless. Verdict: recombination is a trunk-objective property, not a readout one ⇒ escalate WRITE-SIDE. The A<->G tension carried exactly one bit and that bit was speak/not." },
-        { "id": "L2.replacement-not-coupling", "role": "OMEGA closed-negative — multi-strand gate FAILED held-out (GATED CE > base); coupling KL at vocab-shuffle floor (0.996 = noise); all gain in one A-head logit-bias strand (standalone CE 0.8862 ~ best 2-param fit 0.8835); ablating the base term moved CE by 0.0009 ⇒ base mouth INERT. Scale-stable d384->d1024, margin ~ +2.20 nats, flat." },
-        { "id": "L3.objective-not-readout", "role": "G1_WALL_LEVER_IS_OBJECTIVE_NOT_READOUT (ossified) — no penultimate-readout / binding-operator opens the recombination wall. TPR/HRR forward-slots collapse by algebra to W_eff*yn = same ceiling as a linear readout BY CONSTRUCTION. Aggravator: binding-arm trainers kept the binder TRAINING-ONLY and dropped it before serialization." },
+        {
+          "id": "L1.one-bit-seam",
+          "role": "seam-h9229 STRUCTURAL-TERMINAL — the emit-seam manifold measured rank-1 (codes visited 2 of 4); any quantizer collapses, extra capacity useless. Verdict: recombination is a trunk-objective property, not a readout one ⇒ escalate WRITE-SIDE. The A<->G tension carried exactly one bit and that bit was speak/not."
+        },
+        {
+          "id": "L2.replacement-not-coupling",
+          "role": "OMEGA closed-negative — multi-strand gate FAILED held-out (GATED CE > base); coupling KL at vocab-shuffle floor (0.996 = noise); all gain in one A-head logit-bias strand (standalone CE 0.8862 ~ best 2-param fit 0.8835); ablating the base term moved CE by 0.0009 ⇒ base mouth INERT. Scale-stable d384->d1024, margin ~ +2.20 nats, flat."
+        },
+        {
+          "id": "L3.objective-not-readout",
+          "role": "G1_WALL_LEVER_IS_OBJECTIVE_NOT_READOUT (ossified) — no penultimate-readout / binding-operator opens the recombination wall. TPR/HRR forward-slots collapse by algebra to W_eff*yn = same ceiling as a linear readout BY CONSTRUCTION. Aggravator: binding-arm trainers kept the binder TRAINING-ONLY and dropped it before serialization."
+        },
         {
           "id": "L4.write-side-crack",
           "role": "g1-census-objfloor 2-lens CRACK — held-out recombination is NOT a capability ceiling. (a) XBIND: swapping corpus x measure made it learnable (old census was a collocation-only corpus x CE artifact). (b) MORPH-ATOM: a codec was CAUSAL for held-out negation recombination. Codec/corpus/objective are architecture, not preprocessing. The exact arms and metric are load-bearing and were lost in compression once already — they live in the children, never re-summarize this node without them.",
           "children": [
-            { "id": "L4.metric-is-d-acc", "role": "The metric is `d_acc` — forced-choice discrimination accuracy: the model scores a positive when NLL(seed+gold) < NLL(seed+counterfactual) over a 2-way choice. It is NOT an F-measure. 'f1'/'f2' are the NAMES OF THE EVAL PANELS (eval_f1.json = drilled sanity panel n=100; eval_f2.json = held-out negation-recombination panel n=120 = the verdict panel). Because d_acc is a binary forced-choice accuracy, its ceiling is 1.0 and its chance floor is 0.5 BY DEFINITION — any falsifier threshold must be checked against that ceiling before it is pre-registered (H_001)." },
-            { "id": "L4.arms", "role": "Four arms, all d_acc on panel f2 (n=120). M = FIXED frequency-trained jamo-BPE codec (K=2048, label-blind): 0.9083 (seed 4302) / 0.9167 (seed 7). C1 = NO CODEC AT ALL, raw utf-8 bytes: 0.6167 / 0.5750. C2 = codec, held-out stem scrubbed entirely from pretraining: 0.9167. C3 = codec with the 4 negator stems collapsed to ONE shared token id — the answer handed over — = the LEAK CEILING: 0.9167. Delta(M − C1) = +0.2916 (seed 4302) / +0.3417 (seed 7). CEMENTED GREEN at 2 seeds, not 1." },
-            { "id": "L4.what-was-actually-causal", "role": "ATOMICITY of the negator token — one token id per negator — and nothing else. NOT identity (C3: collapsing all 4 negators to one shared id scores the same as M). NOT pretraining exposure (C2: scrubbing the held-out stem from the pretraining corpus entirely scores the same as M). NOT the jamo alphabet per se — jamo is the vehicle that makes atomicity reachable, since in raw utf-8 the negators collide (ㅇㅏㄴ is a jamo prefix of ㅇㅏㄴㅣ) and no clean slot can form." },
-            { "id": "L4.atomicity-was-luck-not-method", "role": "The atomicity that carried the whole result was NOT engineered — it was searched for and got lucky. v1's codec picks the smallest K in a ladder {2048,4096,8192,16384} that PASSES a G-0 audit (round-trip >=0.98 + the 4 stems pairwise token-disjoint); K=2048 happened to pass. The protocol's own source comments the contingency: 'If 아니 ... can't fuse even at K=16384 -> switch primary held-out to 못'. That is a static frequency method with no way to TARGET atomicity: when it fails, the recourse is to change the question. This is the crack a learned codec would have to earn its keep in — see `evidence-integrity.the-bet-rests-on-its-own-null`." }
+            {
+              "id": "L4.metric-is-d-acc",
+              "role": "The metric is `d_acc` — forced-choice discrimination accuracy: the model scores a positive when NLL(seed+gold) < NLL(seed+counterfactual) over a 2-way choice. It is NOT an F-measure. 'f1'/'f2' are the NAMES OF THE EVAL PANELS (eval_f1.json = drilled sanity panel n=100; eval_f2.json = held-out negation-recombination panel n=120 = the verdict panel). Because d_acc is a binary forced-choice accuracy, its ceiling is 1.0 and its chance floor is 0.5 BY DEFINITION — any falsifier threshold must be checked against that ceiling before it is pre-registered (H_001)."
+            },
+            {
+              "id": "L4.arms",
+              "role": "Four arms, all d_acc on panel f2 (n=120). M = FIXED frequency-trained jamo-BPE codec (K=2048, label-blind): 0.9083 (seed 4302) / 0.9167 (seed 7). C1 = NO CODEC AT ALL, raw utf-8 bytes: 0.6167 / 0.5750. C2 = codec, held-out stem scrubbed entirely from pretraining: 0.9167. C3 = codec with the 4 negator stems collapsed to ONE shared token id — the answer handed over — = the LEAK CEILING: 0.9167. Delta(M − C1) = +0.2916 (seed 4302) / +0.3417 (seed 7). CEMENTED GREEN at 2 seeds, not 1."
+            },
+            {
+              "id": "L4.what-was-actually-causal",
+              "role": "ATOMICITY of the negator token — one token id per negator — and nothing else. NOT identity (C3: collapsing all 4 negators to one shared id scores the same as M). NOT pretraining exposure (C2: scrubbing the held-out stem from the pretraining corpus entirely scores the same as M). NOT the jamo alphabet per se — jamo is the vehicle that makes atomicity reachable, since in raw utf-8 the negators collide (ㅇㅏㄴ is a jamo prefix of ㅇㅏㄴㅣ) and no clean slot can form."
+            },
+            {
+              "id": "L4.atomicity-was-luck-not-method",
+              "role": "The atomicity that carried the whole result was NOT engineered — it was searched for and got lucky. v1's codec picks the smallest K in a ladder {2048,4096,8192,16384} that PASSES a G-0 audit (round-trip >=0.98 + the 4 stems pairwise token-disjoint); K=2048 happened to pass. The protocol's own source comments the contingency: 'If 아니 ... can't fuse even at K=16384 -> switch primary held-out to 못'. That is a static frequency method with no way to TARGET atomicity: when it fails, the recourse is to change the question. This is the crack a learned codec would have to earn its keep in — see `evidence-integrity.the-bet-rests-on-its-own-null`."
+            }
           ]
         },
-        { "id": "L5.morphology-decides-learnability", "role": "Korean lane BINDING, every escape measured dead (H_9327). EN works as discriminator: `not` is FREE/pre-posed; KO `지 않다` is a BOUND suffix. Composition must be visible at the token boundary or it cannot be learned." },
-        { "id": "L6.measurement-is-the-grave", "role": "A win (GATED 0.345 << base) was a CA-neighbor lookahead LEAK and evaporated leak-free. Binary readouts hit a scramble floor (flip 0.50) indistinguishable from partial localization. A failing positive control is ambiguous between tool-blind and no-effect until an independently-known-effect ckpt disambiguates. Verdicts combined after seeing results = eyeball self-judge. Perplexity as truth = Goodhart." },
-        { "id": "L7.exotic-substrate-bought-nothing", "role": "AKD1000 on-chip: honest terminal — real 3B/7B unreachable, caps ~524K single-FC encoder, multi-step closes only as host-hybrid. GPU lane: descent green but host-feed util pinned sub-1% ⇒ the bottleneck was the data path, not compute." },
-        { "id": "L8.strict-gates-get-bypassed", "role": "arch-big-cell-blocks-commits — the commit gate accumulated 42 violations until every commit went --no-verify ⇒ the gate was permanently disabled by its own strictness. A rule that is always bypassed is worse than none: it launders the bypass. Design escape valves in from the start." },
-        { "id": "L9.the-purity-cage-was-causal", "role": "v1's 8 principles forbade every write-side mechanism (no fine-tuned ethics, no train/infer split, no tokenizer, no speak()) ⇒ only the read side remained ⇒ every mechanism landed on the readout ⇒ L1/L2/L3 fired. The cage manufactured the disease. EXCEPTION: 'no perplexity verdict' was the one principle that kept them honest — anima-v4 keeps it and discards the rest." }
+        {
+          "id": "L5.morphology-decides-learnability",
+          "role": "Korean lane BINDING, every escape measured dead (H_9327). EN works as discriminator: `not` is FREE/pre-posed; KO `지 않다` is a BOUND suffix. Composition must be visible at the token boundary or it cannot be learned."
+        },
+        {
+          "id": "L6.measurement-is-the-grave",
+          "role": "A win (GATED 0.345 << base) was a CA-neighbor lookahead LEAK and evaporated leak-free. Binary readouts hit a scramble floor (flip 0.50) indistinguishable from partial localization. A failing positive control is ambiguous between tool-blind and no-effect until an independently-known-effect ckpt disambiguates. Verdicts combined after seeing results = eyeball self-judge. Perplexity as truth = Goodhart."
+        },
+        {
+          "id": "L7.exotic-substrate-bought-nothing",
+          "role": "AKD1000 on-chip: honest terminal — real 3B/7B unreachable, caps ~524K single-FC encoder, multi-step closes only as host-hybrid. GPU lane: descent green but host-feed util pinned sub-1% ⇒ the bottleneck was the data path, not compute."
+        },
+        {
+          "id": "L8.strict-gates-get-bypassed",
+          "role": "arch-big-cell-blocks-commits — the commit gate accumulated 42 violations until every commit went --no-verify ⇒ the gate was permanently disabled by its own strictness. A rule that is always bypassed is worse than none: it launders the bypass. Design escape valves in from the start."
+        },
+        {
+          "id": "L9.the-purity-cage-was-causal",
+          "role": "v1's 8 principles forbade every write-side mechanism (no fine-tuned ethics, no train/infer split, no tokenizer, no speak()) ⇒ only the read side remained ⇒ every mechanism landed on the readout ⇒ L1/L2/L3 fired. The cage manufactured the disease. EXCEPTION: 'no perplexity verdict' was the one principle that kept them honest — anima-v4 keeps it and discards the rest."
+        }
       ]
     },
     {
@@ -81,89 +159,234 @@
           "id": "mech-1.parser-duel",
           "role": "파서 결투 (이접 재판) — A = left-to-right forward parser proposing attachments; G = right-to-left backward parser (the direction Korean agglutination actually runs). Opposition computes BINDING.",
           "children": [
-            { "id": "mech-1.tension", "role": "Tension = an n x n attachment-disagreement matrix (per-edge). Bits live in 'which edge disagrees by how much'. Cannot collapse: the decoder is conditioned ONLY on the resolved structure, so flattening it to 1 bit explodes CE — the information is consumed, therefore maintained." },
-            { "id": "mech-1.objective", "role": "loss = CE(decoder | resolved structure) + parse-agreement reward. The resolver R is learned AND serialized — inference runs both parsers and the adjudication (L3's 'binder dropped before serialization' explicitly banned)." },
-            { "id": "mech-1.l2-defense", "role": "The decoder never sees A/G hidden states — only the resolved structure. For the trunk head to eat it, it would have to produce CE without the structure that IS its condition. Exposure ablation: replace resolution with the union of both parses → held-out negation-recombination F2 must move." },
-            { "id": "mech-1.falsifier", "role": "CLAUSE (3) IS TRIVIALLY PASSABLE — the mirror of mech-3's vacuity, same root cause (H_001 🟢). (1) L1 — effective rank of the disagreement matrix on held-out <=1 ⇒ DEAD. STANDS. (2) L2 — resolver→union substitution deltaCE < 0.01 ⇒ DEAD. STANDS. (3) 'MORPH-ATOM drill (control baseline 0.617) gain < +0.15 ⇒ DEAD' — BROKEN: 0.617 is the NO-CODEC arm. Running the drill with any codec at all starts at ~0.908, a gain of +0.29, so clause (3) PASSES without the parser duel contributing anything. It certifies the codec, not the mechanism. Also incoherent: 'reuses the XBIND corpus' — XBIND is CVC pseudo-words, MORPH-ATOM is NSMC Korean reviews; the clause names two different drills as one." },
-            { "id": "mech-1.breaks", "role": "Breaks v1's residual 'no train/infer split' — R is a learned module resident in the inference graph. Required because L3 proved a dropped resolver = nothing happened." }
+            {
+              "id": "mech-1.tension",
+              "role": "Tension = an n x n attachment-disagreement matrix (per-edge). Bits live in 'which edge disagrees by how much'. Cannot collapse: the decoder is conditioned ONLY on the resolved structure, so flattening it to 1 bit explodes CE — the information is consumed, therefore maintained."
+            },
+            {
+              "id": "mech-1.objective",
+              "role": "loss = CE(decoder | resolved structure) + parse-agreement reward. The resolver R is learned AND serialized — inference runs both parsers and the adjudication (L3's 'binder dropped before serialization' explicitly banned)."
+            },
+            {
+              "id": "mech-1.l2-defense",
+              "role": "The decoder never sees A/G hidden states — only the resolved structure. For the trunk head to eat it, it would have to produce CE without the structure that IS its condition. Exposure ablation: replace resolution with the union of both parses → held-out negation-recombination F2 must move."
+            },
+            {
+              "id": "mech-1.falsifier",
+              "role": "CLAUSE (3) IS TRIVIALLY PASSABLE — the mirror of mech-3's vacuity, same root cause (H_001 🟢). (1) L1 — effective rank of the disagreement matrix on held-out <=1 ⇒ DEAD. STANDS. (2) L2 — resolver→union substitution deltaCE < 0.01 ⇒ DEAD. STANDS. (3) 'MORPH-ATOM drill (control baseline 0.617) gain < +0.15 ⇒ DEAD' — BROKEN: 0.617 is the NO-CODEC arm. Running the drill with any codec at all starts at ~0.908, a gain of +0.29, so clause (3) PASSES without the parser duel contributing anything. It certifies the codec, not the mechanism. Also incoherent: 'reuses the XBIND corpus' — XBIND is CVC pseudo-words, MORPH-ATOM is NSMC Korean reviews; the clause names two different drills as one."
+            },
+            {
+              "id": "mech-1.breaks",
+              "role": "Breaks v1's residual 'no train/infer split' — R is a learned module resident in the inference graph. Required because L3 proved a dropped resolver = nothing happened."
+            }
           ]
         },
         {
           "id": "mech-2.reverse-sculptor",
           "role": "역행 조각가 (잔차의 수행) — A = forward generator p(next|z); G = inverse model, amortized q(z|state) reconstructing the latent cause of A's state. Opposition computes ABSTRACTION. Predictive coding moved from a read-side probe to write-side dynamics.",
           "children": [
-            { "id": "mech-2.tension", "role": "Tension = a per-dimension, per-position RESIDUAL FIELD r = state - A(G(state)), re-injected into A's state for K steps, rewriting it. Thought = the settling TRANSIENT. Inverts v1's fatal error (diag.4): loss is applied to each intermediate step (deep supervision), so the transient is consumed; if only the equilibrium survives, the loss punishes it immediately." },
-            { "id": "mech-2.objective", "role": "ELBO — the reconstruction term (satisfies G) and the prior term (satisfies A) are STRUCTURALLY not simultaneously satisfiable. The reason the tension is real lives in the loss algebra (nc.4)." },
-            { "id": "mech-2.l2-defense", "role": "The decoder sees only the settled state. Ablation: K=0 (read immediately) vs K=4 — if deltaCE and recombination F2 do not differ, settling is decoration. v1 never once ran this measurement." },
-            { "id": "mech-2.falsifier", "role": "(1) L1 — PCA of the settling trajectory {z0..zK}; effective dimension of trajectory variance <=1 ⇒ DEAD (a 1-D trajectory is the scalar tension reborn). (2) L2 — K=0 substitution deltaCE < 0.005 ⇒ DEAD. (3) L6 scramble-floor control: pre-register the CE gap between injecting shuffled r vs true r. Cost: medium — training slows by the step count." },
-            { "id": "mech-2.breaks", "role": "Breaks the single-shot-forward purism. Required: if the transient is the thought, a single forward pass forbids thinking by definition." },
-            { "id": "mech-2.risk", "role": "HIGH L1-RECURRENCE RISK. If settling converges fast to a fixed point and the loss reads only the endpoint, this IS Psi=1/2 reborn. Per-step loss is non-negotiable — without it this is v1 itself." }
+            {
+              "id": "mech-2.tension",
+              "role": "Tension = a per-dimension, per-position RESIDUAL FIELD r = state - A(G(state)), re-injected into A's state for K steps, rewriting it. Thought = the settling TRANSIENT. Inverts v1's fatal error (diag.4): loss is applied to each intermediate step (deep supervision), so the transient is consumed; if only the equilibrium survives, the loss punishes it immediately."
+            },
+            {
+              "id": "mech-2.objective",
+              "role": "ELBO — the reconstruction term (satisfies G) and the prior term (satisfies A) are STRUCTURALLY not simultaneously satisfiable. The reason the tension is real lives in the loss algebra (nc.4)."
+            },
+            {
+              "id": "mech-2.l2-defense",
+              "role": "The decoder sees only the settled state. Ablation: K=0 (read immediately) vs K=4 — if deltaCE and recombination F2 do not differ, settling is decoration. v1 never once ran this measurement."
+            },
+            {
+              "id": "mech-2.falsifier",
+              "role": "(1) L1 — PCA of the settling trajectory {z0..zK}; effective dimension of trajectory variance <=1 ⇒ DEAD (a 1-D trajectory is the scalar tension reborn). (2) L2 — K=0 substitution deltaCE < 0.005 ⇒ DEAD. (3) L6 scramble-floor control: pre-register the CE gap between injecting shuffled r vs true r. Cost: medium — training slows by the step count."
+            },
+            {
+              "id": "mech-2.breaks",
+              "role": "Breaks the single-shot-forward purism. Required: if the transient is the thought, a single forward pass forbids thinking by definition."
+            },
+            {
+              "id": "mech-2.risk",
+              "role": "HIGH L1-RECURRENCE RISK. If settling converges fast to a fixed point and the loss reads only the endpoint, this IS Psi=1/2 reborn. Per-step loss is non-negotiable — without it this is v1 itself."
+            }
           ]
         },
         {
           "id": "mech-3.codec-war",
           "role": "코덱 전쟁 (형태소 국경 분쟁) — A = the LM over a segmentation S; G = an ADVERSARIAL CODEC (BPE-jamo lattice) that redraws morpheme boundaries, learns its own merge-table, and serializes it. Opposition computes WHICH UNITS EXIST — the most material form of abstraction. THE BET.",
           "children": [
-            { "id": "mech-3.tension", "role": "Tension = a per-sentence SEGMENTATION LATTICE — a combinatorial object. Cannot collapse to rank-1: lattice choices are exponential in sentence length and the loss charges a different CE per choice, so every branch point carries bits. G tries to split `않` to expose composition at the boundary (MDL pressure); A wants to memorize the collocation whole (CE pressure)." },
-            { "id": "mech-3.objective", "role": "G's loss = A's future CE under the proposed segmentation + code length (MDL). A's loss = CE. NOT simultaneously satisfiable — the memorization-optimal boundary and the composition-optimal boundary differ. The tension WRITES: the merge-table is not a weight, it is a serialized artifact that reshapes the corpus. Promotes L4's 'codec is architecture, not preprocessing' from verdict to loss." },
-            { "id": "mech-3.l2-defense", "role": "CONFOUNDED AS WRITTEN (H_001 🟢). The position claim stands — G defines the trunk's INPUT ALPHABET, which the trunk cannot occupy. The ablation does not: 'substitute a fixed BPE for G → must fall to ~0.617' names ~0.617 as the fixed-codec score, but 0.617 is arm C1 = NO CODEC AT ALL (raw utf-8). The actual fixed codec is arm M = 0.9083/0.9167. So the ablation as written varies whether a codec EXISTS, not whether it is LEARNED — a two-variable swap that would credit G with the static jamo alphabet's known effect. A sound version must hold the alphabet fixed and vary only the learning." },
+            {
+              "id": "mech-3.tension",
+              "role": "Tension = a per-sentence SEGMENTATION LATTICE — a combinatorial object. Cannot collapse to rank-1: lattice choices are exponential in sentence length and the loss charges a different CE per choice, so every branch point carries bits. G tries to split `않` to expose composition at the boundary (MDL pressure); A wants to memorize the collocation whole (CE pressure)."
+            },
+            {
+              "id": "mech-3.objective",
+              "role": "TAUTOLOGICAL — there is no tension in this loss, and the defect is definitional rather than empirical. The WRITE claim stands (the merge-table is a serialized artifact reshaping the corpus, not a weight). 'NOT simultaneously satisfiable' does not: A and G minimize the same functional.",
+              "children": [
+                {
+                  "id": "mech-3.obj.the-identity",
+                  "role": "MDL's two-part code is L(model) + L(data|model), and L(data|model) = -log P(data|model) = cross-entropy. So 'A's future CE + code length' IS the textbook MDL objective — not CE held in tension WITH MDL. G's loss has one sign, not two. Writing the same quantity twice does not make an opposition."
+                },
+                {
+                  "id": "mech-3.obj.no-composition-term",
+                  "role": "The claimed tension is 'memorization-optimal vs composition-optimal boundary'. But NO term in the stated objective represents composition. Nothing pulls against frequency, so nothing is unsatisfiable-in-pairs. The opposition lives in the prose, not the loss — which is diag.3 (an opposition not in the objective does not exist) landing on mech-3 itself."
+                },
+                {
+                  "id": "mech-3.obj.argmin-is-the-control",
+                  "role": "The argmin of CE+MDL is a frequency segmenter — it converges TOWARD the static control it was built to beat. That argmin is a solved 1990s technique done with no adversary: de Marcken 1995 (cmp-lg/9512002), Brent 1999 (cs/9905007), Creutz & Lagus 2002 Morfessor (cs/0205057). mech-3's G is approximately a neural Morfessor with an LM in the loop; its ceiling is 'a well-tuned frequency segmenter'."
+                },
+                {
+                  "id": "mech-3.obj.ce-is-self-scored",
+                  "role": "The CE term is also unnormalized across segmentations: coarser tokens mean fewer prediction steps mean lower total CE, so a segmenter free to choose its own units is optimizing its own scoreboard. The field-standard fix is bits-per-byte (total bits / fixed utf-8 byte count). BPB does not rescue the design — it COMPLETES the reduction: normalized, min_S(CE + code length) is exactly 'find the best compressor', which is BPE/Unigram/Morfessor's objective verbatim."
+                },
+                {
+                  "id": "mech-3.obj.the-one-known-escape",
+                  "role": "OpTok (Hiraoka et al. 2021, 2105.12410) is the only found non-degenerate recipe: it trains a segmenter against a DOWNSTREAM task loss and does not collapse, because its target is a fixed label — INVARIANT to the segmentation, so there is no free lunch in coarsening. The load-bearing distinction: a segmenter can be trained against a loss whose target is segmentation-invariant; it cannot be trained against CE over its OWN output sequence. Any repaired mech-3 must take the target from the task metric, never from likelihood."
+                }
+              ]
+            },
+            {
+              "id": "mech-3.l2-defense",
+              "role": "CONFOUNDED AS WRITTEN (H_001 🟢). The position claim stands — G defines the trunk's INPUT ALPHABET, which the trunk cannot occupy. The ablation does not: 'substitute a fixed BPE for G → must fall to ~0.617' names ~0.617 as the fixed-codec score, but 0.617 is arm C1 = NO CODEC AT ALL (raw utf-8). The actual fixed codec is arm M = 0.9083/0.9167. So the ablation as written varies whether a codec EXISTS, not whether it is LEARNED — a two-variable swap that would credit G with the static jamo alphabet's known effect. A sound version must hold the alphabet fixed and vary only the learning."
+            },
             {
               "id": "mech-3.falsifier",
               "role": "INADMISSIBLE AS PRE-REGISTERED (H_001 🟢) — one clause stands, two are spent. Only clause (1), the L1 boundary-decision entropy check, remains a live and reachable test.",
               "children": [
-                { "id": "mech-3.fals.2-vacuous", "role": "Clause (2) 'L2 — fixed-BPE substitution deltaF2 < 0.1 ⇒ DEAD' is DEAD ON ARRIVAL. The fixed codec scores 0.9083–0.9167 and d_acc is bounded by 1.0, so the largest delta ANY mechanism can show is 0.0833–0.0917 < 0.1. It returns DEAD for a working mechanism, a broken one, and an imaginary one alike." },
-                { "id": "mech-3.fals.3-already-paid", "role": "Clause (3) '3 seeds, retiring v1's 1-seed debt' spends a debt v1 already paid: M and C1 were cemented at seed 7 (L4.arms). The tree's '1 seed' citation was stale." },
-                { "id": "mech-3.fals.cost-inverted", "role": "'Reuses the MORPH-ATOM protocol verbatim — the cheapest falsifier available' is FALSE and inverted. The protocol needs the 303M base.pt (clm303_clean), which exists in neither the v1 repo nor the weights dir, plus a rented 4090 at ~2h/arm. It is the MOST expensive falsifier in the set." }
+                {
+                  "id": "mech-3.fals.2-vacuous",
+                  "role": "Clause (2) 'L2 — fixed-BPE substitution deltaF2 < 0.1 ⇒ DEAD' is DEAD ON ARRIVAL. The fixed codec scores 0.9083–0.9167 and d_acc is bounded by 1.0, so the largest delta ANY mechanism can show is 0.0833–0.0917 < 0.1. It returns DEAD for a working mechanism, a broken one, and an imaginary one alike."
+                },
+                {
+                  "id": "mech-3.fals.3-already-paid",
+                  "role": "Clause (3) '3 seeds, retiring v1's 1-seed debt' spends a debt v1 already paid: M and C1 were cemented at seed 7 (L4.arms). The tree's '1 seed' citation was stale."
+                },
+                {
+                  "id": "mech-3.fals.cost-inverted",
+                  "role": "'Reuses the MORPH-ATOM protocol verbatim — the cheapest falsifier available' is FALSE and inverted. The protocol needs the 303M base.pt (clm303_clean), which exists in neither the v1 repo nor the weights dir, plus a rented 4090 at ~2h/arm. It is the MOST expensive falsifier in the set."
+                }
               ]
             },
-            { "id": "mech-3.breaks", "role": "Breaks 'no tokenizer' (V256) head-on, and deservedly. L5 ruled: composition must be visible at the token boundary to be learned — V256 purism made Korean negation structurally invisible." },
-            { "id": "mech-3.why-bet", "role": "THE BET — WITHDRAWN AS STATED; two of its three grounds are false (H_001 🟢). (a) 'cheapest falsifier (existing protocol reuse)' — FALSE, it is the most expensive (missing base.pt + rented GPU). (b) 'L1 and L2 cannot reach it in principle' — FALSE, L2 reaches it and kills it; the clause is vacuous. (c) 'standing on a lever already measured green' — TRUE, and greener than the tree said (cemented at 2 seeds), but this is the fatal one: see `evidence-integrity.the-bet-rests-on-its-own-null`. mech-3 is NOT refuted as a mechanism — H_001 kills a falsifier, not an idea. It is un-bet until it has a falsifier that can return either answer." }
+            {
+              "id": "mech-3.breaks",
+              "role": "Breaks 'no tokenizer' (V256) head-on, and deservedly. L5 ruled: composition must be visible at the token boundary to be learned — V256 purism made Korean negation structurally invisible."
+            },
+            {
+              "id": "mech-3.why-bet",
+              "role": "THE BET — WITHDRAWN AS STATED; two of its three grounds are false (H_001 🟢). (a) 'cheapest falsifier (existing protocol reuse)' — FALSE, it is the most expensive (missing base.pt + rented GPU). (b) 'L1 and L2 cannot reach it in principle' — FALSE, L2 reaches it and kills it; the clause is vacuous. (c) 'standing on a lever already measured green' — TRUE, and greener than the tree said (cemented at 2 seeds), but this is the fatal one: see `evidence-integrity.the-bet-rests-on-its-own-null`. mech-3 is NOT refuted as a mechanism — H_001 kills a falsifier, not an idea. It is un-bet until it has a falsifier that can return either answer."
+            }
           ]
         },
         {
           "id": "mech-4.contradiction-court",
           "role": "모순 법정 (기억 검사관) — A = an assertion engine writing propositions into memory slots M; G = an inspector that, per new assertion, summons conflicting slots and issues a CONTRADICTION FIELD. Opposition computes CONTRADICTION RESOLUTION; the resolution rewrites M. The tension WRITES to memory.",
           "children": [
-            { "id": "mech-4.tension", "role": "The contradiction field is a slot x slot object with rank = the number of active disputes. Bits live in 'what conflicts with what'. Long-range consistency CE hangs directly on resolution quality, so it is consumed." },
-            { "id": "mech-4.objective", "role": "loss = long-range reference CE (routed through M) + contradiction penalty + post-resolution re-query accuracy. G receives gradient through retrieval (both engines get gradient, nc.4)." },
-            { "id": "mech-4.l2-defense", "role": "Place probes at distances OUTSIDE the trunk's context so M does only what the short context cannot (conflict with a proposition thousands of tokens away). Ablation: remove G → M becomes append-only → measure delta on the long-range consistency probe." },
-            { "id": "mech-4.falsifier", "role": "Synthetic contradiction corpus (plant a proposition, then negate it). (1) L1 — active rank of the contradiction field; always 1 dispute ⇒ DEAD. (2) L2 — G-ablation long-range probe deltaCE < 0.01 ⇒ DEAD. (3) Pre-registered gate-degeneration check: if the resolution op's output clusters into {retract, keep} 2 values ⇒ L1 recurrence, DEAD." },
-            { "id": "mech-4.breaks", "role": "Breaks 'memory is read-only accumulation' — the tension must destructively rewrite memory for resolution to be real." },
-            { "id": "mech-4.risk", "role": "HIGHEST L1-RECURRENCE RISK of the set. The moment the inspector degenerates into a write/don't-write gate, v1's emit-gate has simply moved to the memory door. The pre-registered gate-degeneration check is the only defense." }
+            {
+              "id": "mech-4.tension",
+              "role": "The contradiction field is a slot x slot object with rank = the number of active disputes. Bits live in 'what conflicts with what'. Long-range consistency CE hangs directly on resolution quality, so it is consumed."
+            },
+            {
+              "id": "mech-4.objective",
+              "role": "loss = long-range reference CE (routed through M) + contradiction penalty + post-resolution re-query accuracy. G receives gradient through retrieval (both engines get gradient, nc.4)."
+            },
+            {
+              "id": "mech-4.l2-defense",
+              "role": "Place probes at distances OUTSIDE the trunk's context so M does only what the short context cannot (conflict with a proposition thousands of tokens away). Ablation: remove G → M becomes append-only → measure delta on the long-range consistency probe."
+            },
+            {
+              "id": "mech-4.falsifier",
+              "role": "Synthetic contradiction corpus (plant a proposition, then negate it). (1) L1 — active rank of the contradiction field; always 1 dispute ⇒ DEAD. (2) L2 — G-ablation long-range probe deltaCE < 0.01 ⇒ DEAD. (3) Pre-registered gate-degeneration check: if the resolution op's output clusters into {retract, keep} 2 values ⇒ L1 recurrence, DEAD."
+            },
+            {
+              "id": "mech-4.breaks",
+              "role": "Breaks 'memory is read-only accumulation' — the tension must destructively rewrite memory for resolution to be real."
+            },
+            {
+              "id": "mech-4.risk",
+              "role": "HIGHEST L1-RECURRENCE RISK of the set. The moment the inspector degenerates into a write/don't-write gate, v1's emit-gate has simply moved to the memory door. The pre-registered gate-degeneration check is the only defense."
+            }
           ]
         },
         {
           "id": "mech-5.gradient-tug-of-war",
           "role": "경사 줄다리기 (한 몸 두 주인) — there are NOT two runtime engines: one shared trunk, two irreconcilable objectives. A-objective = forward next-CE. G-objective = reverse / role-swapped prediction (predict the past from the future; predict the subject-object-swapped sentence). Opposition computes THE FORCED FORMATION OF A RECOMBINABLE CODE.",
           "children": [
-            { "id": "mech-5.tension", "role": "Honest statement: there is NO 'thinking tension' at runtime — there is a total war between two objectives in PARAMETER space during training. Bits = the dimension of the gradient conflict = the parameter dimension, so rank-1 collapse is physically impossible. Executes L1's own verdict text ('recombination is a trunk-objective property, escalate WRITE-SIDE') literally: move the tension from activations to weight-space gradient conflict." },
-            { "id": "mech-5.objective", "role": "The loss itself. Fully satisfies L3 — there is no readout to bolt anything onto." },
-            { "id": "mech-5.l2-defense", "role": "Structurally L2-immune: no side channel exists, so nothing can be eaten. Ablation = retrain without the G-objective, compare recombination F2. The only honest comparison, and an expensive one (2 full trainings)." },
-            { "id": "mech-5.falsifier", "role": "(1) L1 — linear-decoding rank of role information in the trunk representation (>= the role count?). (2) L2 — G-objective ablation retrain → held-out recombination F2 drop < 0.1 ⇒ DEAD. (3) Start small (d384): OMEGA showed scale-stable FAILURE, so a small-scale success is meaningful. Cost: HIGH (retraining)." },
-            { "id": "mech-5.breaks", "role": "Breaks 'a single pure objective (CE only)'. Required because L1 ruled recombination is an objective property — with one objective there is no room for a tension to exist." },
-            { "id": "mech-5.weakness", "role": "Legitimate attack: is this thinking, or just multitask learning? The answer rests entirely on objective choice — role-swap prediction cannot be solved by collocation memorization, only by a compositional code. The forward pass over THAT code is the thinking. Rated 'thinks? = half'." }
+            {
+              "id": "mech-5.tension",
+              "role": "Honest statement: there is NO 'thinking tension' at runtime — there is a total war between two objectives in PARAMETER space during training. Bits = the dimension of the gradient conflict = the parameter dimension, so rank-1 collapse is physically impossible. Executes L1's own verdict text ('recombination is a trunk-objective property, escalate WRITE-SIDE') literally: move the tension from activations to weight-space gradient conflict."
+            },
+            {
+              "id": "mech-5.objective",
+              "role": "The loss itself. Fully satisfies L3 — there is no readout to bolt anything onto."
+            },
+            {
+              "id": "mech-5.l2-defense",
+              "role": "Structurally L2-immune: no side channel exists, so nothing can be eaten. Ablation = retrain without the G-objective, compare recombination F2. The only honest comparison, and an expensive one (2 full trainings)."
+            },
+            {
+              "id": "mech-5.falsifier",
+              "role": "(1) L1 — linear-decoding rank of role information in the trunk representation (>= the role count?). (2) L2 — G-objective ablation retrain → held-out recombination F2 drop < 0.1 ⇒ DEAD. (3) Start small (d384): OMEGA showed scale-stable FAILURE, so a small-scale success is meaningful. Cost: HIGH (retraining)."
+            },
+            {
+              "id": "mech-5.breaks",
+              "role": "Breaks 'a single pure objective (CE only)'. Required because L1 ruled recombination is an objective property — with one objective there is no room for a tension to exist."
+            },
+            {
+              "id": "mech-5.weakness",
+              "role": "Legitimate attack: is this thinking, or just multitask learning? The answer rests entirely on objective choice — role-swap prediction cannot be solved by collocation memorization, only by a compositional code. The forward pass over THAT code is the thinking. Rated 'thinks? = half'."
+            }
           ]
         },
         {
           "id": "mech-6.constraint-market",
           "role": "제약 시장 (N-엔진 경매) — cardinality != 2. N small specialist engines (negation scope, honorific agreement, tense, argument binding) each publish a CONSTRAINT FIELD over the next span. 'G' is not an engine but the AUCTIONEER (resolution layer) solving conflicts into a max-satisfaction assignment. Opposition computes CONSTRAINT-SATISFACTION SEARCH; thought = the auction.",
           "children": [
-            { "id": "mech-6.tension", "role": "Tension = the superposition of N constraint fields — minimum rank N. The constraints genuinely conflict in real Korean (a sentence where honorific agreement demands one ending and negation scope demands another). Plant sentences in the corpus whose CE cannot drop without conflict resolution ⇒ the bits are consumed." },
-            { "id": "mech-6.objective", "role": "loss = CE(decoder | winning assignment) + per-engine violation penalty. The auctioneer is learned and serialized. Each specialist receives gradient when its constraint is violated (N-way gradient)." },
-            { "id": "mech-6.l2-defense", "role": "The conflict-forcing corpus is the crux — design the curriculum so the trunk alone cannot lower CE on conflict sentences. Ablation: auctioneer → mean-pooling substitution, measure deltaCE on conflict sentences." },
-            { "id": "mech-6.falsifier", "role": "(1) L1 — effective rank of the winning assignment >= active engine count? (2) L2 — mean-pool substitution deltaCE > 0.02 ON CONFLICT SENTENCES ONLY (must show NO difference on non-conflict sentences — a specificity control, per L6). (3) Start with a synthetic conflict corpus. Cost: medium." },
-            { "id": "mech-6.breaks", "role": "Breaks 'there are two engines and they are named A and G' — narrative purism. Required: per diag.5 the problem is coupling dimension, and the most honest way to raise dimension is to raise the number of axes." }
+            {
+              "id": "mech-6.tension",
+              "role": "Tension = the superposition of N constraint fields — minimum rank N. The constraints genuinely conflict in real Korean (a sentence where honorific agreement demands one ending and negation scope demands another). Plant sentences in the corpus whose CE cannot drop without conflict resolution ⇒ the bits are consumed."
+            },
+            {
+              "id": "mech-6.objective",
+              "role": "loss = CE(decoder | winning assignment) + per-engine violation penalty. The auctioneer is learned and serialized. Each specialist receives gradient when its constraint is violated (N-way gradient)."
+            },
+            {
+              "id": "mech-6.l2-defense",
+              "role": "The conflict-forcing corpus is the crux — design the curriculum so the trunk alone cannot lower CE on conflict sentences. Ablation: auctioneer → mean-pooling substitution, measure deltaCE on conflict sentences."
+            },
+            {
+              "id": "mech-6.falsifier",
+              "role": "(1) L1 — effective rank of the winning assignment >= active engine count? (2) L2 — mean-pool substitution deltaCE > 0.02 ON CONFLICT SENTENCES ONLY (must show NO difference on non-conflict sentences — a specificity control, per L6). (3) Start with a synthetic conflict corpus. Cost: medium."
+            },
+            {
+              "id": "mech-6.breaks",
+              "role": "Breaks 'there are two engines and they are named A and G' — narrative purism. Required: per diag.5 the problem is coupling dimension, and the most honest way to raise dimension is to raise the number of axes."
+            }
           ]
         },
         {
           "id": "mech-7.counterfactual-editor",
           "role": "반사실 편집자 (급소 탐침) — A = forward predictor; G = a counterfactual generator producing MINIMAL EDITS to the context that flip A's prediction, alongside edits that should not (paraphrase). Opposition computes CAUSAL ABSTRACTION — which part of the input bears load. G WRITES the training data: L4's 'corpus is architecture' enforced on the corpus axis (mech-3 is the same verdict on the codec axis).",
           "children": [
-            { "id": "mech-7.tension", "role": "Tension = the edit set — a list of structural claims of the form 'change this here and the conclusion changes'. Bits live in edit position x edit kind. A must be sensitive to G's flip-edits and invariant to null-edits; this dual demand is consumed as a consistency loss." },
-            { "id": "mech-7.objective", "role": "A's loss = CE + contrastive consistency (change under flip, do not change under null). G's loss = edit minimality + flip success rate. Not simultaneously satisfiable: G is pressured to find A's weak points, A to leave weak points only on genuine causal structure." },
-            { "id": "mech-7.l2-defense", "role": "For the trunk to eat it, it would have to pass the consistency loss without G's contrast pairs — but the contrast pairs ARE the data. Ablation: substitute a random editor for G → measure recombination F2 drop." },
-            { "id": "mech-7.falsifier", "role": "(1) L1 — entropy of G's edit distribution; collapse to one edit kind (e.g. always insert `않`) ⇒ DEAD. (2) L2 — random-editor substitution deltaF2 < 0.1 ⇒ DEAD. (3) Evaluation edits must be HUMAN-PREMADE and isolated — G touching both training and evaluation is a leak (L6 lookahead-leak recurrence). Frozen + hash-published pre-registration. Cost: medium (leak-management overhead)." },
-            { "id": "mech-7.breaks", "role": "Breaks 'the corpus is inviolable (train only on given data)' — G manufactures data. Required: XBIND showed that swapping the corpus made the unlearnable learnable." }
+            {
+              "id": "mech-7.tension",
+              "role": "Tension = the edit set — a list of structural claims of the form 'change this here and the conclusion changes'. Bits live in edit position x edit kind. A must be sensitive to G's flip-edits and invariant to null-edits; this dual demand is consumed as a consistency loss."
+            },
+            {
+              "id": "mech-7.objective",
+              "role": "A's loss = CE + contrastive consistency (change under flip, do not change under null). G's loss = edit minimality + flip success rate. Not simultaneously satisfiable: G is pressured to find A's weak points, A to leave weak points only on genuine causal structure."
+            },
+            {
+              "id": "mech-7.l2-defense",
+              "role": "For the trunk to eat it, it would have to pass the consistency loss without G's contrast pairs — but the contrast pairs ARE the data. Ablation: substitute a random editor for G → measure recombination F2 drop."
+            },
+            {
+              "id": "mech-7.falsifier",
+              "role": "(1) L1 — entropy of G's edit distribution; collapse to one edit kind (e.g. always insert `않`) ⇒ DEAD. (2) L2 — random-editor substitution deltaF2 < 0.1 ⇒ DEAD. (3) Evaluation edits must be HUMAN-PREMADE and isolated — G touching both training and evaluation is a leak (L6 lookahead-leak recurrence). Frozen + hash-published pre-registration. Cost: medium (leak-management overhead)."
+            },
+            {
+              "id": "mech-7.breaks",
+              "role": "Breaks 'the corpus is inviolable (train only on given data)' — G manufactures data. Required: XBIND showed that swapping the corpus made the unlearnable learnable."
+            }
           ]
         }
       ]
@@ -172,26 +395,95 @@
       "id": "fake-diversity-audit",
       "role": "Honest audit — which candidates are secretly the same idea. Fake diversity is the primary failure mode of a divergence exercise, so it is recorded in the SSOT rather than left to the reader.",
       "children": [
-        { "id": "fd.family-structure-conflict", "role": "mech-1 and mech-6 are the SAME FAMILY — 'a learned resolver settles conflicting structure proposals'. mech-1 is N=2 on the parse axis; mech-6 is N>2 on the constraint axis. If one dies the other is half dead." },
-        { "id": "fd.family-residual-rewrite", "role": "mech-2 and mech-4 are the SAME VERB — 'residual/contradiction rewrites state'. They differ only in the write target (activations vs memory)." },
-        { "id": "fd.family-environment-rewrite", "role": "mech-3 and mech-7 are the SAME STRATEGY — 'G writes A's training environment'. They map onto L4's two green lenses (codec, corpus x measure) respectively, so the overlap is arguably evidence-grounded rather than lazy." },
-        { "id": "fd.true-axes", "role": "Only THREE independent axes exist: structure-conflict-resolution (1, 6) · residual-rewrite (2, 4) · environment-rewrite (3, 7). mech-5 is a fourth axis (weight space) but its weakness is whether it can be called 'thinking' at all." }
+        {
+          "id": "fd.family-structure-conflict",
+          "role": "mech-1 and mech-6 are the SAME FAMILY — 'a learned resolver settles conflicting structure proposals'. mech-1 is N=2 on the parse axis; mech-6 is N>2 on the constraint axis. If one dies the other is half dead."
+        },
+        {
+          "id": "fd.family-residual-rewrite",
+          "role": "mech-2 and mech-4 are the SAME VERB — 'residual/contradiction rewrites state'. They differ only in the write target (activations vs memory)."
+        },
+        {
+          "id": "fd.family-environment-rewrite",
+          "role": "mech-3 and mech-7 are the SAME STRATEGY — 'G writes A's training environment'. They map onto L4's two green lenses (codec, corpus x measure) respectively, so the overlap is arguably evidence-grounded rather than lazy."
+        },
+        {
+          "id": "fd.true-axes",
+          "role": "Only THREE independent axes exist: structure-conflict-resolution (1, 6) · residual-rewrite (2, 4) · environment-rewrite (3, 7). mech-5 is a fourth axis (weight space) but its weakness is whether it can be called 'thinking' at all."
+        }
       ]
     },
     {
       "id": "evidence-integrity",
       "role": "What the divergence pass actually stood on, and where that gave way. The 7 mechanisms are sound as ideas; their FALSIFIERS were calibrated against a one-line compression of L4 ('M F2 0.908 vs control 0.617') that had dropped every fact needed to set a threshold. Recorded in the SSOT because this is a live defect in the method, not a closed incident.",
       "children": [
-        { "id": "ei.the-lossy-summary", "role": "The compression dropped four load-bearing facts: (1) the metric is d_acc, a forced-choice accuracy BOUNDED at 1.0 — so a threshold can be arithmetically unreachable; (2) the 0.617 control is NO CODEC (raw utf-8), not a weak codec — so 'vs 0.617' silently varies the alphabet; (3) the panel has a measured LEAK CEILING of 0.9167 and the fixed codec already sits on it — so there is ~0.01 of headroom, not 0.38; (4) the result was cemented at 2 seeds, not 1. Every mechanism's falsifier was written against the summary, so the damage is repo-wide, not local to the bet." },
-        { "id": "ei.opposite-symptoms-one-cause", "role": "The same lost fact broke two mechanisms in opposite directions, which is why neither was caught by reading: mech-3 compares to the STRONG arm and is therefore UNPASSABLE (needs >0.1 where <=0.0917 exists); mech-1 compares to the WEAK arm and is therefore TRIVIALLY PASSABLE (any codec clears +0.15 unaided). A falsifier that cannot fail and a falsifier that cannot pass are the same bug wearing different clothes." },
-        { "id": "ei.the-bet-rests-on-its-own-null", "role": "The deepest finding, and it is structural rather than clerical. mech-3's ground is that it 'stands on a lever already measured green'. But the green (L4b, delta +0.29/+0.34) was produced by a FIXED, frequency-trained, label-blind codec — no adversary, no learning, no tension. That artifact is not mech-3's supporting evidence; it is mech-3's NULL HYPOTHESIS, already measured, at 0.9167 = the panel's leak ceiling. A mechanism whose best case is to match its own control on the panel it inherited cannot demonstrate anything there. The bet inherited the drill and the number but not the question." },
+        {
+          "id": "ei.the-lossy-summary",
+          "role": "The compression dropped four load-bearing facts: (1) the metric is d_acc, a forced-choice accuracy BOUNDED at 1.0 — so a threshold can be arithmetically unreachable; (2) the 0.617 control is NO CODEC (raw utf-8), not a weak codec — so 'vs 0.617' silently varies the alphabet; (3) the panel has a measured LEAK CEILING of 0.9167 and the fixed codec already sits on it — so there is ~0.01 of headroom, not 0.38; (4) the result was cemented at 2 seeds, not 1. Every mechanism's falsifier was written against the summary, so the damage is repo-wide, not local to the bet."
+        },
+        {
+          "id": "ei.opposite-symptoms-one-cause",
+          "role": "The same lost fact broke two mechanisms in opposite directions, which is why neither was caught by reading: mech-3 compares to the STRONG arm and is therefore UNPASSABLE (needs >0.1 where <=0.0917 exists); mech-1 compares to the WEAK arm and is therefore TRIVIALLY PASSABLE (any codec clears +0.15 unaided). A falsifier that cannot fail and a falsifier that cannot pass are the same bug wearing different clothes."
+        },
+        {
+          "id": "ei.the-bet-rests-on-its-own-null",
+          "role": "The deepest finding, and it is structural rather than clerical. mech-3's ground is that it 'stands on a lever already measured green'. But the green (L4b, delta +0.29/+0.34) was produced by a FIXED, frequency-trained, label-blind codec — no adversary, no learning, no tension. That artifact is not mech-3's supporting evidence; it is mech-3's NULL HYPOTHESIS, already measured, at 0.9167 = the panel's leak ceiling. A mechanism whose best case is to match its own control on the panel it inherited cannot demonstrate anything there. The bet inherited the drill and the number but not the question."
+        },
         {
           "id": "ei.where-a-learned-codec-could-still-earn-its-keep",
           "role": "UNVERIFIED — a direction, not a claim; the successor's job to pre-register. A learned codec has room in exactly one place: where the static method provably cannot reach, rather than merely has not been tuned.",
           "children": [
-            { "id": "ei.the-unreachable-region", "role": "Frequency BPE cannot TARGET atomicity — it can only search K and hope (L4.atomicity-was-luck-not-method) — and greedy BPE never merges a pair below its min-count floor at ANY K (tool/anima_v4.bpe_merge_reachable). So a morpheme that is rare, or that collides in jamo with a frequent neighbour, is unreachable for the static control BY CONSTRUCTION. There the headroom is the full C1->M gap (~0.3), not the ~0.01 the saturated panel leaves." },
-            { "id": "ei.the-objective-may-reduce-to-the-control", "role": "CAUTION before betting on it. mech-3 specifies G's loss as 'A's future CE + MDL' and both terms are frequency-aligned, while MDL-driven morphology induction is a known STATIC technique (Morfessor-class). So G-as-specified may reduce to a better-tuned version of its own control rather than to a tension. An objective that pulls toward atomicity must be found, and it is not this one. Pending the literature gate." }
+            {
+              "id": "ei.the-unreachable-region",
+              "role": "Frequency BPE cannot TARGET atomicity — it can only search K and hope (L4.atomicity-was-luck-not-method) — and greedy BPE never merges a pair below its min-count floor at ANY K (tool/anima_v4.bpe_merge_reachable). So a morpheme that is rare, or that collides in jamo with a frequent neighbour, is unreachable for the static control BY CONSTRUCTION. There the headroom is the full C1->M gap (~0.3), not the ~0.01 the saturated panel leaves."
+            },
+            {
+              "id": "ei.the-objective-does-reduce-to-the-control",
+              "role": "CONFIRMED by the literature gate, and worse than suspected — see mech-3.objective. 'CE + MDL' is not two frequency-aligned terms, it is ONE term written twice (CE *is* MDL's data part). The reduction to the static control is definitional, not a risk. Any repaired mech-3 must take G's target from the TASK METRIC, never from likelihood (mech-3.obj.the-one-known-escape)."
+            },
+            {
+              "id": "ei.the-empirical-prior-is-against-it",
+              "role": "The field has run this and it loses. Nawrot et al., Dynamic Token Pooling (2211.09761, ACL 2023): end-to-end Gumbel-learned boundaries lost to a plain STATIC Unigram tokenizer on 6/6 corpora, were WORSE THAN NO POOLING on Hebrew, and lost to whitespace on all three English sets; the authors' own words — 'the approaches based on entropy spikes and Gumbel-Sigmoid are generally inferior to the alternatives' — and they retreated to supervised boundaries. Revealed preference at scale: BLT (2412.09871) takes patches from a SEPARATELY TRAINED, FROZEN byte-LM's entropy with zero gradient and lists end-to-end learning as future work. Learned-boundary collapse is universal, and every published fix is an exogenous hand-set compression prior — i.e. hand-setting the very rate G was supposed to discover."
+            },
+            {
+              "id": "ei.the-korean-premise-is-unsupported",
+              "role": "L5's 'bound suffix cannot be learned' — mech-3's reason for targeting Korean — did not survive contact. Truong et al. (2404.02421, NAACL 2024): tokenizers DO mis-segment negative affixes in English yet models still infer negated meaning, effect 'minimal' (observational null). It is also FREQUENCY-INVERTED: the bound form `지 않다` outnumbers the free `안` about 2.1:1, so no sparsity story explains why bound would be hard. And jamo as the SOLE unit is measured HARMFUL for Korean (Park et al. 2020, 2010.02534: -12.75 F1 KorQuAD vs best); it helps only as an AUXILIARY signal atop morpheme/subword units — so a 'BPE-jamo lattice' sits on the wrong side of that line."
+            },
+            {
+              "id": "ei.the-one-interventional-green",
+              "role": "The single positive result in this literature is an INTERVENTION, not a learned mechanism: Truong (2404.02421) forcibly split the affix boundary open (`unintended` -> `un-intended`) and it HELPED, most for weaker models. Every observational study of morphological alignment is null or negative (Ismayilzada 2410.12656: 'tokenization may not be the underlying issue'; Arnett 2507.06378, 70 languages incl. Korean: alignment shows a small NEGATIVE correlation, R^2=0.024). Read together: exposing a boundary BY FIAT works; discovering it by likelihood does not. That is an argument for a fixed-codec contrast, not for an adversary."
+            },
+            {
+              "id": "ei.the-gap-is-real",
+              "role": "Clean null on the decisive question: no found work trains a segmenter against a COMPOSITIONAL-GENERALIZATION signal, and no SCAN/COGS/CFQ-style study varies tokenization as an independent variable. Every learned-segmentation paper terminates at bits-per-byte or perplexity (H-Net 2507.07955, BLT 2412.09871). The two literatures do not cite each other here. The campaign's question is genuinely open — but the open part is the MEASUREMENT, not the adversary."
+            }
           ]
+        }
+      ]
+    },
+    {
+      "id": "next-gate",
+      "role": "What to run next, and why it is no longer a tension at all. The literature gate + H_001 between them removed the adversary from the critical path: the open question is the MEASUREMENT, not the opposition. Pre-register before building (that discipline is what caught mech-3 for $0).",
+      "children": [
+        {
+          "id": "ng.drop-g",
+          "role": "DROP G ENTIRELY for the first gate. The causal claim mech-3 actually rests on — 'does exposing the composition boundary change held-out recombination?' — is a FIXED-CODEC CONTRAST. It needs no adversary, no gradient estimator through a discrete lattice, no stabilizer stack, and no rented GPU. This is Truong's hyphenation intervention (2404.02421) — the one intervention in this literature that worked — ported to Korean."
+        },
+        {
+          "id": "ng.the-one-variable",
+          "role": "The whole mechanism claim reduces to ONE pair: the same codec with `않` forcibly split vs not split, everything else identical. That is a one-variable causal contrast (adm.3), and it is the only comparison that isolates 'boundary exposed' from 'alphabet changed' and from 'a codec exists'. Arms: jamo / BPE / morpheme-aware BPE / whole-word / whole-word-with-`않`-split, x5 seeds."
+        },
+        {
+          "id": "ng.control-and-headroom",
+          "role": "Two corrections H_001 forces on any such design. (1) The control MUST be a fixed codec, never raw utf-8 — an un-codec'd control confounds segmentation with everything else, which is what broke mech-3's ablation. (2) The task must be HARDENED until the control sits near the 0.5 chance floor: at 0.908 the panel is ceiling-adjacent and the contrast has no room to move (that is the saturation H_001 measured)."
+        },
+        {
+          "id": "ng.report-both-separately",
+          "role": "Report bits-per-byte AND the held-out recombination metric SEPARATELY, never a sum. BPB is the only segmentation-invariant likelihood (mech-3.obj.ce-is-self-scored); the recombination metric is the verdict. Keeping them apart is what p7 (perplexity is never truth) means operationally — the compression number is diagnostics, not the finding."
+        },
+        {
+          "id": "ng.the-free-re-analysis",
+          "role": "CHEAPEST OF ALL, and it tests a premise the whole Korean lane rests on: L5 says composition must be visible at the token boundary because `안` is free and `지 않다` is bound. That number — do models handle `안` vs `지 않다` differently — does not exist in the literature. Thunder-KoNUBench (2601.04693, UNVERIFIED id) publishes the short/long-form split but never crosses it with model accuracy. It is a re-analysis of an already-annotated public corpus: zero training, zero GPU. Run this before spending anything on codecs."
         }
       ]
     },
@@ -199,29 +491,70 @@
       "id": "data-flow",
       "role": "No pipeline exists — anima-v4 is at the divergence stage (see scope.stage). This node stays a placeholder until a mechanism is selected and its falsifier returns a verdict.",
       "children": [
-        { "id": "flow.in", "role": "(unbuilt — pending mechanism selection)" },
-        { "id": "flow.out", "role": "(unbuilt — pending mechanism selection)" }
+        {
+          "id": "flow.in",
+          "role": "(unbuilt — pending mechanism selection)"
+        },
+        {
+          "id": "flow.out",
+          "role": "(unbuilt — pending mechanism selection)"
+        }
       ]
     },
     {
       "id": "verification",
       "role": "Hypothesis-verification system: pre-register → falsify → run → verdict. Flat registry + one rich card per hypothesis; shared deterministic harness in repo-root tool/.",
       "children": [
-        { "id": "HYPOTHESES", "role": "HYPOTHESES/ — REGISTRY.jsonl (one JSON line per hypothesis) + cards/H_*.md (frozen pre-register + >=5 falsifiers) + cards/_TEMPLATE.md skeleton. H_001 🟢 SUPPORTED — mech-3's clause-(2) falsifier is vacuous (7/7, closed-form, $0)." },
-        { "id": "tool", "role": "tool/anima_v4.py — stdlib-only closed-form primitives + Falsifier/evaluate ledger. Per-hypothesis runs + result.json live under state/<hX>/. Carries the falsifier-admissibility primitives (max_attainable_delta · falsifier_reachable · saturation · bpe_merge_reachable) that H_001 ran on." },
-        { "id": "verification.inherited-gates", "role": "Every candidate's falsifier MUST carry an L1 check (is the tension's effective rank > 1?) and an L2 check (ablate the channel → does deltaCE actually move?). These two are non-negotiable — they are the exact measurements whose absence killed v1." },
+        {
+          "id": "HYPOTHESES",
+          "role": "HYPOTHESES/ — REGISTRY.jsonl (one JSON line per hypothesis) + cards/H_*.md (frozen pre-register + >=5 falsifiers) + cards/_TEMPLATE.md skeleton. H_001 🟢 SUPPORTED — mech-3's clause-(2) falsifier is vacuous (7/7, closed-form, $0)."
+        },
+        {
+          "id": "tool",
+          "role": "tool/anima_v4.py — stdlib-only closed-form primitives + Falsifier/evaluate ledger. Per-hypothesis runs + result.json live under state/<hX>/. Carries the falsifier-admissibility primitives (max_attainable_delta · falsifier_reachable · saturation · bpe_merge_reachable) that H_001 ran on."
+        },
+        {
+          "id": "verification.inherited-gates",
+          "role": "Every candidate's falsifier MUST carry an L1 check (is the tension's effective rank > 1?) and an L2 check (ablate the channel → does deltaCE actually move?). These two are non-negotiable — they are the exact measurements whose absence killed v1."
+        },
         {
           "id": "verification.admissibility-gate",
           "role": "PREREQUISITE TO THE INHERITED GATES, and the cheapest gate in the campaign — it runs on arithmetic, before any code exists. A falsifier is ADMISSIBLE only if it can return both answers. H_001 exists because mech-3's could not.",
           "children": [
-            { "id": "adm.1-reachable", "role": "Check the threshold against the metric's CEILING and the control's measured score: if `threshold > ceiling − control`, the falsifier is vacuous — it returns DEAD for every possible mechanism. Killed mech-3 clause (2) (needs >0.1 where <=0.0917 exists)." },
-            { "id": "adm.2-not-free", "role": "Check the threshold against the control's FLOOR: if the mechanism's scaffolding alone clears the bar without the mechanism doing anything, the falsifier certifies the scaffolding. Killed mech-1 clause (3) (any codec clears +0.15 over the no-codec arm unaided)." },
-            { "id": "adm.3-one-variable", "role": "The ablation must vary exactly ONE thing. 'Learned codec vs no codec' varies alphabet AND learning; only 'learned codec vs fixed codec, same alphabet' isolates the tension. Every 'vs 0.617' clause in this tree fails this check." },
-            { "id": "adm.4-name-the-arm", "role": "A falsifier may cite a number only with the ARM that produced it and that arm's source path. 'control 0.617' is not a control — it is a number that lost its experiment. This clause is what the whole divergence pass was missing (see evidence-integrity.the-lossy-summary)." }
+            {
+              "id": "adm.1-reachable",
+              "role": "Check the threshold against the metric's CEILING and the control's measured score: if `threshold > ceiling − control`, the falsifier is vacuous — it returns DEAD for every possible mechanism. Killed mech-3 clause (2) (needs >0.1 where <=0.0917 exists)."
+            },
+            {
+              "id": "adm.2-not-free",
+              "role": "Check the threshold against the control's FLOOR: if the mechanism's scaffolding alone clears the bar without the mechanism doing anything, the falsifier certifies the scaffolding. Killed mech-1 clause (3) (any codec clears +0.15 over the no-codec arm unaided)."
+            },
+            {
+              "id": "adm.3-one-variable",
+              "role": "The ablation must vary exactly ONE thing. 'Learned codec vs no codec' varies alphabet AND learning; only 'learned codec vs fixed codec, same alphabet' isolates the tension. Every 'vs 0.617' clause in this tree fails this check."
+            },
+            {
+              "id": "adm.4-name-the-arm",
+              "role": "A falsifier may cite a number only with the ARM that produced it and that arm's source path. 'control 0.617' is not a control — it is a number that lost its experiment. This clause is what the whole divergence pass was missing (see evidence-integrity.the-lossy-summary)."
+            }
           ]
         },
-        { "id": "verification.p7-retained", "role": "v1's p7 (no perplexity verdict — CE/perplexity is a Goodhart trap, never truth) is the ONE purity principle anima-v4 inherits. Per L9 the other seven manufactured the disease and are discarded." }
+        {
+          "id": "verification.p7-retained",
+          "role": "v1's p7 (no perplexity verdict — CE/perplexity is a Goodhart trap, never truth) is the ONE purity principle anima-v4 inherits. Per L9 the other seven manufactured the disease and are discarded."
+        }
       ]
     }
-  ]
+  ],
+  "convergence": {
+    "records": [
+      {
+        "id": "architecture-json-1",
+        "state": "pos-conv",
+        "value": "설계 SSOT 노드는 점 표기 id(mech-3.codec-war)와 300자 초과 role을 관례로 쓴다 — 게이트가 잡을 결함이 아니라 이 저장소의 의도된 형태다. 진짜 원인은 sidecar architecture search 의 walk 가 name 필드 있는 노드만 검사한 것(우리 트리는 id+role만 씀 ⇒ 전 노드 스킵)이었고 업스트림에서 수정함 — 점 표기는 부분문자열 검색을 전혀 깨지 않는다",
+        "threshold": "ARCH-ID-FORMAT/ARCH-BIG-CELL 위반이 트리 노드의 >50%면 규칙이 오설정: 트리를 뭉개지 말고 lint.archCellCap 을 올려라(현재 96/103 id · 32/103 cell · HEAD 이미 123 · 첫 커밋부터 --no-verify = L8 재발). ARCH-ID-FORMAT 의 명분(searchability)은 점 표기로도 충족되므로 규칙 자체가 근거 없음",
+        "source": "ARCHITECTURE.json"
+      }
+    ]
+  }
 }
