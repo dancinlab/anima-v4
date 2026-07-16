@@ -2,6 +2,28 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_003 🔴 FALSIFIED: atomicity is NOT causal (mech-3 dead, all four parts)
+
+- The re-dispatched d=384 L=4 ×2-seed run completed cleanly (10/10 arms, local MPS). `collect_verdict.py`
+  applied the frozen falsifiers: **F1 Δd_acc(A-atom − A-shat) = −0.1146 (s0) / +0.0468 (s1)** — both
+  below the 0.05 DEAD floor; at seed 0 the *atomic* arm scored lower than the shattered one.
+- **The measurement is CLEAN** (verdict-integrity cleared — this is a real null, not a tool artifact):
+  F2 liveness f1'(A-atom) = 0.8594 at BOTH seeds ≥ 0.85 (model learned + scorer discriminates, unlike
+  the quarantined windower run's flat 0.5); F6 placebo gap ≤ 0.05 (A-shat's loss is not generic
+  embedding interference); C-scaf ≈ 0.5 (grid does not leak); C-perm in [0.40,0.60] (harness/label
+  does not leak). Every structural control confirms the null.
+- **Meaning**: v1's `salvage.L4` attribution ("ATOMICITY of the negator token — and nothing else" was
+  causal) does NOT survive isolation. Under a fixed jamo-BPE codec, an atomic negator token buys nothing
+  on held-out negation recombination versus shattering it into jamo singletons. Whatever carried v1's
+  MORPH-ATOM 🟢 (d_acc 0.9083/0.9167) was confounded with atomicity — a different codec/corpus/curriculum.
+  This confirms `L4.atomicity-was-luck-not-method` as fact, not suspicion, and retires mech-3's last lever.
+- mech-3 is now dead in all four parts: falsifier vacuous (H_001 🟢), objective tautological (literature
+  gate), L5 bound/free premise not in the measurement (H_002 🟢), atomicity not causal (H_003 🔴).
+- Recorded: H_003 card Verdict + `status: falsified`, REGISTRY tier 🔴, ARCHITECTURE `scope.stage` +
+  `salvage.L4.atomicity-isolated-is-null` (new gate node) + `next-gate` (codec axis CLOSED), README banner.
+- **NEXT**: leave the codec axis — mech-1 (파서 결투) / mech-7 (반사실 편집자) are the other two independent
+  tension families. Same discipline: research → admissibility-gate → pre-register → falsify.
+
 ## 2026-07-16 — H_003 first full run was a WINDOWER BUG (quarantined); fixed + re-dispatched
 
 - The first full d=384 run "finished" in minutes with EVERY arm at exactly 0.5 and NO per-step loss
