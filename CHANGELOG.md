@@ -2,6 +2,36 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 G-2 training driver DESIGNED (implementable spec; run still gated on freeze)
+
+- `DESIGN_g2_training_fable5.md`: exact spec for `train_h004.py` — H_003 trunk (CLMConvMoE d=384 L=4
+  E=3) on RAW UTF-8 (no codec — the codec axis is closed, and it removes L1's foothold) + resolver R
+  (32.5k params): size-invariant offset-bucket ingestion of the n×n field T → per-node embedding added
+  to byte embeds pre-trunk via the measured eojeol↔node map (20 == 3K+2 on f2″/drill, 5 on f1′);
+  `struct` is an input of the SAME forward used at eval (nc5 — a training-only binder is impossible).
+- ONE variable = the per-item map T→tensor handed to R: A-duel T · A-rank1 `rank1_tiebreak(T)`
+  (measured on all 192 built items: six σ=√2 blocks tie ⇒ the tie rule fires on EVERY item ⇒ row-0
+  truncation = slot 0's two signed cells only; arithmetic floor ≈0.583 ≈ E=0.62) ·
+  C-plc ΠTΠᵀ (per-item fixed Π) · C-scaf 0 (drills, unlike H_003's C-scaf — the honest floor) ·
+  C-perm T + shuffled drill gold. Shared: one CPT cache (struct=None), same manual_seed init, same
+  batch draws, same scorer. Slot indexing pinned: answer bytes `[base+3k, base+3k+3)`, 앞/뒤 both
+  3 bytes, gold-teacher-forced forced choice, K+1 forwards/item, no H_003-style context prefix.
+- Falsifiers made procedural: F1 (Δ≥0.15 / <0.05, E 0.90 vs 0.62) · F2 (f1′<0.85) · F3 (C-scaf>0.60) ·
+  F4 = `offtop(∂Σlogp_gold/∂T) < 0.20` on trained A-duel (learned-usage rank, the L1 fold-in) ·
+  F5 = inference-only substitution T→|T_struct| (union skeleton, χ removed; ΔCE<0.01 ∧ Δd_acc<0.05 ⇒
+  DEAD, the L2 fold-in) · F6 (A-duel−C-plc≤0.05; measured perm floor 0.711) · C-perm∈[0.45,0.55].
+- Honest scope carried from G-1 §(iii): χ is hand-computed — G-2 certifies the resolved-FIELD FORMAT
+  as the causal carrier, NOT parser competence. Flagged failure modes: capacity (FM-1, read F6 with
+  the drill-CE diagnostic), rank-1 conditioning (FM-2, probe ceiling 0.4167 anchors the info claim),
+  wiring/frame-transfer false-DEAD (FM-3 — drill is 100% K=6 while f1′ is K=1 held-out-tail; the
+  pre-recorded tell separates transfer-death from liveness-death). #1 wiring risk named: drill cannot
+  reuse `_stack_windows` (struct is position-aligned) → per-item padded batches + external masked CE;
+  smoke WIRING-1..5 (alignment · slots · T-sign-flip injection liveness · d=64 16-item overfit ≥0.9 ·
+  harness) must pass before the ~5–6h d=384 run.
+- `ARCHITECTURE.json`: added `ng.mech1.g2-training-design` under `ng.mech1-is-next` in lockstep.
+- NOT a run authorization: `pre_register_frozen: false` stands; native-operator G-1 remains the only
+  gate before freeze → smoke → G-2.
+
 ## 2026-07-16 — H_004 G-2 drill grid built; F7″ disjointness PENDING→PASS (all $0 gates closed but native G-1)
 
 - `gen_drill_h004.py` → `drill_grid_multi.json` (n=384): teaches the K=6 MULTI-BIND task on the DRILLED
