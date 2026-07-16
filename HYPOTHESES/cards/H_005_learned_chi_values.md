@@ -69,6 +69,12 @@ per-node φ? If the trunk does not represent the concord, χ̂ = g(φ) has nothi
 (the gate doing its job, not a setback). No H_004 checkpoint needed — G3-a's OWN CPT stage is the same
 recipe; run one CPT per seed and probe (tens of minutes, $0 cash). `train_g3a.py --g3-0d`.
 
+**RESULT (2026-07-17): probe φ→hon held-out acc = 1.0 (n=1200) ≥ 0.90 → PASS, χ̂ can read concord ⇒ build.**
+But acc=1.0 TRIGGERS honest-limit (a) below at the ceiling: the templatic drill register lets the trunk
+encode the hon bit near-verbatim, so g(φ) is ~one linear unmix from g(raw hon). G3-a stays admissible and F5
+still guards vacuity, but the eventual F1a-green claim is SCOPED to "concord recoverable from trunk
+representations on the drill register" — a modest, honestly-bounded result, NOT a strong natural-text claim.
+
 ## Honest-limit (Fable fidelity review) — when G3-a is STILL a scaffolding-certifier
 
 Even rewired, name it on the frozen record: (a) if G3-0d probes ≈1.0 because the templatic drill register
