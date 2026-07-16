@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import random
 import sys
@@ -250,10 +251,17 @@ def _cpt_windows(lines, seq_len, torch):
 
 # ---------------------------------------------------------------- drill (per-item padded)
 def _drill_batch(model, torch, items, arm, seed, device, pad):
-    """One padded batch: (tokens, targets, struct, mask) for masked external CE."""
+    """One padded batch: (tokens, targets, struct, mask, amask) for masked external CE.
+
+    `mask`  = all predict-next positions (surface + answer).
+    `amask` = ONLY the positions that predict the 3·K answer bytes (base-1 .. base+3K-2 = the
+    PREDICT positions, per the off-by-one lesson train-h004-py-1). ⊆ mask. Lets the drill loop
+    up-weight the 18 decisive bytes so the binding CE is not diluted by ~215 surface bytes
+    (root cause of the run-1 precond failure: drill CE converged to 6·ln2/L ≈ chance-on-binding).
+    """
     B = len(items)
     tok = np.zeros((B, pad), np.int64); tgt = np.zeros((B, pad), np.int64)
-    mask = np.zeros((B, pad), np.float32)
+    mask = np.zeros((B, pad), np.float32); amask = np.zeros((B, pad), np.float32)
     struct = torch.zeros(B, pad, 64, device=device)
     for bi, (idx, item) in enumerate(items):
         surf_b, gold_b = _seq_bytes(item)
@@ -263,17 +271,40 @@ def _drill_batch(model, torch, items, arm, seed, device, pad):
         tok[bi, :L] = list(seq)
         tgt[bi, :L - 1] = list(seq[1:])
         mask[bi, :L - 1] = 1.0                            # predict-next positions
+        base = len(surf_b); K = len(gold_b) // 3          # answer = 3·K bytes appended after surface
+        a0 = max(base - 1, 0); a1 = min(base + 3 * K - 1, L - 1)   # predict-positions of answer bytes
+        if a1 > a0:
+            amask[bi, a0:a1] = 1.0
         struct[bi, :st.shape[0]] = st.to(device)
-    return (torch.tensor(tok, device=device), torch.tensor(tgt, device=device),
-            struct, torch.tensor(mask, device=device))
+    return (torch.tensor(tok, device=device), torch.tensor(tgt, device=device), struct,
+            torch.tensor(mask, device=device), torch.tensor(amask, device=device))
 
 
-def train_arm(arm, seed, cfg_tuple, panels, drill, cpt_win, steps, device):
+# drill objective constants (arm-BLIND — applied identically to all 5 arms; the only across-arm
+# difference stays the T-policy in _arm_tensor · quarantine amendment to run-1's diluted objective)
+LAMBDA_ANS = 5.0                     # up-weight the 18 answer bytes: 1/L → 5/18 ≈ ×65 per-position
+_BASE_LR, _MIN_LR, _WARMUP = 3e-4, 1e-5, 100
+
+
+def _drill_lr(step, drill_steps):
+    warm = min((step + 1) / _WARMUP, 1.0)
+    cos = _MIN_LR / _BASE_LR + (1 - _MIN_LR / _BASE_LR) * 0.5 * (1 + math.cos(math.pi * step / drill_steps))
+    return _BASE_LR * warm * cos
+
+
+def train_arm(arm, seed, cfg_tuple, panels, drill, cpt_win, steps, device, tag=None):
     torch, M, cfg, Struct = cfg_tuple
     torch.manual_seed(seed)
     model = Struct(cfg).to(device)
-    opt = torch.optim.Adam(model.parameters(), lr=3e-4)
+    opt = torch.optim.Adam(model.parameters(), lr=_BASE_LR)
     import torch.nn.functional as F
+    logf = os.path.join(_HERE, f"train_log_{tag}.jsonl") if tag else None
+
+    def _log(rec):
+        if logf:
+            with open(logf, "a") as fh:
+                fh.write(json.dumps({"arm": arm, "seed": seed, **rec}, ensure_ascii=False) + "\n")
+
     # CPT (struct=None, identical for all arms)
     cpt_steps, drill_steps = steps
     bs = 8 if device == "cpu" else 16
@@ -282,6 +313,8 @@ def train_arm(arm, seed, cfg_tuple, panels, drill, cpt_win, steps, device):
         w = cpt_win[idx].to(device)
         out = model(w[:, :-1], targets=w[:, 1:])
         opt.zero_grad(); out["loss"].backward(); opt.step()
+        if logf and (step % 500 == 0 or step == cpt_steps - 1):
+            _log({"phase": "cpt", "step": step, "ce": round(float(out["loss"].item()), 4)})
     # drill (per-item padded, external masked CE; per-arm struct)
     d_items = list(enumerate(drill))
     drill_gold = [it["gold_pattern"] for _, it in d_items]
@@ -293,19 +326,37 @@ def train_arm(arm, seed, cfg_tuple, panels, drill, cpt_win, steps, device):
         d_items = [(idx, {**it, "gold_pattern": drill_gold[perm[i]]})
                    for i, (idx, it) in enumerate(d_items)]
     pad = 256 if cfg.d_model == 64 else 320    # must fit the longest K=6 drill item (~250 bytes)
+    ce_ans = torch.tensor(0.0)
     for step in range(drill_steps):
         bi = torch.randint(0, len(d_items), (min(bs, len(d_items)),))
         batch = [d_items[i] for i in bi.tolist()]
-        tok, tgt, struct, mask = _drill_batch(model, torch, batch, arm, seed, device, pad)
+        tok, tgt, struct, mask, amask = _drill_batch(model, torch, batch, arm, seed, device, pad)
         out = model(tok, struct=struct)
         logits = out["logits"]                                       # (B,V,T)
-        ce = F.cross_entropy(logits[:, :, :-1].transpose(1, 2).reshape(-1, cfg.vocab_size),
-                             tgt[:, :-1].reshape(-1), reduction="none")
-        ce = (ce * mask[:, :-1].reshape(-1)).sum() / mask[:, :-1].sum().clamp(min=1)
-        loss = ce + out["aux_loss"]
-        opt.zero_grad(); loss.backward(); opt.step()
+        ce_tok = F.cross_entropy(logits[:, :, :-1].transpose(1, 2).reshape(-1, cfg.vocab_size),
+                                 tgt[:, :-1].reshape(-1), reduction="none")
+        m = mask[:, :-1].reshape(-1); am = amask[:, :-1].reshape(-1); sm = m - am
+        ce_surf = (ce_tok * sm).sum() / sm.sum().clamp(min=1)        # ~215 surface bytes, weight 1
+        ce_ans = (ce_tok * am).sum() / am.sum().clamp(min=1)         # 18 answer bytes, weight LAMBDA
+        loss = ce_surf + LAMBDA_ANS * ce_ans + out["aux_loss"]
+        lr = _drill_lr(step, drill_steps)                            # 100-step warmup + cosine → 1e-5
+        for g in opt.param_groups:
+            g["lr"] = lr
+        opt.zero_grad(); loss.backward()
+        gnorm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)   # drill-only insurance
+        opt.step()
+        if logf and (step % 50 == 0 or step == drill_steps - 1):
+            _log({"phase": "drill", "step": step, "lr": round(lr, 7),
+                  "ce_surf": round(float(ce_surf.item()), 4), "ce_ans": round(float(ce_ans.item()), 4),
+                  "aux": round(float(out["aux_loss"].item()), 5), "grad_norm": round(float(gnorm), 3)})
+        if logf and (step % 500 == 0 or step == drill_steps - 1):
+            model.eval()
+            _log({"phase": "drill_eval", "step": step,
+                  "drill_dacc32": round(dacc_panel(model, torch, drill[:32], arm, 0, device), 4),
+                  "per_slot": dacc_perslot(model, torch, drill[:32], arm, 0, device)})
+            model.train()
     model.eval()
-    return model, float(ce.item())
+    return model, float(ce_ans.item())     # drill_ce_final now = the binding (answer) CE, the true metric
 
 
 # ---------------------------------------------------------------- smoke wiring checks
@@ -453,7 +504,7 @@ def run_full(device, cpt_steps, drill_steps, tag, seeds=(0, 1)):
         for arm in ARMS:
             print(f"  training {arm}.s{seed} (CPT {cpt_steps} + drill {drill_steps}, d={cfg.d_model})…", flush=True)
             model, ce = train_arm(arm, seed, (torch, M, cfg, Struct), {"f2": f2, "f1": f1},
-                                  drill, cpt_win, (cpt_steps, drill_steps), device)
+                                  drill, cpt_win, (cpt_steps, drill_steps), device, tag=tag)
             rec = {
                 "f2doubleprime": round(dacc_panel(model, torch, f2, arm, 1, device), 4),
                 "f2doubleprime_per_slot": dacc_perslot(model, torch, f2, arm, 1, device),
@@ -477,6 +528,52 @@ def run_full(device, cpt_steps, drill_steps, tag, seeds=(0, 1)):
     return 0
 
 
+def fit_check(device):
+    """$0-ish pre-flight (~10-15 min MPS): does the FIXED drill objective fit A-duel to ≥0.95?
+
+    d=64/L=2 (the smoke config), CPT 200 + full 384-item drill 1500 steps, on the TARGET device
+    (train-h004-py-2: exercise the MPS struct path, never CPU-only). Trains ONLY A-duel s0, A-duel s1,
+    C-perm s0. Go-bar (ALL must pass, else DO NOT launch the ~3.8h full run):
+      1. A-duel drill d_acc ≥ 0.95 both seeds AND seed-spread ≤ 0.03  (optimization, not capacity)
+      2. A-duel ce_ans (binding CE) decays < 0.05 both seeds            (the new answer term trains)
+      3. C-perm drill d_acc vs TRUE gold ≤ 0.60                         (boosted loss ≠ shuffled fit)
+    If bar-1 fails at d=64, re-test d=128 before any conclusion (capacity confound at 64; none at 384).
+    """
+    torch, M, cfg, Struct = _load(smoke=True)                # d=64, L=2, E=2
+    drill = json.load(open(os.path.join(_HERE, "drill_grid_multi.json"), encoding="utf-8"))
+    f2 = json.load(open(os.path.join(_HERE, "panel_f2doubleprime.json"), encoding="utf-8"))
+    f1 = json.load(open(os.path.join(_HERE, "panel_f1prime.json"), encoding="utf-8"))
+    cpt_win = _cpt_windows(_nsmc_lines(2000), 128, torch)
+    logp = os.path.join(_HERE, "train_log_fitcheck.jsonl")
+    if os.path.exists(logp):
+        os.remove(logp)
+    print(f"FIT-CHECK: d=64 L=2, CPT 200 + drill 1500 on {device} (fixed objective λ={LAMBDA_ANS} + "
+          "cosine LR); A-duel s0/s1 + C-perm s0 …", flush=True)
+    res = {}
+    for arm, seed in [("A-duel", 0), ("A-duel", 1), ("C-perm", 0)]:
+        model, ce_ans = train_arm(arm, seed, (torch, M, cfg, Struct), {"f2": f2, "f1": f1},
+                                  drill, cpt_win, (200, 1500), device, tag="fitcheck")
+        dacc = round(dacc_panel(model, torch, drill[:64], arm, 0, device), 4)
+        res[f"{arm}.s{seed}"] = {"drill_dacc": dacc, "ce_ans_final": round(ce_ans, 4)}
+        print(f"    {arm}.s{seed}: drill_dacc={dacc}  ce_ans={round(ce_ans, 4)}", flush=True)
+    ad0, ad1 = res["A-duel.s0"]["drill_dacc"], res["A-duel.s1"]["drill_dacc"]
+    bar1 = ad0 >= 0.95 and ad1 >= 0.95 and abs(ad0 - ad1) <= 0.03
+    bar2 = res["A-duel.s0"]["ce_ans_final"] < 0.05 and res["A-duel.s1"]["ce_ans_final"] < 0.05
+    bar3 = res["C-perm.s0"]["drill_dacc"] <= 0.60
+    with open(os.path.join(_HERE, "fitcheck_result.json"), "w") as fh:
+        json.dump({"device": device, "results": res,
+                   "bar1_aduel_fit": bar1, "bar2_ce_ans_decays": bar2, "bar3_cperm_harness": bar3,
+                   "GO": bar1 and bar2 and bar3}, fh, indent=2, ensure_ascii=False)
+    print(f"\nbar1 A-duel≥0.95 both + spread≤0.03: {'PASS' if bar1 else 'FAIL'}  "
+          f"(s0={ad0} s1={ad1})")
+    print(f"bar2 ce_ans<0.05 both:               {'PASS' if bar2 else 'FAIL'}")
+    print(f"bar3 C-perm true-gold ≤0.60:         {'PASS' if bar3 else 'FAIL'}  "
+          f"({res['C-perm.s0']['drill_dacc']})")
+    print("\nFIT-CHECK VERDICT:", "GO — launch the full run" if (bar1 and bar2 and bar3)
+          else "NO-GO — do not spend the full run; diagnose from train_log_fitcheck.jsonl")
+    return 0 if (bar1 and bar2 and bar3) else 1
+
+
 def _frozen():
     card = os.path.join(_ROOT, "HYPOTHESES", "cards", "H_004_parser_duel_tension_rank_drill.md")
     for ln in open(card, encoding="utf-8"):
@@ -492,6 +589,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--full-check", action="store_true", help="$0 plumbing: run_full at d=64 tiny steps")
+    ap.add_argument("--fit-check", action="store_true",
+                    help="pre-flight: does the fixed drill objective fit A-duel ≥0.95 at d=64 (~15min MPS)")
     a = ap.parse_args()
     import torch
     device = "mps" if torch.backends.mps.is_available() else "cpu"
@@ -501,12 +600,14 @@ def main() -> int:
         print(f"FULL-CHECK: run_full plumbing at d=64 on {device} (not a verdict; exercises the "
               "target device to catch CPU/MPS placement bugs) …")
         return run_full(device, cpt_steps=20, drill_steps=120, tag="check", seeds=(0,))
+    if a.fit_check:
+        return fit_check(device)
     if not _frozen():
         print("FULL RUN refused: H_004 card pre_register_frozen != true. Native-operator G-1 must "
               "clear and the card must be frozen first (no-escape-hatch).")
         return 2
-    print("FULL RUN — H_004 G-2 d=384 ×2seed ×5arm (~5h)…", flush=True)
-    return run_full(device, cpt_steps=8000, drill_steps=2500, tag="full", seeds=(0, 1))
+    print("FULL RUN — H_004 G-2 d=384 ×2seed ×5arm (~4h)…", flush=True)
+    return run_full(device, cpt_steps=8000, drill_steps=4000, tag="full", seeds=(0, 1))
 
 
 if __name__ == "__main__":
