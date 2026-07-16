@@ -4,7 +4,8 @@ ssot: ARCHITECTURE.json → next-gate.*, mech-1.* (this card is the pre-register
 slug: parser-duel-tension-rank-drill
 title: the per-edge parse-disagreement FIELD T (A=L→R parser vs G=R→L parser) — as a field, NOT its rank-1 scalar summary — CAUSES held-out honorific-binding resolution; one variable = post-parse tension policy (full T vs rank-1 T), predicted Δd_acc ≥ 0.15 on a HON-BIND panel whose heuristics sit at 0.5
 domain: verification-design (causal drill · pre-register SEED)
-status: frozen
+status: supported
+verdict: 🟢 SUPPORTED (2026-07-17) — free-slot d_acc, d=384 ×2seed ×5arm. F1 Δ(A-duel−A-rank1)=0.3789/0.3802 ≥0.15 both seeds; F4 offtop 0.6467/0.6963 ≥0.20 (R reads a HIGH-rank field, not v1's rank-1 seam); F5 d_dacc 0.5/0.5 ≥0.05 (decoder needs the resolution, not any-tensor capacity); F2/F3/F6/harness/precond all clean both seeds. SCOPE: certifies the resolved-FIELD FORMAT (edge-aligned) as causal carrier of held-out honorific binding beyond its rank-1 summary; does NOT claim a TRAINED parser pair produces this field (χ hand-computed) — licenses building the learned-duel stage next.
 exploration_method: research-gate delegated to Fable 5 under fable-mode (literature scan + one-variable lever + admissibility arithmetic); absorbed locally
 verification_method: deterministic panel audits (F7 · closed-form) + trained-arm falsifiers (F1–F7, with L1 eff-rank as F4 and L2 union-substitution as F5) with a rank-1 control, a placebo, and a leak-ceiling arm
 pre_register_frozen: true
@@ -20,7 +21,33 @@ llm: none in the eval path (design only; the model is trained, the scoring is de
 > `next-gate`. Raw seed: `state/h004_parser_duel_tension_rank_drill_2026-07-16/DESIGN_fable5_seed.md`.
 > Human viewer: `python3 serve.py`. **NOT FROZEN — no number here is a result; G-0/G-1 gate it.**
 
-## Status — 🔵 RE-FROZEN (2 amendments) + RE-LAUNCH PENDING (2026-07-16)
+## Status — 🟢 SUPPORTED (2026-07-17)
+
+**VERDICT: SUPPORTED** (collect_verdict_h004.py verbatim, free-slot d_acc, d=384 ×2seed ×5arm drill4000):
+
+```
+[seed 0] A-duel f2″=1.0  A-rank1 f2″=0.6211  →  F1 Δ=0.3789
+  liveness f1′=1.0 (≥0.85) · drill=1.0 (≥0.95 precond) · C-scaf 0.4935 (<0.60) · C-perm 0.4648 (∈[.45,.55])
+  C-plc 0.625 → F6 gap=0.375 (>0.05) · F4 offtop=0.6467 (≥0.20) · F5 dCE=1.9343 d_dacc=0.5
+[seed 1] A-duel f2″=1.0  A-rank1 f2″=0.6198  →  F1 Δ=0.3802
+  liveness f1′=1.0 · drill=1.0 · C-scaf 0.5534 · C-perm 0.4857
+  C-plc 0.6341 → F6 gap=0.3659 · F4 offtop=0.6963 · F5 dCE=1.9177 d_dacc=0.5
+precond_ok=True live_ok=True F3_leak=False harness_bad=False F4_dead=False F5_dead=False F6_void=False
+VERDICT: SUPPORTED — Δd_acc(A-duel−A-rank1) ≥ 0.15 both seeds, F2/F3/F4/F5/F6/harness clean.
+```
+
+**What it means**: the per-edge parse-disagreement FIELD T beats its own rank-1 summary by Δ=0.38 on held-out
+honorific binding, AND it does so through a genuinely high-dimensional, genuinely-needed resolution — the two
+measurements that killed anima(v1) both PASS here: F4 (offtop 0.65/0.70 ≫ 0.20) says R reads more than a rank-1
+shadow (not L1's one-bit seam); F5 (strip resolution → d_acc 1.0→0.5, d_dacc=0.5) says the decoder needs the
+resolved field, not any-tensor capacity (not L2's replacement-not-coupling). **SCOPE (load-bearing)**: G-2
+certifies the resolved-FIELD FORMAT as causal carrier; χ (the honorific concord) is HAND-COMPUTED, so this does
+NOT yet claim a TRAINED L→R/R→L parser pair produces this field. SUPPORTED licenses building that learned-duel
+stage next. Reached only after three root-caused defects (device-placement crash · masked-CE dilution ·
+GF(2)-rank-4 codebook parity metric-ceiling) — see Amendments below + convergence train-h004-py-{2,3},
+build-honbind-multi-py-1.
+
+## Status (history) — 🔵 RE-FROZEN (2 amendments) → RAN (2026-07-16/17)
 
 **FROZEN** (`pre_register_frozen: true`) — every $0 gate PASSED on the built MULTI-BIND panel: F7″ (pairwise slot-corr 0.0) · G-0 rank-mass 0.833 · G-1 probe separation 0.583 · F6 headroom 0.477 · drill lexeme-disjointness · G-2 driver smoke GREEN (A-duel overfits) · full-loop plumbing GREEN (5 arms train + eval f2″/f1′/drill + F4/F5 + json). G-1 grammar = LLM-judged PASS finalized under the owner's go-delegation (H_003 'LLM 판정' precedent); the honest caveats (PL normativity · loose associative P의H genitives · 6-stack) are accepted-risk and documented in g1_multi_grammar_provisional.md — reversible (revise + re-freeze if a native reviewer later rejects a surface).
 
