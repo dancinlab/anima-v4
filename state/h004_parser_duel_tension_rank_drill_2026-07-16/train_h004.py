@@ -139,27 +139,27 @@ def _load(smoke):
 
 
 # ---------------------------------------------------------------- struct tensor for an item
-def _struct_for(model, torch, item, arm, set_id, idx, seq_bytes_len):
-    """(seq_bytes_len, 64) struct rows: node_embed(arm_tensor(T)) scattered by node_of_byte."""
-    T, gold, n = _item_T(item)
-    Ta = _arm_tensor(T, arm, set_id, idx)
-    emb = model.node_embed(torch.tensor(Ta, dtype=torch.float32))    # (n,64)
-    surf = item["surface"]
-    nob = _node_of_byte(surf, n)                                     # len == len(surf bytes)
+def _node_layout(surf, n, gold, seq_bytes_len):
+    """(seq_bytes_len,) node id per byte. Answer byte k → its conjunct-k node (3k) at the PREDICTION
+    position (base+3k-1) + the 3 answer bytes, so the answer reads its slot's resolved structure
+    directly (train-h004-py-1: the off-by-one lesson)."""
+    nob = _node_of_byte(surf, n)
     full = np.full(seq_bytes_len, n - 1, dtype=np.int64)            # default → ANS node
     full[:len(nob)] = nob
-    # answer byte for slot k → its own conjunct verb node (3k), so the answer position carries
-    # slot-k's RESOLVED structure directly (a short read), not a ~200-byte propagation through a
-    # causal trunk. A-duel gets all 6 slots' signs; A-rank1 only slot 0's (row-0 truncation);
-    # C-scaf gets the zero-field. The arm separation is preserved; the injection becomes testable.
     base = len(surf.encode("utf-8"))
     K = len(gold)
     node_k = (lambda k: 3 * k) if K > 1 else (lambda k: 0)
     for k in range(K):
-        # positions [base+3k-1 .. base+3k+2]: the position that PREDICTS answer byte k (base+3k-1,
-        # whose hidden state feeds logits[:, that pos] for seq[base+3k]) AND the 3 answer bytes.
-        lo = max(base + 3 * k - 1, 0)
-        full[lo: base + 3 * k + 3] = node_k(k)
+        full[max(base + 3 * k - 1, 0): base + 3 * k + 3] = node_k(k)
+    return full
+
+
+def _struct_for(model, torch, item, arm, set_id, idx, seq_bytes_len, override_T=None):
+    """(seq_bytes_len, 64) struct rows: node_embed(arm_tensor(T)) scattered by _node_layout."""
+    T, gold, n = _item_T(item)
+    Ta = override_T if override_T is not None else _arm_tensor(T, arm, set_id, idx)
+    emb = model.node_embed(torch.tensor(Ta, dtype=torch.float32))    # (n,64)
+    full = _node_layout(item["surface"], n, gold, seq_bytes_len)
     struct = emb[torch.tensor(full)]                                # (seq_bytes_len, 64)
     return struct, gold, T
 
@@ -206,6 +206,28 @@ def _dacc_item(model, torch, item, arm, set_id, idx, device):
 def dacc_panel(model, torch, panel, arm, set_id, device):
     return float(np.mean([_dacc_item(model, torch, panel[i], arm, set_id, i, device)
                           for i in range(len(panel))]))
+
+
+def dacc_perslot(model, torch, panel, arm, set_id, device):
+    """Per-slot mean d_acc on a K=6 panel (FM-2 signature: slot-0-high/others-0.5 for A-rank1)."""
+    K = len(panel[0].get("gold_pattern", "앞")) if "gold_pattern" in panel[0] else 1
+    acc = np.zeros(K)
+    for i, it in enumerate(panel):
+        surf_b, gold_b = _seq_bytes(it)
+        base = len(surf_b); seq = surf_b + gold_b
+        struct, gold, _ = _struct_for(model, torch, it, arm, set_id, i, len(seq))
+        struct = struct.to(device)
+        def _nll(byte_seq, k):
+            toks = torch.tensor(list(byte_seq), dtype=torch.long, device=device)[None]
+            with torch.no_grad():
+                logp = torch.log_softmax(model(toks, struct=struct[None])["logits"][0], dim=0)
+            s = base + 3 * k
+            return sum(-logp[byte_seq[s + j], s + j - 1].item() for j in range(3))
+        for k in range(K):
+            s = base + 3 * k
+            alt = bytearray(seq); alt[s:s + 3] = ANS[1 - gold[k]].encode()
+            acc[k] += 1 if _nll(seq, k) <= _nll(bytes(alt), k) else 0
+    return (acc / len(panel)).round(4).tolist()
 
 
 # ---------------------------------------------------------------- CPT (raw utf-8 concat)
@@ -263,8 +285,10 @@ def train_arm(arm, seed, cfg_tuple, panels, drill, cpt_win, steps, device):
     if arm == "C-perm":
         perm = list(range(len(d_items)))
         random.Random(seed).shuffle(perm)
-        d_items = [(d_items[i][0], dict(d_items[j], gold_pattern=drill_gold[j]))
-                   for i, j in enumerate(perm)]  # shuffle gold across items (whole 6-tok units)
+        # keep item i's surface/conjuncts (⇒ real T), swap in a shuffled gold_pattern target:
+        # A-duel trained on permuted gold ⇒ no consistent field→answer signal ⇒ f2″ ≈ 0.5 (harness)
+        d_items = [(idx, {**it, "gold_pattern": drill_gold[perm[i]]})
+                   for i, (idx, it) in enumerate(d_items)]
     pad = 256 if cfg.d_model == 64 else 320    # must fit the longest K=6 drill item (~250 bytes)
     for step in range(drill_steps):
         bi = torch.randint(0, len(d_items), (min(bs, len(d_items)),))
@@ -354,17 +378,131 @@ def smoke(device="cpu"):
     return 0 if ok else 1
 
 
+ARMS = ["A-duel", "A-rank1", "C-plc", "C-scaf", "C-perm"]
+
+
+def _f4_offtop(model, torch, f2, device):
+    """F4 (=L1): learned T-usage rank on trained A-duel. Per item: grad of Σ logp(gold answer bytes)
+    w.r.t. T; offtop(grad) mean < 0.20 ⇒ R reads ≤ a rank-1 shadow ⇒ DEAD."""
+    offs = []
+    for i, it in enumerate(f2):
+        T, gold, n = _item_T(it)
+        Tt = torch.tensor(T, dtype=torch.float32, device=device, requires_grad=True)
+        emb = model.node_embed(Tt)                                   # (n,64) grad-enabled
+        surf_b, gold_b = _seq_bytes(it); base = len(surf_b); seq = surf_b + gold_b
+        full = _node_layout(it["surface"], n, gold, len(seq))
+        struct = emb[torch.tensor(full, device=device)][None]        # (1,T,64)
+        toks = torch.tensor(list(seq), dtype=torch.long, device=device)[None]
+        logp = torch.log_softmax(model(toks, struct=struct)["logits"][0], dim=0)
+        L = 0.0
+        for k in range(len(gold)):
+            s = base + 3 * k
+            for j in range(3):
+                L = L + logp[seq[s + j], s + j - 1]
+        model.zero_grad(); L.backward()
+        offs.append(gc.offtop(Tt.grad.detach().cpu().numpy()))
+    return float(np.mean(offs))
+
+
+def _f5_union(model, torch, f2, device):
+    """F5 (=L2): inference-only substitution T → |t_struct| (both candidate edges +1, χ removed).
+    ΔCE (answer bytes) and Δd_acc between the real field and the resolution-stripped skeleton."""
+    ha, hg = bt._heads()
+    ce_T, ce_U, dac_T, dac_U = [], [], 0, 0
+    for i, it in enumerate(f2):
+        T, gold, n = _item_T(it)
+        union = np.abs(gc.t_struct(n, ha, hg))                       # unsigned skeleton, item-independent
+        for tag, Ta in (("T", None), ("U", union)):
+            surf_b, gold_b = _seq_bytes(it); base = len(surf_b); seq = surf_b + gold_b
+            struct, g, _ = _struct_for(model, torch, it, "A-duel", 1, i, len(seq), override_T=Ta)
+            toks = torch.tensor(list(seq), dtype=torch.long, device=device)[None]
+            with torch.no_grad():
+                logp = torch.log_softmax(model(toks, struct=struct.to(device)[None])["logits"][0], dim=0)
+            ce = 0.0; corr = 0
+            for k in range(len(gold)):
+                s = base + 3 * k
+                ce += sum(-logp[seq[s + j], s + j - 1].item() for j in range(3))
+                alt = bytearray(seq); alt[s:s + 3] = ANS[1 - gold[k]].encode()
+                t2 = torch.tensor(list(bytes(alt)), dtype=torch.long, device=device)[None]
+                with torch.no_grad():
+                    lp2 = torch.log_softmax(model(t2, struct=struct.to(device)[None])["logits"][0], dim=0)
+                nll_alt = sum(-lp2[alt[s + j], s + j - 1].item() for j in range(3))
+                nll_gold = sum(-logp[seq[s + j], s + j - 1].item() for j in range(3))
+                corr += 1 if nll_gold <= nll_alt else 0
+            n_ans = 3 * len(gold)
+            if tag == "T":
+                ce_T.append(ce / n_ans); dac_T += corr / len(gold)
+            else:
+                ce_U.append(ce / n_ans); dac_U += corr / len(gold)
+    return {"dCE": round(float(np.mean(ce_U)) - float(np.mean(ce_T)), 4),
+            "d_dacc": round(dac_T / len(f2) - dac_U / len(f2), 4)}
+
+
+def run_full(device, cpt_steps, drill_steps, tag, seeds=(0, 1)):
+    torch, M, cfg, Struct = _load(smoke=(drill_steps < 500))    # check mode d=64, full d=384
+    f2 = json.load(open(os.path.join(_HERE, "panel_f2doubleprime.json"), encoding="utf-8"))
+    f1 = json.load(open(os.path.join(_HERE, "panel_f1prime.json"), encoding="utf-8"))
+    drill = json.load(open(os.path.join(_HERE, "drill_grid_multi.json"), encoding="utf-8"))
+    n_cpt = 2000 if tag == "check" else 120000
+    cpt_win = _cpt_windows(_nsmc_lines(n_cpt), 128 if tag == "check" else 512, torch)
+    results = {}
+    for seed in seeds:
+        for arm in ARMS:
+            print(f"  training {arm}.s{seed} (CPT {cpt_steps} + drill {drill_steps}, d={cfg.d_model})…", flush=True)
+            model, ce = train_arm(arm, seed, (torch, M, cfg, Struct), {"f2": f2, "f1": f1},
+                                  drill, cpt_win, (cpt_steps, drill_steps), device)
+            rec = {
+                "f2doubleprime": round(dacc_panel(model, torch, f2, arm, 1, device), 4),
+                "f2doubleprime_per_slot": dacc_perslot(model, torch, f2, arm, 1, device),
+                "f1prime": round(dacc_panel(model, torch, f1, arm, 2, device), 4),
+                "drill_dacc": round(dacc_panel(model, torch, drill[:64], arm, 0, device), 4),
+                "drill_ce_final": round(ce, 4),
+            }
+            if arm == "A-duel":
+                rec["F4_offtop"] = round(_f4_offtop(model, torch, f2, device), 4)
+                rec["F5_union"] = _f5_union(model, torch, f2, device)
+            results[f"{arm}.s{seed}"] = rec
+            print(f"    {arm}.s{seed}: f2″={rec['f2doubleprime']} f1′={rec['f1prime']} "
+                  f"drill={rec['drill_dacc']}", flush=True)
+    out = {"config": {"d": cfg.d_model, "L": cfg.n_trunk_layers, "cpt_steps": cpt_steps,
+                      "drill_steps": drill_steps, "tag": tag, "seeds": list(seeds)},
+           "results": results}
+    fn = "train_result_full.json" if tag == "full" else f"train_result_{tag}.json"
+    with open(os.path.join(_HERE, fn), "w") as fh:
+        json.dump(out, fh, indent=2, ensure_ascii=False)
+    print(f"wrote {fn}")
+    return 0
+
+
+def _frozen():
+    card = os.path.join(_ROOT, "HYPOTHESES", "cards", "H_004_parser_duel_tension_rank_drill.md")
+    for ln in open(card, encoding="utf-8"):
+        if ln.strip().startswith("pre_register_frozen:"):
+            return "true" in ln.lower()
+    return False
+
+
+_ROOT = os.path.dirname(os.path.dirname(_HERE))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--full-check", action="store_true", help="$0 plumbing: run_full at d=64 tiny steps")
     a = ap.parse_args()
     import torch
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     if a.smoke:
-        return smoke(device="cpu")     # smoke on cpu for determinism/speed at d=64
-    print("FULL RUN is gated on native-operator G-1 + pre_register_frozen. "
-          "Freeze the card first; then wire the full loop here. Refusing to spend ~5h unfrozen.")
-    return 2
+        return smoke(device="cpu")
+    if a.full_check:
+        print("FULL-CHECK: run_full plumbing at d=64 (not a verdict) …")
+        return run_full("cpu", cpt_steps=20, drill_steps=120, tag="check", seeds=(0,))
+    if not _frozen():
+        print("FULL RUN refused: H_004 card pre_register_frozen != true. Native-operator G-1 must "
+              "clear and the card must be frozen first (no-escape-hatch).")
+        return 2
+    print("FULL RUN — H_004 G-2 d=384 ×2seed ×5arm (~5h)…", flush=True)
+    return run_full(device, cpt_steps=8000, drill_steps=2500, tag="full", seeds=(0, 1))
 
 
 if __name__ == "__main__":

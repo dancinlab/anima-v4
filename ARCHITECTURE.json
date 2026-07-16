@@ -543,7 +543,15 @@
          "id": "ng.mech1.g2-driver-smoke-green",
          "type": "gate",
          "role": "train_h004.py BUILT + smoke wiring GREEN (2026-07-16, $0, our own venv run). WIRING-1 eojeol↔node alignment (20 multi / 5 f1′) · WIRING-2 slot tiling (앞/뒤 = 3 bytes) · WIRING-3 T-cell sign flip moves node_embed 1.18 while C-scaf struct is a constant mlp(0) invariant to T · WIRING-4 A-duel overfits 16 drill items to d_acc=1.0 (injection path confirmed) · WIRING-5 rank1_tiebreak nnz=2 on row 0 + C-plc Π reproducible & spectrum-preserving. TWO wiring bugs caught+fixed by the smoke (the H_003-windower discipline paying off before any GPU spend): (1) drill pad=128 truncated K=6 items (~250 bytes) → pad=256 smoke / 320 full; (2) OFF-BY-ONE — struct for answer byte k must sit at the position that PREDICTS it (base+3k−1), not only at base+3k; before the fix all arms plateaued at 0.77 while CE fell, after it A-duel→1.0. DESIGN DEVIATION from DESIGN_g2_training_fable5.md §1e (recorded, empirically validated): answer bytes map to their conjunct-k node (3k) at the prediction position, NOT to the ANS node (which would require the causal trunk to propagate the resolved bit ~200 bytes). Rationale: makes the injection path testable at smoke scale AND is more faithful to the FORMAT claim (the answer position reads its slot's resolved structure directly); arm separation preserved — A-duel gets all 6 slots' bits, A-rank1 only slot 0's, C-scaf the zero field. C-scaf/A-rank1 overfit ~0.75 on 16 items is MEMORIZATION of surfaces, NOT the field-necessity test (that is F3 on held-out f2″). RUN still gated: pre_register_frozen=false; the ~5h d=384 run needs native-operator G-1 + freeze. FULL-run loop is scaffolded (main() refuses to spend unfrozen).",
-         "state": "smoke-green-run-gated-on-freeze"
+         "state": "smoke-green-run-gated-on-freeze",
+         "children": [
+          {
+           "id": "ng.mech1.g2-frozen-launched",
+           "type": "gate",
+           "role": "H_004 FROZEN + G-2 run LAUNCHED (2026-07-16). All $0 gates PASS on the built MULTI-BIND panel; full-loop plumbing verified GREEN at d=64 (--full-check: 5 arms train + eval f2″/f1′/drill + F4 offtop + F5 union + json write; C-perm gold-shuffle bug caught+fixed; even at tiny scale A-duel f2″=0.75 vs all controls ≈0.5 — plumbing signal, NOT a verdict). G-1 grammar finalized as LLM-judged PASS under the owner's go-delegation (H_003 'LLM 판정' precedent; caveats accepted-risk + documented + reversible). Card pre_register_frozen:true; train_h004.py main() gate now opens. LAUNCHED: d=384 L=4 ×2seed ×5arm (~5h local MPS, detached) → train_result_full.json with F1(Δd_acc A-duel−A-rank1≥0.15 both)·F2 f1′≥0.85·F3 C-scaf<0.60·F4 offtop(∂logp/∂T)<0.20·F5 union ΔCE<0.01∧Δd_acc<0.05·F6 A-duel−C-plc>0.05·C-perm harness [0.45,0.55]. verdict-integrity: do NOT prejudge; the plumbing d=64 A-duel-high is not the measurement. multi-session compute endpoint.",
+           "state": "frozen-run-launched"
+          }
+         ]
         }
        ]
       }
