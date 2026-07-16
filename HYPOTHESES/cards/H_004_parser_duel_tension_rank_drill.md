@@ -54,11 +54,22 @@ off-top 0.8333 ✓ · probe(vec) 1.000 ✓ · probe(rank-1) 0.5833 ≤ 0.60 ✓ 
 separation 0.4167 ✓ · perm-placebo 0.711 ⇒ F6 headroom 0.289 ✓. f1′ stays liveness; f2′ becomes
 report-only diagnostic; F1 moves to f2″ with E[A-rank1]=0.62.
 
-**Remaining before `pre_register_frozen: true`**: (1) native-operator confirm of the PL-cell
-normativity + 2 flagged genitive orders + lexeme-pool expansion 4→6 pairs for MULTI-BIND; (2) build
-f2″ MULTI-BIND (K=6, n=192) + F7″ audit + the drill grid with its lexeme-disjointness check (F7
-disjointness currently PENDING); (3) re-run G-0 rank-mass + G-1 probe-separation on the BUILT f2″
-(predictions above are exact and falsifiable); (4) re-anchor F1 E-values on f2″.
+**MULTI-BIND f2″ BUILT + G-0/G-1 PASS on it** (2026-07-16, $0, our own `build_honbind_multi.py` +
+`build_tension.py` runs — not the design's synthetic-factorial self-report; commons `verify-done`).
+The real Korean panel (`panel_f2doubleprime.json`, n=192, K=6, 20 nodes) decorrelates its 6 slots by a
+strength-2 orthogonal array — the 6 conjunct cells per sentence are a codeword of the **[6,3] MDS
+Reed-Solomon code over GF(4)** (64 codewords × 3 lexeme rotations), giving MEASURED worst pairwise
+slot-gold deviation = **0.0000**. **F7″ PASS** (all 6 slots × 4 heuristics 0.5, balance 0.5, 도-boundary
+constant). **G-0/G-1 on the built panel**: off-top rank-mass **0.8333** ≥ 0.20; cross-validated (cv8,
+stratified by the 16 gold-patterns) probe(vec) **1.000** · probe(rank-1) **0.4167** ≤ 0.60 · separation
+**0.5833** > 0.05 · F6 perm-placebo headroom **0.4766** > 0.05. *verdict-integrity catch*: perm-placebo
+train-acc was 1.000 (small-n memorization) — cv8 dropped it to 0.5234 (chance), the honest number that
+clears F6; train=test would have falsely voided it.
+
+**Remaining before `pre_register_frozen: true`**: native-operator G-1 only — surfaces grammatical · PL-cell
+normativity · genitive orders · the 4 new pool lexemes 원장님/총장님/조수/신입 (`?`-flagged). Then freeze →
+build the drill grid (+ its lexeme-disjointness check) → G-2 d=384 arms (A-duel/A-rank1/C-plc/C-scaf/
+C-perm ×2 seed). E-anchor for F1 on f2″: E[A-rank1]=0.62, E[A-duel]=0.90.
 
 ## Hypothesis
 
