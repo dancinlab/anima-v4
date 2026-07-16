@@ -2,6 +2,17 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 G-2 drill grid built; F7″ disjointness PENDING→PASS (all $0 gates closed but native G-1)
+
+- `gen_drill_h004.py` → `drill_grid_multi.json` (n=384): teaches the K=6 MULTI-BIND task on the DRILLED
+  pool (9 HON / 8 PLAIN, SPEC §1 split), same GF(4)-MDS cross-slot decorrelation (per-slot balance 0.5,
+  worst pairwise slot-gold dev 0.0, per-slot presence 0.5 — the drill is itself heuristic-neutral).
+- **F7″ lexeme-disjointness gate PENDING→PASS**: every f2″/f1′ held-out lexeme (어머님/회장님/스승님/
+  박사님/원장님/총장님 · 조카/후배/제자/비서/조수/신입) and the held-out register 기다렸네요 is ABSENT
+  (substring) from every drill surface — so f2″ genuinely tests recombination to novel fillers.
+- With this, ALL $0 pre-freeze gates are closed: G-0 F7″ · G-0 rank-mass · G-1 separation · F6 placebo ·
+  drill disjointness. The ONLY remaining freeze gate is native-operator G-1 grammar confirm.
+
 ## 2026-07-16 — H_004 MULTI-BIND G-1 grammar: provisional LLM PASS (native confirm pending)
 
 - LLM first-pass on the K=6 stacked surfaces (`g1_multi_grammar_provisional.md`, H_003 "LLM 판정"
