@@ -1,0 +1,46 @@
+{
+  "config": {
+    "d": 64,
+    "L": 2,
+    "cpt_steps": 20,
+    "drill_steps": 120,
+    "tag": "check",
+    "seeds": [
+      0
+    ],
+    "metric": "free-slot"
+  },
+  "results": {
+    "A-hand.s0": {
+      "f2doubleprime": 0.4688,
+      "f1prime": 0.5,
+      "drill_dacc": 0.4688,
+      "ce_ans_final": 1.4926
+    },
+    "A-χ̂.s0": {
+      "f2doubleprime": 0.5013,
+      "f1prime": 0.5,
+      "drill_dacc": 0.4961,
+      "ce_ans_final": 1.5022,
+      "chi_grad_seen": true
+    },
+    "C-χ̂plc.s0": {
+      "f2doubleprime": 0.5013,
+      "f1prime": 0.5,
+      "drill_dacc": 0.5,
+      "ce_ans_final": 1.4978
+    },
+    "C-scaf.s0": {
+      "f2doubleprime": 0.4688,
+      "f1prime": 0.5,
+      "drill_dacc": 0.5,
+      "ce_ans_final": 1.4975
+    },
+    "C-perm.s0": {
+      "f2doubleprime": 0.4805,
+      "f1prime": 0.5,
+      "drill_dacc": 0.5,
+      "ce_ans_final": 1.5892
+    }
+  }
+}
