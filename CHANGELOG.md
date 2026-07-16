@@ -2,6 +2,22 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 first launch crashed (MPS device-placement); quarantined + fixed + re-launched
+
+- The first d=384 launch CRASHED after CPT with `RuntimeError: Placeholder storage has not been
+  allocated on MPS device!` — root cause: the custom `node_embed` took a CPU tensor into MPS
+  parameters (`r_out`/`r_in` embeddings). CPT (`struct=None`) passed; the DRILL struct path crashed on
+  the first drill step. The smoke and --full-check both ran on `device="cpu"`, so the MPS placement
+  bug was never exercised (observability blind spot).
+- **QUARANTINED** (`infra-wall-noneval`): the crashed run measured NOTHING → no verdict is
+  contaminated; the frozen card, collector, and all $0 gates stand unchanged.
+- **Root fix**: `node_embed` now moves its input to `self.r_out.weight.device` before the lookup;
+  `--full-check` now runs on the real target device (MPS) to catch placement bugs. **MPS full-check
+  GREEN** (5 arms, drill on MPS OK; A-duel f2″=0.73 vs controls ≈0.5 — plumbing signal, not a verdict).
+- Convergence `train-h004-py-2`: a CPU smoke green does NOT prove device placement — run the wiring
+  smoke on the TARGET device (≥1 forward through every conditional path, esp. struct/injection) before
+  any long GPU/MPS run. Re-launched.
+
 ## 2026-07-16 — H_004 FROZEN + G-2 run launched (all $0 gates PASS; ~5h d=384 falsification in flight)
 
 - **Full-run loop wired** into train_h004.py (run_full: 5 arms × 2 seeds, CPT 8000 + drill 2500 at

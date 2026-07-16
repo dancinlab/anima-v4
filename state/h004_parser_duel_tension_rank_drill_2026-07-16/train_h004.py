@@ -109,9 +109,12 @@ def _load(smoke):
             self.rproj = torch.nn.Linear(64, cfg.d_model)
 
         def node_embed(self, T):                       # T: (n,n) tensor → (n,64)
+            dev = self.r_out.weight.device             # move input to the module's device (MPS/CPU)
+            if T.device != dev:                        # else CPU tensor + MPS params → "Placeholder
+                T = T.to(dev)                          # storage not allocated on MPS" (train-h004-py-2)
             n = T.shape[0]
-            delta = torch.arange(n)[None, :] - torch.arange(n)[:, None]
-            b = (delta.clamp(-9, 9) + 9).to(T.device)
+            delta = (torch.arange(n, device=dev)[None, :] - torch.arange(n, device=dev)[:, None])
+            b = (delta.clamp(-9, 9) + 9)
             h = (T.unsqueeze(-1) * self.r_out(b)).sum(1) + (T.t().unsqueeze(-1) * self.r_in(b)).sum(1)
             return self.rmlp(h)                         # (n,64)
 
@@ -495,8 +498,9 @@ def main() -> int:
     if a.smoke:
         return smoke(device="cpu")
     if a.full_check:
-        print("FULL-CHECK: run_full plumbing at d=64 (not a verdict) …")
-        return run_full("cpu", cpt_steps=20, drill_steps=120, tag="check", seeds=(0,))
+        print(f"FULL-CHECK: run_full plumbing at d=64 on {device} (not a verdict; exercises the "
+              "target device to catch CPU/MPS placement bugs) …")
+        return run_full(device, cpt_steps=20, drill_steps=120, tag="check", seeds=(0,))
     if not _frozen():
         print("FULL RUN refused: H_004 card pre_register_frozen != true. Native-operator G-1 must "
               "clear and the card must be frozen first (no-escape-hatch).")
