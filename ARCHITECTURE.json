@@ -702,6 +702,13 @@
         "value": "설계 SSOT 노드는 점 표기 id(mech-3.codec-war)와 300자 초과 role을 관례로 쓴다 — 게이트가 잡을 결함이 아니라 이 저장소의 의도된 형태다. 진짜 원인은 sidecar architecture search 의 walk 가 name 필드 있는 노드만 검사한 것(우리 트리는 id+role만 씀 ⇒ 전 노드 스킵)이었고 업스트림에서 수정함 — 점 표기는 부분문자열 검색을 전혀 깨지 않는다",
         "threshold": "ARCH-ID-FORMAT/ARCH-BIG-CELL 위반이 트리 노드의 >50%면 규칙이 오설정: 트리를 뭉개지 말고 lint.archCellCap 을 올려라(현재 96/103 id · 32/103 cell · HEAD 이미 123 · 첫 커밋부터 --no-verify = L8 재발). ARCH-ID-FORMAT 의 명분(searchability)은 점 표기로도 충족되므로 규칙 자체가 근거 없음",
         "source": "ARCHITECTURE.json"
+      },
+      {
+        "id": "train-h003-py-1",
+        "state": "pos-conv",
+        "value": "학습 드라이버가 코퍼스를 줄 단위로 seq_len 윈도우하면, 줄 길이 < seq_len 인 데이터(NSMC ~53바이트 < 512)는 전부 0 윈도우로 탈락해 모델이 한 번도 학습 안 된다 — 그런데 eval 은 정상 실행돼 전 arm 이 정확히 chance(0.5)를 낸다(no-train artifact). 반드시 코퍼스를 연속 스트림으로 concat 한 뒤 윈도우하라(바이트레벨 LM 표준·v1 방식)",
+        "threshold": "학습 결과가 전 arm 정확히 0.5(chance) + 스텝 loss 로그 부재 + 런이 예상보다 훨씬 빨리 끝남 = no-train 신호. verdict 로 읽지 말고 하네스 먼저 의심(verdict-integrity·infra-wall-noneval): 윈도우 개수>0 인지, 코퍼스 줄 길이 vs seq_len 을 실측 확인",
+        "source": "state/h003_atomicity_fixed_codec_drill_2026-07-16/train_h003.py"
       }
     ]
   },
