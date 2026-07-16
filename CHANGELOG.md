@@ -2,6 +2,34 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 G-1 core: single-bind panel is F4-DEAD (rank-1); MULTI-BIND K=6 is the fix ($0)
+
+- The G-0 rank-mass half + the G-1 probe separation, RUN AND RE-VERIFIED BY OUR OWN `g1_core_check.py`
+  execution (not the design's self-report; commons `verify-done`): the honorific-blind proxy parsers
+  P_A (L→R nearest-head) / P_G (R→L maximal-head) disagree on exactly ONE edge on the built HON-BIND
+  frame, so the concord field collapses to **T ≡ s·(E12+E13)**, s = 1−2·gold_flip — one signed scalar,
+  v1's emit-bit in a 5×5 costume.
+- **Measured, both panels: G-0 off-top rank-mass = 0.000 (< 0.20 ⇒ F4-DEAD as pre-registered);
+  probe(vec T) = probe(rank-1 T) = 1.000 ⇒ separation 0.000 ⇒ the pre-registered STOP fires**;
+  permuted-T probe 1.000 ⇒ F6 void; F1 inadmissible on single-bind (A-rank1 ≈ A-duel ⇒ DEAD by
+  construction). The single-bind HON-BIND panel — F7-clean though it is — cannot certify the mechanism:
+  a tension with one contested site IS the emit-bit. **This is a $0 kill that saves a d=384 run.**
+- The XOR shield is confirmed: unary token features score exactly 0.500 through a concave linear probe
+  (balanced XOR ⇒ w\*=0); a single T cell — a cross-edge product, matrix coordinate ≡ token pair —
+  scores 1.000. Binding is linearly readable ONLY as edge-indexed products (the field's indexing IS
+  the binding). Scope: G-1 certifies the representation FORMAT (concord layer hand-coded); parser
+  competence is G-2's question.
+- **Fix, arithmetic-checked by our run on the full 4⁶ factorial: MULTI-BIND K=6** — six stacked
+  HON-BIND conjuncts in one sentence, six 앞/뒤 answer slots (chance 0.5/slot), T = Σ c_k M_k rank-6:
+  off-top **0.8333** ≥ 0.20 ✓ · probe(vec) **1.000** ≥ 0.75 ✓ · probe(rank-1) **0.5833** ≤ 0.60 ✓
+  (exact — K=6 is the minimal K) · separation **0.4167** ✓ · perm-placebo 0.711 ⇒ F6 headroom 0.289 ✓.
+  Single-bind panels kept: f1′ = liveness, f2′ = report-only diagnostic; F1 moves to f2″, E[A-rank1]
+  re-anchored to 0.62.
+- Distilled to `next-gate.ng.mech1.g1-core-single-bind-degenerate`; H_004 card Status + REGISTRY line
+  updated. Freeze stays blocked: operator confirms (PL normativity · genitive orders · lexeme pool
+  4→6 pairs), build the real Korean f2″ K=6 panel + F7″, re-run G-0/G-1 on the BUILT f2″. Artifacts:
+  `DESIGN_g1_core_fable5.md` · `g1_core_check.py` · `g1_core_check.json`.
+
 ## 2026-07-16 — H_004 G-0: HON-BIND panel BUILT + F7 PASS (verified by our own run, $0)
 
 - Implemented `build_hon_bind.py` against the spec and ran the F7 audit ourselves (commons

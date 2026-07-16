@@ -39,10 +39,26 @@ N1 lexeme; the prefix analog of H_003's long-suffix over-count, not a learnable 
 PROVISIONAL LLM PASS (`g1_grammar_provisional.md`): surfaces grammatical, +시 cells hard grammar, −시
 cells rest on the drilled categorical-agreement convention (documented asymmetry).
 
+**G-1 core designed + arithmetic-MEASURED at $0 (2026-07-16)** — `state/h004_parser_duel_tension_
+rank_drill_2026-07-16/DESIGN_g1_core_fable5.md` (numbers from our own `g1_core_check.py` run):
+honorific-blind proxy parsers P_A (L→R nearest-head) / P_G (R→L maximal-head) disagree on exactly ONE
+edge on this frame, so the concord field collapses to `T ≡ s·(E12+E13)`, s = 1−2·gold_flip — one
+signed scalar (v1's emit-bit in a 5×5 costume). Measured consequences on the built panel: **G-0
+rank-mass = 0.000 < 0.20 (F4-DEAD as pre-registered) · G-1 probe(vec)=probe(rank-1)=1.000 ⇒
+separation 0.000 ≤ 0.05 ⇒ the pre-registered STOP fires**; permuted-T probe = 1.000 ⇒ F6 void; F1
+itself is inadmissible on single-bind items (A-rank1 receives ≈ A-duel's tensor ⇒ DEAD by
+construction). The XOR shield is confirmed (unary token features exactly 0.500 via concave linear
+probe; one T cell = the cross-edge product = 1.000). **Fix, arithmetic-checked on the full 4^6
+factorial: MULTI-BIND K=6** (six stacked HON-BIND conjuncts, 6 answer slots, chance 0.5/slot):
+off-top 0.8333 ✓ · probe(vec) 1.000 ✓ · probe(rank-1) 0.5833 ≤ 0.60 ✓ (exact, K=6 minimal) ·
+separation 0.4167 ✓ · perm-placebo 0.711 ⇒ F6 headroom 0.289 ✓. f1′ stays liveness; f2′ becomes
+report-only diagnostic; F1 moves to f2″ with E[A-rank1]=0.62.
+
 **Remaining before `pre_register_frozen: true`**: (1) native-operator confirm of the PL-cell
-normativity + 2 flagged genitive orders; (2) the drill grid + its lexeme-disjointness check (F7
-disjointness currently PENDING); (3) G-0's rank-mass check (≥20% of ‖T‖² off the top singular
-direction) and G-1's probe-separation, both of which need the two directional proxy parsers.
+normativity + 2 flagged genitive orders + lexeme-pool expansion 4→6 pairs for MULTI-BIND; (2) build
+f2″ MULTI-BIND (K=6, n=192) + F7″ audit + the drill grid with its lexeme-disjointness check (F7
+disjointness currently PENDING); (3) re-run G-0 rank-mass + G-1 probe-separation on the BUILT f2″
+(predictions above are exact and falsifiable); (4) re-anchor F1 E-values on f2″.
 
 ## Hypothesis
 
