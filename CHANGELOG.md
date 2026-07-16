@@ -2,6 +2,25 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 G-2 driver built + smoke wiring GREEN ($0; 2 wiring bugs caught pre-GPU)
+
+- `train_h004.py` implemented (trunk CLMConvMoEStruct = H_003 CLMConvMoE + resolver R injecting the
+  per-node structure embedding pre-trunk; 5 arms = one variable, the T→tensor map; slot-indexed
+  forced-choice d_acc). Smoke wiring **GREEN** by our own venv run: WIRING-1 alignment · 2 slots ·
+  3 injection (T-flip moves node_embed, C-scaf = constant mlp(0)) · 4 **A-duel overfits 16 items to
+  d_acc 1.0** (injection path) · 5 rank1/C-plc.
+- **Two wiring bugs caught + fixed by the smoke** (H_003-windower discipline, before any GPU spend):
+  (1) drill pad=128 truncated ~250-byte K=6 items → pad 256/320; (2) **off-by-one** — the struct for
+  answer byte k must sit at the position that PREDICTS it (base+3k−1); before the fix all arms
+  plateaued at 0.77 while CE fell, after it A-duel → 1.0.
+- **Design deviation recorded** (vs DESIGN §1e, empirically validated): answer bytes map to their
+  conjunct-k node at the prediction position, not the ANS node — makes the injection path testable and
+  is more faithful to the FORMAT claim (the answer position reads its slot's resolved structure).
+  C-scaf/A-rank1 overfit ~0.75 on 16 items = surface MEMORIZATION, not the field test (that is F3 on
+  held-out f2″). Distilled to `next-gate.ng.mech1.g2-driver-smoke-green`.
+- **RUN still gated**: `pre_register_frozen: false`; the ~5h d=384 run needs native-operator G-1 +
+  freeze. `main()` refuses to spend unfrozen.
+
 ## 2026-07-16 — H_004 G-2 training driver DESIGNED (implementable spec; run still gated on freeze)
 
 - `DESIGN_g2_training_fable5.md`: exact spec for `train_h004.py` — H_003 trunk (CLMConvMoE d=384 L=4

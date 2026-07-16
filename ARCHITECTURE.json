@@ -538,7 +538,14 @@
        "id": "ng.mech1.g2-training-design",
        "type": "design",
        "role": "G-2 training driver DESIGNED, implementable (DESIGN_g2_training_fable5.md, 2026-07-16, $0 — design only, run gated on the freeze + native G-1). Model = H_003 trunk (CLMConvMoE d=384 L=4 E=3, raw UTF-8 V=256, NO codec — codec axis closed) + resolver R (32.5k params, <1%): size-invariant offset-bucket ingestion h_i = Σ_j T[i,j]·r_out[clip(j−i,±9)] + T[j,i]·r_in[·] → MLP → per-node e_i added to byte embeds pre-trunk via node_of_byte (eojeol split == 3K+2 nodes, measured on all 3 files); struct is an input of the SAME forward at eval (nc5 — v1's training-only binder impossible). Slot indexing: answer bytes [base+3k, base+3k+3), 앞/뒤 both 3 bytes, gold-teacher-forced forced choice, K+1 forwards/item. ONE variable = the map T_item→tensor: A-duel T · A-rank1 rank1_tiebreak(T) (MEASURED on all 192 built items: six blocks tie at σ=√2 ⇒ the pre-registered tie rule fires on EVERY item ⇒ row-0 truncation = conjunct 0's two signed cells only, nnz=2, ‖·‖=√2 vs ‖T‖=2√3; arithmetic floor (1+5·0.5)/6≈0.583 ≈ E=0.62 — the per-slot signature slot-0-high/others-0.5 is FM-2's diagnostic) · C-plc ΠTΠᵀ (per-item fixed Π, disjoint seed ranges) · C-scaf 0 (drills, unlike H_003 — the honest floor since surface carries the XOR bits) · C-perm T + shuffled gold; CPT one shared cache, struct=None, same torch.manual_seed → arms differ ONLY in the tensor column. Drill CANNOT reuse _stack_windows (struct is position-aligned; per-item padded batches + external masked CE) — the #1 wiring risk, targeted by smoke WIRING-3/4 (T-cell sign flip must move A-duel logits and not C-scaf; d=64 16-item overfit must reach drill d_acc ≥0.9). Falsifiers: F1 Δ≥0.15/DEAD<0.05 both seeds (E 0.90 vs 0.62) · F2 f1′<0.85 · F3 C-scaf>0.60 · F4 = offtop(∂logp_gold/∂T)<0.20 on trained A-duel (learned-usage rank) · F5 = inference-only T→|T_struct| union substitution, ΔCE<0.01 ∧ Δd_acc<0.05 ⇒ DEAD · F6 A-duel−C-plc≤0.05 (measured floor 0.711) · C-perm∈[0.45,0.55] harness. SCOPE carried: χ is hand-computed — G-2 certifies the resolved-FIELD FORMAT as causal carrier, NOT parser competence. Flagged honest risks: FM-3b frame transfer (drill 100% K=6, f1′ K=1 held-out tail — F2 can fire on transfer; tell pre-recorded), FM-1 capacity (read F6 with the drill-CE column), FM-2 rank-1 conditioning (probe ceiling 0.4167 anchors it).",
-       "children": []
+       "children": [
+        {
+         "id": "ng.mech1.g2-driver-smoke-green",
+         "type": "gate",
+         "role": "train_h004.py BUILT + smoke wiring GREEN (2026-07-16, $0, our own venv run). WIRING-1 eojeol↔node alignment (20 multi / 5 f1′) · WIRING-2 slot tiling (앞/뒤 = 3 bytes) · WIRING-3 T-cell sign flip moves node_embed 1.18 while C-scaf struct is a constant mlp(0) invariant to T · WIRING-4 A-duel overfits 16 drill items to d_acc=1.0 (injection path confirmed) · WIRING-5 rank1_tiebreak nnz=2 on row 0 + C-plc Π reproducible & spectrum-preserving. TWO wiring bugs caught+fixed by the smoke (the H_003-windower discipline paying off before any GPU spend): (1) drill pad=128 truncated K=6 items (~250 bytes) → pad=256 smoke / 320 full; (2) OFF-BY-ONE — struct for answer byte k must sit at the position that PREDICTS it (base+3k−1), not only at base+3k; before the fix all arms plateaued at 0.77 while CE fell, after it A-duel→1.0. DESIGN DEVIATION from DESIGN_g2_training_fable5.md §1e (recorded, empirically validated): answer bytes map to their conjunct-k node (3k) at the prediction position, NOT to the ANS node (which would require the causal trunk to propagate the resolved bit ~200 bytes). Rationale: makes the injection path testable at smoke scale AND is more faithful to the FORMAT claim (the answer position reads its slot's resolved structure directly); arm separation preserved — A-duel gets all 6 slots' bits, A-rank1 only slot 0's, C-scaf the zero field. C-scaf/A-rank1 overfit ~0.75 on 16 items is MEMORIZATION of surfaces, NOT the field-necessity test (that is F3 on held-out f2″). RUN still gated: pre_register_frozen=false; the ~5h d=384 run needs native-operator G-1 + freeze. FULL-run loop is scaffolded (main() refuses to spend unfrozen).",
+         "state": "smoke-green-run-gated-on-freeze"
+        }
+       ]
       }
      ]
     },
@@ -752,6 +759,13 @@
     "value": "학습 드라이버가 코퍼스를 줄 단위로 seq_len 윈도우하면, 줄 길이 < seq_len 인 데이터(NSMC ~53바이트 < 512)는 전부 0 윈도우로 탈락해 모델이 한 번도 학습 안 된다 — 그런데 eval 은 정상 실행돼 전 arm 이 정확히 chance(0.5)를 낸다(no-train artifact). 반드시 코퍼스를 연속 스트림으로 concat 한 뒤 윈도우하라(바이트레벨 LM 표준·v1 방식)",
     "threshold": "학습 결과가 전 arm 정확히 0.5(chance) + 스텝 loss 로그 부재 + 런이 예상보다 훨씬 빨리 끝남 = no-train 신호. verdict 로 읽지 말고 하네스 먼저 의심(verdict-integrity·infra-wall-noneval): 윈도우 개수>0 인지, 코퍼스 줄 길이 vs seq_len 을 실측 확인",
     "source": "state/h003_atomicity_fixed_codec_drill_2026-07-16/train_h003.py"
+   },
+   {
+    "id": "train-h004-py-1",
+    "state": "pos-conv",
+    "value": "학습/평가 드라이버의 POSITION-ALIGNMENT 결함군(train-h003-py-1 windower와 동류): (1) per-item 패딩 pad 이 최장 아이템보다 작으면 문장이 잘려 struct/node_of_byte broadcast 붕괴 — pad 은 데이터에서 max_seq 로 도출하라. (2) OFF-BY-ONE: 답 바이트 k 의 예측은 위치 s-1 의 은닉상태가 하니, 그 바이트를 좌우하는 구조 주입은 위치 s 가 아니라 s-1(예측위치)에 실려야 한다. 증상: 주입해도 전 arm 이 0.77 근처에서 정체하는데 CE 는 계속 하락(주입경로가 답에 안 닿음). 해결 후 A-duel 오버핏 1.0",
+    "threshold": "바이트레벨 forced-choice/주입 드라이버는 GPU 쓰기 전 d=64 16-item OVERFIT smoke 로 '읽을 수 있는가(learnability)' 신호를 assert 하라: 답이 입력에 주입/결정돼 있으면 대상 arm 이 drill d_acc≥0.9 로 올라야 정상. 정체(<0.9)면서 CE 는 하락 = 미학습 아니라 정렬/인덱싱 버그. 오버핏 d_acc 는 표면-암기로 오염되니 field-필요 판정엔 쓰지 말고(그건 held-out) 주입경로 확인에만 써라",
+    "source": "state/h004_parser_duel_tension_rank_drill_2026-07-16/train_h004.py"
    }
   ]
  },
