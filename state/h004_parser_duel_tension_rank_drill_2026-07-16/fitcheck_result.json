@@ -1,0 +1,21 @@
+{
+  "device": "mps",
+  "results": {
+    "A-duel.s0": {
+      "drill_dacc": 1.0,
+      "ce_ans_final": 0.0004
+    },
+    "A-duel.s1": {
+      "drill_dacc": 1.0,
+      "ce_ans_final": 0.0004
+    },
+    "C-perm.s0": {
+      "drill_dacc": 0.6432,
+      "ce_ans_final": 0.1728
+    }
+  },
+  "bar1_aduel_fit": true,
+  "bar2_ce_ans_decays": true,
+  "bar3_cperm_harness": false,
+  "GO": false
+}
