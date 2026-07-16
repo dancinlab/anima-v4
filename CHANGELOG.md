@@ -2,6 +2,29 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 MULTI-BIND K=6 panel BUILT + G-0/G-1 PASS on it ($0, cross-validated)
+
+- Built the real Korean f2″ panel (`build_honbind_multi.py` → `panel_f2doubleprime.json`, n=192, K=6,
+  20 nodes): six independent HON-BIND conjuncts stacked in one sentence + 기다렸다, six 앞/뒤 answer
+  slots, d_acc = mean over the 6 forced choices.
+- **Cross-slot decorrelation via a strength-2 orthogonal array**: the 6 conjunct cells per sentence
+  are a codeword of the [6,3] MDS Reed-Solomon/Vandermonde code over GF(4) (64 codewords × 3 lexeme
+  rotations). MDS ⇒ any 2 of the 6 slots are jointly uniform ⇒ per-slot balance AND pairwise
+  independence, exactly — MEASURED worst pairwise slot-gold deviation = **0.0000**.
+- **F7″ PASS** (our run): all 6 slots × 4 heuristics = 0.5, per-slot gold balance 0.5, 도-boundary +
+  matrix-tail constant, negators absent, answer-pattern majority 0.0625 (16 patterns).
+- **G-0/G-1 on the BUILT panel** (`build_tension.py`, reusing g1_core_check's proxy-parser/field/probe
+  primitives — verify-done, not the design's synthetic-factorial self-report): off-top rank-mass
+  **0.8333 ≥ 0.20** ✓; cross-validated (cv8, stratified by the 16 gold-patterns) probe(vec) **1.000** ·
+  probe(rank-1) **0.4167 ≤ 0.60** · separation **0.5833 > 0.05** · F6 perm-placebo headroom **0.4766**.
+- **verdict-integrity catch**: the perm-placebo probe scored train-acc 1.000 (small-n memorization on
+  192 items) — which would falsely VOID F6. Cross-validation (cv8) dropped it to 0.5234 (chance), the
+  honest number, clearing F6. train=test would have lied; suspect-the-measurement caught it. The K=6
+  field genuinely carries binding the rank-1 approximation cannot generalize, on the real panel.
+- Distilled to `next-gate.ng.mech1.multibind-g0g1-pass`; H_004 card Status + REGISTRY updated. Freeze
+  now blocked ONLY on native-operator G-1 (surfaces · PL normativity · genitive orders · the 4 new
+  pool lexemes 원장님/총장님/조수/신입 flagged `?`), then `pre_register_frozen` → G-2 d=384 arms.
+
 ## 2026-07-16 — H_004 G-1 core: single-bind panel is F4-DEAD (rank-1); MULTI-BIND K=6 is the fix ($0)
 
 - The G-0 rank-mass half + the G-1 probe separation, RUN AND RE-VERIFIED BY OUR OWN `g1_core_check.py`
