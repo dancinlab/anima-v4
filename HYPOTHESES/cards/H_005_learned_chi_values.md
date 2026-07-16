@@ -119,3 +119,16 @@ still land at PARTIAL-K3, not SUPPORTED, since even the fit s0 fails F1a′. The
 hand: ~0.18–0.29 d_acc. G3-b (trained SUPPORT = H_006) remains the only untried lever, but it is strictly
 harder and inherits this scale's optimization fragility — do not open it without a fresh research/feasibility
 gate. Artifacts: g3a_result_full.json · verdict_g3a.json.
+
+## G3-b feasibility RE-GATE (2026-07-17) — H_006 NOT OPENED, mech-1 sealed at G-2
+
+`state/h004_.../REGATE_g3b_feasibility_fable5.md` ($0, closed-form on this card's own numbers): G3-a
+upper-bounds G3-b's value channel (the concord sign must still be computed by the shared readout f from
+the same trunk-state interface under the same drill-CE objective; the s0 drill-1.0/f2″-0.824 gap is an
+IDENTIFICATION failure, not capacity, so a bigger f worsens it), and support recall only multiplies down:
+E[A-tduel] ≈ 0.53 + 0.24·r ⇒ F1b non-inferiority has NEGATIVE headroom at any r, and the Δ form needs
+r ≥ 1.25 for the 2×-bar headroom this card was frozen under (bare bar r ≥ 0.65 vs literature 0.46–0.50
+directed at ≥8M params). No $0 run can greenlight (G3-0b is kill-only; G3-0a needs the absent external
+parser). **mech-1 SEALS at G-2**: FIELD-FORMAT 🟢 + K3's measured 0.18–0.29 cost-of-removing-the-hand;
+trained SUPPORT = substrate wall, UNREACHED (not falsified). Reopen: ≥8M/jamo substrate passing an
+F1a′-analog first · non-templatic register (probe < 1.0) · or external parser as a new campaign premise.

@@ -2,6 +2,27 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-17 — G3-b feasibility RE-GATE: DO NOT OPEN H_006 — mech-1 SEALED at G-2
+
+- **Re-gate after G3-a's K3** ($0, closed-form — no run, no download):
+  `state/h004_parser_duel_tension_rank_drill_2026-07-16/REGATE_g3b_feasibility_fable5.md`. G3-a
+  upper-bounds G3-b: the trained-SUPPORT arm's value channel is the SAME learning problem G3-a just
+  measured (concord sign computed by the shared readout f from the same trunk-state interface, same
+  192-item drill-CE objective, same scale — three-way trap: compute/miss/leak-into-support), and the
+  s0 drill-1.0/f2″-0.824 gap shows the wall is drill→held-out IDENTIFICATION, not 3k-param capacity.
+- **The decisive $0 gate is arithmetic (G3-0e), and it kills**: E[A-tduel] ≈ 0.53 + 0.24·r (measured
+  endpoints; r = contested-edge support recall). F1b non-inferiority (bar 0.95): negative headroom at
+  ANY r — H_001's vacuity shape. F1b Δ-vs-C-same: 2×-bar headroom needs r ≥ 1.25 (impossible); bare
+  bar needs r ≥ 0.65 vs literature anchor 0.46–0.50 directed at ≥8M/English/word-level (L9). No $0 RUN
+  can greenlight — G3-0b is kill-only, G3-0a needs the absent external parser. Plus two priced-in
+  inconclusive modes (drill-precond instability · P-inv vs probe=1.0 honest-limit (a)).
+- **Sealed**: mech-1's verified result = H_004 FIELD-FORMAT 🟢 (Δ 0.379/0.380) + K3's measured
+  0.18–0.29 cost-of-removing-the-hand. Trained SUPPORT: UNREACHED — substrate wall at
+  3.7M/byte/Korean/templatic (`break-walls`), not falsified. H_006 never created. Reopen (future
+  campaign): ≥8M or jamo/word substrate passing an F1a′-analog first · non-templatic register with
+  probe < 1.0 · or a pretrained parser as a NEW campaign's premise. Tree:
+  `ng.mech1.g3b-regate-do-not-open`; registry H_005 line updated in lockstep.
+
 ## 2026-07-17 — H_004 G-3 research-gate delivered (learned duel: staged design + $0 gates; no training)
 
 - **Research-gate for G-3** (replacing hand-computed χ + fixed proxy parsers with trained
