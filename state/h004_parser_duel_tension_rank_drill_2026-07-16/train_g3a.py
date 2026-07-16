@@ -179,6 +179,77 @@ def _dacc_g3a(model, phi_enc, torch, panel, arm, set_id, device, free_only=True)
     return float(np.mean(accs))
 
 
+def _that_numpy(model, phi_enc, torch, item, device):
+    """Trained A-χ̂ field T̂ = support ⊙ χ̂(g(φ)) as a detached numpy array — F4/F5 treat T̂ as the
+    field fed to R, regardless of how it was produced (mirrors H_004's F4/F5 on the numpy T)."""
+    n = _hon_n(item)
+    support = _support(item, n)
+    with torch.no_grad():
+        phi = _node_phi(phi_enc, torch, item, n, device)
+        chi = _chi_hat(model, torch, phi).cpu().numpy()
+    return support * chi, n
+
+
+def _f4_offtop_g3a(model, phi_enc, torch, f2, device):
+    """F4 (=L1) on A-χ̂: offtop of ∂Σlogp(gold)/∂T̂ < 0.20 ⇒ R reads ≤ a rank-1 shadow ⇒ DEAD."""
+    offs = []
+    for it in f2:
+        That, n = _that_numpy(model, phi_enc, torch, it, device)
+        Tt = torch.tensor(That, dtype=torch.float32, device=device, requires_grad=True)
+        emb = model.node_embed(Tt)
+        _, gold, _ = H._item_T(it)
+        surf_b, gold_b = H._seq_bytes(it); base = len(surf_b); seq = surf_b + gold_b
+        full = H._node_layout(it["surface"], n, gold, len(seq))
+        struct = emb[torch.tensor(full, device=device)][None]
+        toks = torch.tensor(list(seq), dtype=torch.long, device=device)[None]
+        logp = torch.log_softmax(model(toks, struct=struct)["logits"][0], dim=0)
+        Lsum = 0.0
+        for k in range(len(gold)):
+            s = base + 3 * k
+            for j in range(3):
+                Lsum = Lsum + logp[seq[s + j], s + j - 1]
+        model.zero_grad(); Lsum.backward()
+        offs.append(gc.offtop(Tt.grad.detach().cpu().numpy()))
+    return float(np.mean(offs))
+
+
+def _f5_union_g3a(model, phi_enc, torch, f2, device):
+    """F5 (=L2) on A-χ̂: substitute T̂ → |support| (strip the learned resolution). Free-slot ΔCE<0.01
+    AND Δd_acc<0.05 ⇒ decoder didn't need the resolution ⇒ DEAD. (F5 = the VALUES-matter control.)"""
+    fs = H._panel_free_slots(f2)
+    ce_T, ce_U, dac_T, dac_U = [], [], 0, 0
+    for it in f2:
+        That, n = _that_numpy(model, phi_enc, torch, it, device)
+        for tag, Ta in (("T", That), ("U", np.abs(_support(it, n)))):
+            _, gold, _ = H._item_T(it)
+            surf_b, gold_b = H._seq_bytes(it); base = len(surf_b); seq = surf_b + gold_b
+            with torch.no_grad():
+                emb = model.node_embed(torch.tensor(Ta, dtype=torch.float32, device=device))
+            full = H._node_layout(it["surface"], n, gold, len(seq))
+            struct = emb[torch.tensor(full, device=device)]
+            toks = torch.tensor(list(seq), dtype=torch.long, device=device)[None]
+            with torch.no_grad():
+                logp = torch.log_softmax(model(toks, struct=struct[None])["logits"][0], dim=0)
+            ce = 0.0; corr = 0
+            for k in fs:
+                s = base + 3 * k
+                ce += sum(-logp[seq[s + j], s + j - 1].item() for j in range(3))
+                alt = bytearray(seq); alt[s:s + 3] = H.ANS[1 - gold[k]].encode()
+                with torch.no_grad():
+                    lp2 = torch.log_softmax(model(torch.tensor(list(bytes(alt)), dtype=torch.long,
+                                            device=device)[None], struct=struct[None])["logits"][0], dim=0)
+                nll_g = sum(-logp[seq[s + j], s + j - 1].item() for j in range(3))
+                nll_a = sum(-lp2[alt[s + j], s + j - 1].item() for j in range(3))
+                corr += 1 if nll_g <= nll_a else 0
+            (ce_T if tag == "T" else ce_U).append(ce)
+            if tag == "T":
+                dac_T += corr / len(fs)
+            else:
+                dac_U += corr / len(fs)
+    return {"dCE": round(float(abs(np.mean(ce_U) - np.mean(ce_T))), 4),
+            "d_dacc": round(float(abs(dac_U - dac_T) / len(f2)), 4)}
+
+
 def train_arm_g3a(arm, seed, cfg_tuple, drill, cpt_win, steps, device):
     torch, M, cfg, Struct = cfg_tuple
     torch.manual_seed(seed)
@@ -245,6 +316,9 @@ def run_g3a(device, cpt_steps, drill_steps, tag, seeds=(0, 1)):
                    "ce_ans_final": round(ce, 4)}
             if chi_ok is not None:
                 rec["chi_grad_seen"] = bool(chi_ok); rec["phi_frozen_ok"] = bool(phi_ok)
+            if arm == "A-χ̂":                                     # F4/F5 (L1/L2) on the learned field
+                rec["F4_offtop"] = round(_f4_offtop_g3a(model, phi_enc, torch, f2, device), 4)
+                rec["F5_union"] = _f5_union_g3a(model, phi_enc, torch, f2, device)
             results[f"{arm}.s{seed}"] = rec
             print(f"    {arm}.s{seed}: f2″={rec['f2doubleprime']} f1′={rec['f1prime']} "
                   f"drill={rec['drill_dacc']}" + (f" chi_grad={rec['chi_grad_seen']} phi_frozen={rec['phi_frozen_ok']}"
