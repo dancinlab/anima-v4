@@ -4,11 +4,11 @@ ssot: ARCHITECTURE.json → next-gate.*, mech-1.* (this card is the pre-register
 slug: parser-duel-tension-rank-drill
 title: the per-edge parse-disagreement FIELD T (A=L→R parser vs G=R→L parser) — as a field, NOT its rank-1 scalar summary — CAUSES held-out honorific-binding resolution; one variable = post-parse tension policy (full T vs rank-1 T), predicted Δd_acc ≥ 0.15 on a HON-BIND panel whose heuristics sit at 0.5
 domain: verification-design (causal drill · pre-register SEED)
-status: pre-register-seed
+status: frozen
 exploration_method: research-gate delegated to Fable 5 under fable-mode (literature scan + one-variable lever + admissibility arithmetic); absorbed locally
 verification_method: deterministic panel audits (F7 · closed-form) + trained-arm falsifiers (F1–F7, with L1 eff-rank as F4 and L2 union-substitution as F5) with a rank-1 control, a placebo, and a leak-ceiling arm
-pre_register_frozen: false
-frozen_at: null (NOT frozen — G-0 closed-form panel/rank audit + G-1 $0 CPU probe must pass first; only then do E-values become anchors and the arms train)
+pre_register_frozen: true
+frozen_at: 2026-07-16 (all $0 gates PASS on the built MULTI-BIND panel: F7″ · rank-mass 0.833 · G-1 probe separation 0.583 · F6 headroom 0.477 · drill disjointness · G-2 driver smoke GREEN. G-1 grammar = LLM-judged PASS finalized under the owner's go-delegation (H_003 'LLM 판정' precedent), honest caveats accepted-risk and documented in g1_multi_grammar_provisional.md — reversible: if a native reviewer later rejects a flagged surface, revise the panel and re-freeze)
 deterministic: false
 llm: none in the eval path (design only; the model is trained, the scoring is deterministic forced-choice)
 ---
@@ -20,7 +20,11 @@ llm: none in the eval path (design only; the model is trained, the scoring is de
 > `next-gate`. Raw seed: `state/h004_parser_duel_tension_rank_drill_2026-07-16/DESIGN_fable5_seed.md`.
 > Human viewer: `python3 serve.py`. **NOT FROZEN — no number here is a result; G-0/G-1 gate it.**
 
-## Status — PRE-REGISTER SEED (2026-07-16); G-0 panel+F7 PASS, NOT FROZEN
+## Status — 🔵 FROZEN + RUNNING (2026-07-16)
+
+**FROZEN** (`pre_register_frozen: true`) — every $0 gate PASSED on the built MULTI-BIND panel: F7″ (pairwise slot-corr 0.0) · G-0 rank-mass 0.833 · G-1 probe separation 0.583 · F6 headroom 0.477 · drill lexeme-disjointness · G-2 driver smoke GREEN (A-duel overfits) · full-loop plumbing GREEN (5 arms train + eval f2″/f1′/drill + F4/F5 + json). G-1 grammar = LLM-judged PASS finalized under the owner's go-delegation (H_003 'LLM 판정' precedent); the honest caveats (PL normativity · loose associative P의H genitives · 6-stack) are accepted-risk and documented in g1_multi_grammar_provisional.md — reversible (revise + re-freeze if a native reviewer later rejects a surface). **RUNNING**: train_h004.py d=384 ×2seed ×5arm (~5h local MPS) → F1(Δd_acc A-duel−A-rank1≥0.15 both seeds)·F2 liveness·F3 not-free·F4 eff-rank·F5 union·F6 placebo·harness → train_result_full.json → verdict. SCOPE (carried): G-2 certifies the resolved-FIELD FORMAT as causal carrier, NOT parser competence; SUPPORTED licenses building the learned-duel stage next.
+
+## Status (history) — PRE-REGISTER SEED (2026-07-16); G-0 panel+F7 PASS
 
 The next mechanism after mech-3's four-part death (H_003 🔴). Chosen off the codec axis: mech-1 파서
 결투 (binding) over mech-7 (반사실 편집자), because mech-7 is mech-3's corpus-axis twin in the same

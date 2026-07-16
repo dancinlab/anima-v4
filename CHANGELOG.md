@@ -2,6 +2,22 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 FROZEN + G-2 run launched (all $0 gates PASS; ~5h d=384 falsification in flight)
+
+- **Full-run loop wired** into train_h004.py (run_full: 5 arms × 2 seeds, CPT 8000 + drill 2500 at
+  d=384, eval f2″/f1′/drill + per-slot, F1–F6 + harness, F4 offtop(∂logp_gold/∂T) + F5 union
+  substitution on A-duel, writes train_result_full.json). `--full-check` plumbing verified GREEN at
+  d=64 (5 arms + F4/F5 + json); it caught + fixed a C-perm gold-shuffle bug (tuple vs dict) before the
+  5h spend. Even at tiny scale A-duel f2″=0.75 vs all controls ≈0.5 — a plumbing signal, NOT a verdict.
+- **FROZEN**: `pre_register_frozen: true`. G-1 grammar finalized as LLM-judged PASS under the owner's
+  go-delegation (H_003 'LLM 판정' precedent); the honest caveats (PL normativity · loose associative
+  P의H genitives · 6-stack length) are accepted-risk, documented, and reversible (revise + re-freeze
+  if a native reviewer later rejects a surface). Card status → frozen; REGISTRY → ⚪ FROZEN (running).
+- **LAUNCHED**: the ~5h d=384 ×2seed ×5arm run (detached, local MPS). main() opens only when the card
+  is frozen (no-escape-hatch). On completion → F1(Δd_acc A-duel−A-rank1≥0.15 both seeds)·F2·F3·F4·F5·F6·
+  harness → verdict. verdict-integrity: do NOT prejudge from the plumbing signal. Distilled to
+  `next-gate.ng.mech1.g2-frozen-launched`.
+
 ## 2026-07-16 — H_004 G-2 driver built + smoke wiring GREEN ($0; 2 wiring bugs caught pre-GPU)
 
 - `train_h004.py` implemented (trunk CLMConvMoEStruct = H_003 CLMConvMoE + resolver R injecting the
