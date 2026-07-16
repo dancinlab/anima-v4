@@ -4,7 +4,7 @@ ssot: ARCHITECTURE.json → next-gate.mech1.g3-research-gate (this card is the p
 slug: learned-chi-values
 title: a LEARNED concord χ̂ = g(φᵢ,φⱼ) on the FIXED proxy-parser support reproduces the hand-computed field's causal power on held-out honorific binding — i.e. the FIELD VALUES (signs), not just the format, can be trained; one variable = χ policy (hand χ vs learned χ̂), support held fixed
 domain: verification-design (causal drill · learned-values stage G3-a · pre-register SEED)
-status: frozen
+status: inconclusive-consolidate-at-g2
 exploration_method: research-gate delegated to Fable 5 (DESIGN_g3_research_gate_fable5.md, literature-verified) — G3-a is the run-first, cheapest-decisive half of the learned-duel extension after H_004 🟢 SUPPORTED
 verification_method: deterministic forced-choice d_acc (free-slot {0,1,2,4}) on the H_004 f2″/f1′/drill panels; a learned χ̂ module trained jointly on the drill, with a same-g wrong-support placebo (C-χ̂plc) + the H_004 controls carried verbatim
 pre_register_frozen: true
@@ -97,8 +97,25 @@ collapse d_acc, the signs were epiphenomenal on this rig and the "values" framin
 - H_006 / G3-b (trained parser opposition = SUPPORT half) — gated behind G3-a green + $0 gates G3-0a/b/c.
 - Design: `state/h004_parser_duel_tension_rank_drill_2026-07-16/DESIGN_g3_research_gate_fable5.md`.
 
-## Verdict
+## Verdict — 🟡 INCONCLUSIVE → CONSOLIDATE AT G-2 (2026-07-17)
 
-⚪ PRE-REGISTER SEED (2026-07-17). No number here is a result. Next: G3-0d $0 gate + d=64 smoke of the
-learned-χ̂ arm (device + injection-path + one-variable audit, per this session's 3-defect discipline) →
-`pre_register_frozen: true` → ~4h d=384 ×2seed ×5arm run → collect_verdict.
+collect_verdict_g3a.py (free-slot, d=384 ×2seed ×5arm) → **WIRING FAILURE (precond)**: A-χ̂ fit its own
+drill UNSTABLY (s0=1.0, s1=0.832 < 0.95). Measurement path CLEAN (chi_grad+phi_frozen assert both seeds;
+A-hand on the same rig fit 1.0/1.0) — so this is a **training-stability limit of the tiny learned bilinear g**,
+not a tool bug, and per `infra-wall-noneval` a precond-failed run is not graded a clean verdict.
+
+But the substantive signal is unambiguous and does NOT need the unstable seed:
+- **F1a passes** (Δ = A-χ̂ − C-χ̂plc = 0.298 / 0.191, both ≥ 0.15) — the learned values DO require correct
+  edge alignment (not capacity). F4 (0.35/0.50 ≥0.20) + F5 (dCE 14/68, d_dacc 0.32/0.21) also fire clean.
+- **F1a′ FAILS on BOTH seeds — including the fit seed s0** (margin −0.176 / −0.290): A-χ̂ f2″ 0.82/0.71 ≪
+  A-hand 1.0. This is Fable's **K3**: the learned χ̂ cannot reproduce the hand concord's power at this scale;
+  the FORMAT can be hand-specified but the VALUES are only ~partially recoverable from a frozen-trunk φ that
+  encodes hon near-verbatim (honest-limit (a), G3-0d probe = 1.0).
+
+**Decision (K3 STOP + honest-limit): CONSOLIDATE AT G-2.** H_004's FIELD-FORMAT claim (🟢 SUPPORTED) stands
+as the campaign's proven, defensible result. G3-a does NOT extend it: the learned-values stage is inconclusive
+(precond-unstable) and, where admissible, materially below the hand concord (K3). No re-run — a fit s1 would
+still land at PARTIAL-K3, not SUPPORTED, since even the fit s0 fails F1a′. The measured cost of removing the
+hand: ~0.18–0.29 d_acc. G3-b (trained SUPPORT = H_006) remains the only untried lever, but it is strictly
+harder and inherits this scale's optimization fragility — do not open it without a fresh research/feasibility
+gate. Artifacts: g3a_result_full.json · verdict_g3a.json.
