@@ -2,6 +2,28 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-17 — H_004 G-3 research-gate delivered (learned duel: staged design + $0 gates; no training)
+
+- **Research-gate for G-3** (replacing hand-computed χ + fixed proxy parsers with trained
+  components) delivered at $0: `state/h004_parser_duel_tension_rank_drill_2026-07-16/
+  DESIGN_g3_research_gate_fable5.md`, literature verified by three parallel web scans
+  (Korean-treebank feasibility · LM-objective structure induction · parsing direction + honorific
+  cue), every claim tagged VERIFIED/MEMORY.
+- **Staging**: the field decomposes SUPPORT × VALUES → G3-a (learned χ̂ on fixed proxy support,
+  one G-2 envelope, run first, controls A-hand/C-χ̂plc) then G3-b (forward/backward byte-LM tower
+  pair + SHARED readout, lever = direction of tower 2, control = same-direction pair). Register
+  as H_005; H_004 stays sealed.
+- **Admissibility catch**: the natural $0 pre-check ("does a real parser's field beat the proxy
+  field on f2″") is VACUOUS — proxy probe already at cv8 1.000 ceiling (build_tension.json;
+  H_001's shape). Replaced by support-recovery gates G3-0a–d + trained-arm preconds
+  P-live/P-loc/P-inv (incl. hon-flip support-invariance replacing type-signature blindness).
+- **Feasibility verdict**: treebank-supervised Korean attachment at ~1M params is solved
+  (Stratos 2017 jamo 94.86 UAS / 5.4k sents; UD-Kaist 27k CC BY-SA) but REJECTED as a G-3 arm
+  (self-containment); unsupervised induction at 3.7M/byte/Korean is unprecedented (min. published
+  ≈8M, English; direction is the hard residual, StructFormer/UDGN directed −12–15 pts) ⇒ G3-b
+  gated so failure costs $0. Kill criteria K1–K6 pre-named; stop-and-consolidate point = K1/K2/K3.
+- `ARCHITECTURE.json`: added `ng.mech1.g3-research-gate` under `ng.mech1-is-next`.
+
 ## 2026-07-16 — H_004 first launch crashed (MPS device-placement); quarantined + fixed + re-launched
 
 - The first d=384 launch CRASHED after CPT with `RuntimeError: Placeholder storage has not been

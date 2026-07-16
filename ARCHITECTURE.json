@@ -562,6 +562,11 @@
          ]
         }
        ]
+      },
+      {
+       "id": "ng.mech1.g3-research-gate",
+       "type": "design",
+       "role": "G-3 research-gate DELIVERED (DESIGN_g3_research_gate_fable5.md, 2026-07-17, $0 — literature verified by 3 parallel web scans, no training). Decides how to replace hand-computed χ + fixed proxy parsers after H_004 🟢. (1) The field decomposes SUPPORT×VALUES — stage as G3-a (learned χ̂ on fixed proxy support, ~1 G-2 envelope, run first) then G3-b (direction-opposed forward/backward byte-LM towers + SHARED readout f, lever = direction of tower 2, control = same-direction pair C-same), register as H_005 not an H_004 amendment. (2) The proposed $0 pre-check 'real parser field beats proxy' is INADMISSIBLE — proxy probe already at cv8 1.000 ceiling (build_tension.json, H_001 shape); replaced by support-recovery gates G3-0a..d (contested-edge recall of a pretrained parser's L→R vs R→L decodes · d=64 induction smoke · C-same band · hon-probe on frozen trunk states). (3) Feasibility verdict: treebank route EXISTS trivially (Stratos EMNLP-2017 jamo-only 94.86 UAS on 5.4k sents; UD-Kaist 27,363 sents CC BY-SA) but is REJECTED as a G-3 arm (breaks self-containment, certifies UD rightmost-head conventions); unsupervised induction at 3.7M-param/byte/Korean is UNPRECEDENTED (smallest inducer ≈8M English word-level; direction is the hard residual — StructFormer 46.2 directed vs 61.6 undirected, UDGN 49.9/61.8) ⇒ G3-b gated, failure costs $0. (4) Structural trap pre-registered: a parser competent enough to RESOLVE (concord is a real human cue — Lee 2025; Kwon&Sturt 2016/2024) makes both directions AGREE ⇒ T̂≡0 — incapacity must be architectural (decoding direction), blindness enforced by MEASURED audit P-inv (support invariant under hon-flips), not type signature. (5) Kill criteria K1–K6 named, incl. K5 = direction buys nothing over a trained same-direction pair ⇒ mech-1's direction clause falsified cleanly; direction-opposition is literature-NOVEL (no source shows L→R vs R→L pairs err differently — nearest is graph-vs-transition stacking, Nivre&McDonald ACL-2008)."
       }
      ]
     },
