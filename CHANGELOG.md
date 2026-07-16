@@ -2,6 +2,17 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 MULTI-BIND G-1 grammar: provisional LLM PASS (native confirm pending)
+
+- LLM first-pass on the K=6 stacked surfaces (`g1_multi_grammar_provisional.md`, H_003 "LLM 판정"
+  pattern): each conjunct `[V-adn(±시) N1의 N2도]` is well-formed; the 6-fold 도-object stack
+  (`A도 B도 … F도 기다렸다`) is grammatical (heavy but a probe artifact); ±시 concord holds per
+  conjunct; the 4 new pool lexemes 원장님/총장님/조수/신입 are class-correct.
+- Flagged for the native operator (the ONLY remaining freeze gate): PL-cell normativity; loose
+  associative P의H genitives with the new lexemes (신입의 총장님, 조수의 원장님); 6-stack length.
+- On native confirm → `pre_register_frozen: true` → build the drill grid → G-2 d=384 arms
+  (A-duel/A-rank1/C-plc/C-scaf/C-perm ×2 seed, ~5h local MPS = multi-session compute endpoint).
+
 ## 2026-07-16 — H_004 MULTI-BIND K=6 panel BUILT + G-0/G-1 PASS on it ($0, cross-validated)
 
 - Built the real Korean f2″ panel (`build_honbind_multi.py` → `panel_f2doubleprime.json`, n=192, K=6,
