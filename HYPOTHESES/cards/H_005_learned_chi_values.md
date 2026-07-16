@@ -56,9 +56,11 @@ H_006/G3-b, gated behind this.
 - **F1a′ (non-inferiority)**: d_acc(A-χ̂) ≥ d_acc(A-hand) − 0.05 both seeds — the learned values must not
   be materially worse than the hand ones (else G3-a reports the measured COST of removing the hand, K3).
 - **F2 liveness** f1′(A-χ̂) ≥ 0.85 both · **precond** drill d_acc(A-χ̂) ≥ 0.95 both · **F3 not-free**
-  f2″(C-scaf) < 0.60 · **harness** f2″(C-perm) ∈ [0.45,0.55] · **F6 placebo** f2″(A-χ̂) − f2″(C-plc) > 0.05 ·
-  **F4 eff-rank** A-χ̂ offtop ≥ 0.20 · **F5 union** A-χ̂ union ΔCE ≥ 0.01 OR Δd_acc ≥ 0.05 — carried verbatim
-  from H_004 (all on free-slot d_acc {0,1,2,4}).
+  f2″(C-scaf) < 0.60 · **harness** f2″(C-perm) ∈ [0.45,0.55] · **F4 eff-rank** A-χ̂ offtop ≥ 0.20 ·
+  **F5 union** A-χ̂ union ΔCE ≥ 0.01 OR Δd_acc ≥ 0.05 — carried from H_004 (all on free-slot d_acc {0,1,2,4}).
+  (No standalone F6: in G3-a the **C-χ̂plc arm IS the placebo** — same learned χ̂, spectrum-matched but
+  edge-misaligned support — so F1a already tests A-χ̂ against a matched-magnitude placebo; the H_004 F6
+  vs C-plc does not apply and is deliberately dropped, not omitted.)
 
 ## $0 gate before training (G3-0d) — must pass before freeze
 

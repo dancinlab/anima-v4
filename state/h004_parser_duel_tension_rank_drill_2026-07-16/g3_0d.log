@@ -1,9 +1,3 @@
-Traceback (most recent call last):
-  File "/Users/mini/dancinlab/anima-v4/state/h004_parser_duel_tension_rank_drill_2026-07-16/train_g3a.py", line 341, in <module>
-    raise SystemExit(main())
-                     ~~~~^^
-  File "/Users/mini/dancinlab/anima-v4/state/h004_parser_duel_tension_rank_drill_2026-07-16/train_g3a.py", line 329, in main
-    return g3_0d(device)
-  File "/Users/mini/dancinlab/anima-v4/state/h004_parser_duel_tension_rank_drill_2026-07-16/train_g3a.py", line 266, in g3_0d
-    from sklearn.linear_model import LogisticRegression
-ModuleNotFoundError: No module named 'sklearn'
+g3-0d: CPT 8000 (d=384) then probe φ→hon bit … (device=mps)
+
+G3-0d probe φ→hon: held-out acc=1.0 (≥0.90: PASS) · χ̂ can read concord ⇒ build
