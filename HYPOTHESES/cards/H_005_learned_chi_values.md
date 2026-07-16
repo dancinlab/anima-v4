@@ -4,20 +4,21 @@ ssot: ARCHITECTURE.json → next-gate.mech1.g3-research-gate (this card is the p
 slug: learned-chi-values
 title: a LEARNED concord χ̂ = g(φᵢ,φⱼ) on the FIXED proxy-parser support reproduces the hand-computed field's causal power on held-out honorific binding — i.e. the FIELD VALUES (signs), not just the format, can be trained; one variable = χ policy (hand χ vs learned χ̂), support held fixed
 domain: verification-design (causal drill · learned-values stage G3-a · pre-register SEED)
-status: pre-register-seed
+status: frozen
 exploration_method: research-gate delegated to Fable 5 (DESIGN_g3_research_gate_fable5.md, literature-verified) — G3-a is the run-first, cheapest-decisive half of the learned-duel extension after H_004 🟢 SUPPORTED
 verification_method: deterministic forced-choice d_acc (free-slot {0,1,2,4}) on the H_004 f2″/f1′/drill panels; a learned χ̂ module trained jointly on the drill, with a same-g wrong-support placebo (C-χ̂plc) + the H_004 controls carried verbatim
-pre_register_frozen: false
+pre_register_frozen: true
+frozen_at: 2026-07-17 (G3-0d PASS probe φ→hon=1.0 · re-smoke GREEN chi_grad+phi_frozen · d=64 MPS full-check GREEN incl F4/F5 · collector wiring-verified · honest-limit(a) SCOPE recorded)
 deterministic: false
 llm: none in the eval path (design only; χ̂ is trained, scoring is deterministic forced-choice)
 ---
 
 # H_005 — G3-a: can a LEARNED χ̂ reproduce the hand-computed concord field's causal power?
 
-> **SSOT**: design tree `ARCHITECTURE.json → ng.mech1.g3-research-gate`. This card is the pre-register
-> SEED absorbed from Fable's G-3 research-gate (`state/h004_.../DESIGN_g3_research_gate_fable5.md`).
-> **NOT FROZEN** — the $0 admissibility gate (G3-0d) + the d=64 smoke must pass before `pre_register_frozen`.
-> H_004 (G-2, the FIELD FORMAT claim) stays SEALED 🟢; H_005 only extends its scope from FORMAT→VALUES.
+> **SSOT**: design tree `ARCHITECTURE.json → ng.mech1.g3-research-gate`. Absorbed from Fable's G-3
+> research-gate (`state/h004_.../DESIGN_g3_research_gate_fable5.md`). **FROZEN 2026-07-17** — G3-0d PASS
+> (probe φ→hon=1.0, SCOPED) + re-smoke GREEN + d=64 MPS full-check + collector wiring-verified all cleared.
+> H_004 (G-2, the FIELD FORMAT claim) stays SEALED 🟢; H_005 extends its scope FORMAT→VALUES (drill-register).
 
 ## Why this hypothesis (the caveat H_004's own verdict names)
 
