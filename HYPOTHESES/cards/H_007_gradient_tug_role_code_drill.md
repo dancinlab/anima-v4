@@ -69,8 +69,16 @@ inherited, GF(2)-rank audit, length-parity check.
   mech-5's bet (conflict is the forge) is genuinely contrarian → both answers informative. Caruana 1997
   (MTL, pre-arXiv), SCAN (Lake&Baroni 2018), ELECTRA (Clark 2020) are foundational supporting priors
   (well-attested, used non-critically for the C-dup/C-shuf controls + DEAD-is-live). GATE CLEARED.
-- **G-0**: closed-form panel/codebook/leak audit + a STRUCTURAL BAN on head-G ever supervising the gold bit
-  (the raw-hon-φ scaffolding-certifier trap from G3-a, named up front).
+- **G-0 ✅ (2026-07-17, `build_swap_xor.py` EXIT 0)**: SWAP-XOR panel built (f2 n=192 OOD / f1 n=64) —
+  ALL 10 closed-form audits PASS. A1 free-slot=[0] (single answer slot, nothing prefix-determined) · A2
+  GF(2) codebook rank=2, gold=class⊕marker with gold ∉ span of either ingredient alone · A3 every
+  single-site heuristic EXACTLY 0.500 (class-of-first/nearest-verb/majority · marker-alone · class(subj)-
+  alone · worst single byte) · A4 length-parity (surfaces all 24 B, answer/marker forms 3 B) · A5 swap(x)
+  byte-aligned transpose · A6 supervision-leak ban (answer forms absent from head-G target). The first
+  build FAILED A3 (worst-byte 0.677 — finite-sample overfit of high-cardinality features) + held-out
+  overlap; fixed with a DETERMINISTIC-BALANCED construction (each lexeme balanced across the marker bit ⇒
+  exact decorrelation, H_004's orthogonal-array discipline) — G-0 caught both before any spend. GATE
+  CLEARED. Artifacts: `swap_xor_f2.json` / `swap_xor_f1.json` / `swap_xor_reserved.json`.
 - **G-1**: d=64 kill-only smoke — no early gradient conflict, OR no probe separation vs C-dup ⇒ KILL at ~$0.
 
 ## Honest kill criteria
