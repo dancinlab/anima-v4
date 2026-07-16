@@ -1,0 +1,44 @@
+{
+  "verdict": "WIRING FAILURE — d_acc(A-duel, drill) < 0.95; the run did not fit its own drill (not a verdict)",
+  "per_seed": {
+    "0": {
+      "f1_delta": 0.1996,
+      "A_duel": 0.8177,
+      "A_rank1": 0.6181,
+      "C_plc": 0.5469,
+      "C_scaf": 0.4688,
+      "C_perm": 0.4505,
+      "liveness_f1prime": 0.7344,
+      "drill_dacc": 0.8255,
+      "F4_offtop": 0.5718,
+      "F5_dCE": 1.1525,
+      "F5_d_dacc": 0.3177,
+      "placebo_gap": 0.2708
+    },
+    "1": {
+      "f1_delta": -0.0235,
+      "A_duel": 0.6354,
+      "A_rank1": 0.6589,
+      "C_plc": 0.5,
+      "C_scaf": 0.5,
+      "C_perm": 0.5,
+      "liveness_f1prime": 1.0,
+      "drill_dacc": 0.6354,
+      "F4_offtop": 0.6414,
+      "F5_dCE": 0.8994,
+      "F5_d_dacc": 0.1354,
+      "placebo_gap": 0.1354
+    }
+  },
+  "precond_ok": false,
+  "live_ok": false,
+  "F3_leak": false,
+  "harness_bad": false,
+  "F4_dead": false,
+  "F5_dead": false,
+  "F6_void": false,
+  "f1_deltas": [
+    0.1996,
+    -0.0235
+  ]
+}
