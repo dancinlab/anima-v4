@@ -2,6 +2,24 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — next mechanism seeded: H_004 파서 결투 (mech-1), off the codec axis
+
+- With mech-3 dead in all four parts, selected the next tension family: **mech-1 파서 결투** over mech-7
+  반사실 편집자 — mech-7 is mech-3's corpus-axis TWIN (same "G writes A's environment" family per the
+  fake-diversity audit) and would inherit H_003's failure mode. Recorded to `next-gate.ng.mech1-is-next`
+  + `frontier`.
+- Research-gate delegated to Fable-5 under fable-mode (literature scan + one-variable lever +
+  admissibility arithmetic) and absorbed as **H_004 SEED** (`state/h004_.../DESIGN_fable5_seed.md`):
+  claim = the per-edge parse-disagreement FIELD T (L→R vs R→L parser), *as a field* not its rank-1
+  scalar summary, causes held-out honorific-binding. One variable = post-parse tension policy
+  (A-duel full T vs A-rank1 rank-1 approx; corpus delta ZERO between arms — cleaner than H_003's 3–5%).
+  Panel HON-BIND (honorific-attachment XOR, heuristics at 0.5). Replaces mech-1's broken falsifier
+  clause (3); standing L1/L2 fold in as F4 (eff-rank) / F5 (union-substitution).
+- **Admissibility pre-checked on arithmetic** (the H_001 discipline): reachable (0.15 ≤ ceiling−control
+  = 0.90−0.60 = 0.30), not-free, one-variable. Card + REGISTRY entry (⚪ SEED, not frozen) written.
+- **NOT frozen, NOT run** — cheapest-first gates come first: G-0 ($0 closed-form panel + rank-mass
+  audit) and G-1 ($0 CPU probe separation) must pass before any training spend (실측전 research).
+
 ## 2026-07-16 — H_003 🔴 FALSIFIED: atomicity is NOT causal (mech-3 dead, all four parts)
 
 - The re-dispatched d=384 L=4 ×2-seed run completed cleanly (10/10 arms, local MPS). `collect_verdict.py`
