@@ -20,13 +20,29 @@ llm: none in the eval path (design only; the model is trained, the scoring is de
 > `next-gate`. Raw seed: `state/h004_parser_duel_tension_rank_drill_2026-07-16/DESIGN_fable5_seed.md`.
 > Human viewer: `python3 serve.py`. **NOT FROZEN — no number here is a result; G-0/G-1 gate it.**
 
-## Status — PRE-REGISTER SEED (2026-07-16), NOT FROZEN, NOT RUN
+## Status — PRE-REGISTER SEED (2026-07-16); G-0 panel+F7 PASS, NOT FROZEN
 
 The next mechanism after mech-3's four-part death (H_003 🔴). Chosen off the codec axis: mech-1 파서
 결투 (binding) over mech-7 (반사실 편집자), because mech-7 is mech-3's corpus-axis twin in the same
 strategy family (`fake-diversity` audit) and would inherit mech-3's just-measured failure mode. This
-card is a **seed**: the design is admissibility-pre-checked on arithmetic, but the $0 gates (G-0
-closed-form, G-1 CPU probe) have NOT run, so nothing is frozen and nothing is spent.
+card is a **seed**: the design is admissibility-pre-checked on arithmetic, and the panel half of G-0
+is now built and gated — but the freeze is NOT taken.
+
+**G-0 panel gate = PASS** (2026-07-16, $0, verified by our own `build_hon_bind.py` run — not the
+design's self-report; commons `verify-done`). The HON-BIND panel (SPEC_hon_bind_panel_fable5.md) is
+implemented and F7 measures **every heuristic at exactly 0.5** on f2′ (n=192) and f1′ (n=64):
+presence-attach · locality · lexical-lookup(6 groupings) · marker-position · template ·
+worst-suffix(L≤10) · verbform-prefix(gated) · char-length — with all structural asserts holding
+(per-cell equal · 도 particle constant · every stratum balanced 0.5 · task-conjunction sanity 1.0).
+The fixed-L prefix curve is report-only (hits 1.0 at L≥6 — short verb forms cross into a drill-absent
+N1 lexeme; the prefix analog of H_003's long-suffix over-count, not a learnable leak). G-1 grammar =
+PROVISIONAL LLM PASS (`g1_grammar_provisional.md`): surfaces grammatical, +시 cells hard grammar, −시
+cells rest on the drilled categorical-agreement convention (documented asymmetry).
+
+**Remaining before `pre_register_frozen: true`**: (1) native-operator confirm of the PL-cell
+normativity + 2 flagged genitive orders; (2) the drill grid + its lexeme-disjointness check (F7
+disjointness currently PENDING); (3) G-0's rank-mass check (≥20% of ‖T‖² off the top singular
+direction) and G-1's probe-separation, both of which need the two directional proxy parsers.
 
 ## Hypothesis
 

@@ -2,6 +2,53 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-16 — H_004 G-0: HON-BIND panel BUILT + F7 PASS (verified by our own run, $0)
+
+- Implemented `build_hon_bind.py` against the spec and ran the F7 audit ourselves (commons
+  `verify-done` — the design's "measured 0.5" self-report is not evidence; our run is). Result:
+  **F7 PASS** — every heuristic exactly 0.5 on f2′ (n=192, 48/cell) and f1′ (n=64, 16/cell):
+  presence-attach, locality, lexical-lookup (6 groupings), marker-position, template,
+  worst-suffix(L≤10), verbform-prefix(gated), char-length. All structural asserts hold (per-cell
+  equal · eojeol_len single · 도 particle constant panel-wide · answer tokens 앞/뒤 absent from
+  surfaces · negators absent · every gold stratum balanced 0.5 · task-conjunction sanity 1.0);
+  union(f2′∪f1′) template+suffix 0.5; σ(0.5,192)=0.036 → F3 floor 0.60 = chance + 2.77σ.
+- The report-only fixed-L prefix curve hits 1.0 at L≥6 (short verb forms let the window cross into
+  a drill-ABSENT N1 lexeme) — kept out of the gate on purpose: it is the prefix analog of H_003's
+  long-suffix over-count (no learnable statistic), so the GATED per-verb-form window is used and
+  stays 0.5. Documented in `f7_audit.json`.
+- G-1 grammar = PROVISIONAL LLM PASS (`g1_grammar_provisional.md`): surfaces grammatical; +시 cells
+  are hard grammar, −시 cells rest on the drilled categorical-agreement convention (honest asymmetry
+  recorded — the softer half, first place to check if A-duel underperforms).
+- Artifacts: `build_hon_bind.py` · `f7_audit.json` · `panel_f{1,2}prime.json` ·
+  `heldout_manifest.json` · `REVIEW_surfaces.tsv` (256 distinct surfaces for the native pass).
+  Distilled to `next-gate.ng.mech1-is-next.ng.mech1.honbind-g0-pass`. NOT frozen — freeze awaits
+  native-operator confirm + drill grid + the rank-mass/probe checks (need the proxy parsers).
+
+## 2026-07-16 — H_004 G-0: HON-BIND panel spec, implementable + arithmetic-verified ($0)
+
+- Authored the precise, buildable spec for the HON-BIND panel
+  (`state/h004_.../SPEC_hon_bind_panel_fable5.md`): lexeme inventories (13 HON all
+  님-marked / 12 PLAIN / 9 clean RC verbs, `?`-flags for G-1), the four cells with worked
+  surfaces, gold function `gold_flip = 1 ^ 시-presence ^ honored-position`, OOD split
+  (f2′ n=192 = 8 curated held-out noun pairs × 3 verbs × 2 registers × 4 cells; f1′ n=64
+  drilled pairs × held-out register 기다렸네요), item schema, and the exact F7 inequality set.
+- **Three leak classes killed at spec time** (H_003's three-defect lesson applied up front):
+  accusative 을/를 allomorphy leaks honored-noun position (HON nouns are all consonant-final)
+  → invariant delimiter 도; a matrix predicate over N2 leaks class via matrix -시- → object
+  frame with reserved matrix verb 기다리다; lexical answer tokens let "-시- ⇒ emit the
+  님-noun" score 1.0 without positional binding → position tokens 앞/뒤.
+- **Spec verified by generation before delivery**: built the panels per spec and measured
+  every claimed scorer — presence-attach, locality, lexical-lookup (6 groupings),
+  marker-position, template, suffix(L≤10), char-length all EXACTLY 0.5 on both panels.
+  The verification caught one audit defect: a fixed-L prefix gate scores 1.0 mechanically
+  (short verb forms let the window cross into N1); replaced by the per-item verb-eojeol
+  window (measured 0.5), fixed-L curve report-only — the prefix analog of H_003's
+  long-suffix over-count, with drill-disjointness playing held_out_blind's role.
+- Honest scope recorded: per-design-cell gold is CONSTANT (gold = f(cell), as in H_003) so
+  balance is gated on observable strata; PL cells' gold rests on the drilled categorical
+  -시--agreement convention (normative, not absolute). Distilled to
+  `next-gate.ng.mech1-is-next.ng.mech1.honbind-panel-spec`.
+
 ## 2026-07-16 — next mechanism seeded: H_004 파서 결투 (mech-1), off the codec axis
 
 - With mech-3 dead in all four parts, selected the next tension family: **mech-1 파서 결투** over mech-7
