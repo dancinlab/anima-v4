@@ -1,0 +1,3 @@
+FIT-CHECK: d=64 L=2, CPT 200 + drill 1500 on mps (fixed objective λ=5.0 + cosine LR); A-duel s0/s1 + C-perm s0 …
+    d_acc scored on FREE slots [0, 1, 2, 4] (parity slots {3,5} excluded — codebook rank-4)
+    A-duel.s0: drill_dacc(free)=1.0  ce_ans=0.0004

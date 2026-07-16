@@ -174,13 +174,42 @@ def _seq_bytes(item):
         else item["gold_token"].encode("utf-8")
 
 
-def _dacc_item(model, torch, item, arm, set_id, idx, device):
+def _panel_free_slots(panel):
+    """Slots whose gold bit is NOT prefix-determined by earlier slots — the only slots that require
+    the tension FIELD to answer. d_acc must score ONLY these. The K=6 gold codebook is a GF(2)
+    rank-4 linear code (slot3=s0⊕s1⊕s2, slot5=s1⊕s2⊕s4); since `_dacc_item` teacher-forces the true
+    prefix when scoring slot k, ANY answer-LM (incl. the shuffled-gold C-perm harness) completes the
+    two parity slots {3,5} for free → a field-BLIND ceiling of 0.667, not 0.5, that reaches held-out
+    (Fable adjudication btgczi488 · confirmed on both drill + f2″). Scoring the free slots {0,1,2,4}
+    restores a 0.5 floor. Computed from the codebook so it can never silently drift."""
+    import itertools
+    pats = sorted({it["gold_pattern"] for it in panel if "gold_pattern" in it})
+    if not pats:
+        return [0]                                                  # single-bind panel (K=1)
+    M = [[0 if c == "앞" else 1 for c in p] for p in pats]
+    K = len(M[0])
+    def col_xor(cols):
+        x = [0] * len(M)
+        for j in cols:
+            x = [a ^ M[i][j] for i, a in enumerate(x)]
+        return x
+    free = []
+    for k in range(K):
+        det = any(col_xor(list(sub)) == [row[k] for row in M]
+                  for r in range(1, k + 1) for sub in itertools.combinations(range(k), r))
+        if not det:
+            free.append(k)
+    return free
+
+
+def _dacc_item(model, torch, item, arm, set_id, idx, device, free_slots=None):
     surf_b, gold_b = _seq_bytes(item)
     base = len(surf_b)
     K = len(gold_b) // 3
     seq = surf_b + gold_b
     struct, gold, _ = _struct_for(model, torch, item, arm, set_id, idx, len(seq))
     struct = struct.to(device)
+    slots = range(K) if free_slots is None else free_slots
 
     def _nll_slots(byte_seq):
         toks = torch.tensor(list(byte_seq), dtype=torch.long, device=device)[None]
@@ -197,18 +226,21 @@ def _dacc_item(model, torch, item, arm, set_id, idx, device):
         return nll
     nll_gold = _nll_slots(seq)
     correct = 0
-    for k in range(K):
+    for k in slots:
         s = base + 3 * k
         flip = ANS[1 - gold[k]].encode("utf-8")
         alt = bytearray(seq); alt[s:s + 3] = flip
         nll_alt_k = _nll_slots(bytes(alt))[k]
         if nll_gold[k] <= nll_alt_k:
             correct += 1
-    return correct / K
+    return correct / len(list(slots))
 
 
-def dacc_panel(model, torch, panel, arm, set_id, device):
-    return float(np.mean([_dacc_item(model, torch, panel[i], arm, set_id, i, device)
+def dacc_panel(model, torch, panel, arm, set_id, device, free_only=True):
+    """d_acc averaged over items. free_only=True (default) scores ONLY the field-carried free slots
+    {0,1,2,4} — the frozen metric re-registration after the parity-ceiling defect (see _panel_free_slots)."""
+    fs = _panel_free_slots(panel) if free_only else None
+    return float(np.mean([_dacc_item(model, torch, panel[i], arm, set_id, i, device, free_slots=fs)
                           for i in range(len(panel))]))
 
 
@@ -549,29 +581,39 @@ def fit_check(device):
         os.remove(logp)
     print(f"FIT-CHECK: d=64 L=2, CPT 200 + drill 1500 on {device} (fixed objective λ={LAMBDA_ANS} + "
           "cosine LR); A-duel s0/s1 + C-perm s0 …", flush=True)
+    fs = _panel_free_slots(drill)
+    print(f"    d_acc scored on FREE slots {fs} (parity slots {{3,5}} excluded — codebook rank-4)", flush=True)
     res = {}
     for arm, seed in [("A-duel", 0), ("A-duel", 1), ("C-perm", 0)]:
         model, ce_ans = train_arm(arm, seed, (torch, M, cfg, Struct), {"f2": f2, "f1": f1},
                                   drill, cpt_win, (200, 1500), device, tag="fitcheck")
-        dacc = round(dacc_panel(model, torch, drill[:64], arm, 0, device), 4)
-        res[f"{arm}.s{seed}"] = {"drill_dacc": dacc, "ce_ans_final": round(ce_ans, 4)}
-        print(f"    {arm}.s{seed}: drill_dacc={dacc}  ce_ans={round(ce_ans, 4)}", flush=True)
+        rec = {"drill_dacc": round(dacc_panel(model, torch, drill[:64], arm, 0, device), 4),
+               "ce_ans_final": round(ce_ans, 4)}
+        if arm == "C-perm":                                       # confirm parity slots come free, held-out clean
+            rec["per_slot_all6"] = dacc_perslot(model, torch, drill[:64], arm, 0, device)
+            rec["f2doubleprime_heldout"] = round(dacc_panel(model, torch, f2, arm, 1, device), 4)
+        res[f"{arm}.s{seed}"] = rec
+        print(f"    {arm}.s{seed}: drill_dacc(free)={rec['drill_dacc']}  ce_ans={rec['ce_ans_final']}"
+              + (f"  per_slot={rec['per_slot_all6']}  f2''(held-out,free)={rec['f2doubleprime_heldout']}"
+                 if arm == "C-perm" else ""), flush=True)
     ad0, ad1 = res["A-duel.s0"]["drill_dacc"], res["A-duel.s1"]["drill_dacc"]
+    cp = res["C-perm.s0"]
+    parity = cp["per_slot_all6"][3] >= 0.9 and cp["per_slot_all6"][5] >= 0.9   # wiring: teacher-forced parity
     bar1 = ad0 >= 0.95 and ad1 >= 0.95 and abs(ad0 - ad1) <= 0.03
     bar2 = res["A-duel.s0"]["ce_ans_final"] < 0.05 and res["A-duel.s1"]["ce_ans_final"] < 0.05
-    bar3 = res["C-perm.s0"]["drill_dacc"] <= 0.60
+    bar3 = 0.40 <= cp["drill_dacc"] <= 0.60 and 0.45 <= cp["f2doubleprime_heldout"] <= 0.55 and parity
+    GO = bar1 and bar2 and bar3
     with open(os.path.join(_HERE, "fitcheck_result.json"), "w") as fh:
-        json.dump({"device": device, "results": res,
+        json.dump({"device": device, "free_slots": fs, "results": res,
                    "bar1_aduel_fit": bar1, "bar2_ce_ans_decays": bar2, "bar3_cperm_harness": bar3,
-                   "GO": bar1 and bar2 and bar3}, fh, indent=2, ensure_ascii=False)
-    print(f"\nbar1 A-duel≥0.95 both + spread≤0.03: {'PASS' if bar1 else 'FAIL'}  "
-          f"(s0={ad0} s1={ad1})")
+                   "GO": GO}, fh, indent=2, ensure_ascii=False)
+    print(f"\nbar1 A-duel≥0.95 both + spread≤0.03: {'PASS' if bar1 else 'FAIL'}  (s0={ad0} s1={ad1})")
     print(f"bar2 ce_ans<0.05 both:               {'PASS' if bar2 else 'FAIL'}")
-    print(f"bar3 C-perm true-gold ≤0.60:         {'PASS' if bar3 else 'FAIL'}  "
-          f"({res['C-perm.s0']['drill_dacc']})")
-    print("\nFIT-CHECK VERDICT:", "GO — launch the full run" if (bar1 and bar2 and bar3)
+    print(f"bar3 C-perm free∈[.40,.60]+f2''∈[.45,.55]+parity: {'PASS' if bar3 else 'FAIL'}  "
+          f"(drill={cp['drill_dacc']} f2''={cp['f2doubleprime_heldout']} parity_slots={cp['per_slot_all6'][3]},{cp['per_slot_all6'][5]})")
+    print("\nFIT-CHECK VERDICT:", "GO — launch the full run" if GO
           else "NO-GO — do not spend the full run; diagnose from train_log_fitcheck.jsonl")
-    return 0 if (bar1 and bar2 and bar3) else 1
+    return 0 if GO else 1
 
 
 def _frozen():
