@@ -263,7 +263,6 @@ def run_g3a(device, cpt_steps, drill_steps, tag, seeds=(0, 1)):
 def g3_0d(device):
     """$0 admissibility gate: is the honorific bit recoverable (≥0.90) from the frozen d=384 CPT trunk's
     per-node φ? If not, χ̂=g(φ) has nothing to read and G3-a is UNBUILT (the gate doing its job)."""
-    from sklearn.linear_model import LogisticRegression
     torch, M, cfg, Struct = H._load(smoke=False)                 # d=384 real trunk
     drill = json.load(open(os.path.join(_HERE, "drill_grid_multi.json"), encoding="utf-8"))
     cpt_win = H._cpt_windows(H._nsmc_lines(120000), 512, torch)
@@ -281,9 +280,20 @@ def g3_0d(device):
         phi = _node_phi(fm, torch, it, n, device).cpu().numpy()
         for k, c in enumerate(it["conjuncts"]):
             X.append(phi[3 * k]); y.append(int(c["hp"]))          # hp = the honorific bit at the head node
-    X = np.asarray(X); y = np.asarray(y); ntr = int(0.7 * len(X))
-    clf = LogisticRegression(max_iter=1000).fit(X[:ntr], y[:ntr])
-    acc = float(clf.score(X[ntr:], y[ntr:]))
+    X = np.asarray(X, np.float32); y = np.asarray(y, np.float32)
+    rng = np.random.default_rng(0); perm = rng.permutation(len(X)); X, y = X[perm], y[perm]
+    ntr = int(0.7 * len(X))
+    Xt = torch.tensor(X[:ntr], device=device); yt = torch.tensor(y[:ntr], device=device)
+    Xv = torch.tensor(X[ntr:], device=device); yv = torch.tensor(y[ntr:], device=device)
+    probe = torch.nn.Linear(X.shape[1], 1).to(device)            # self-contained logistic probe (no sklearn)
+    po = torch.optim.Adam(probe.parameters(), lr=1e-2)
+    for _ in range(500):
+        po.zero_grad()
+        loss = torch.nn.functional.binary_cross_entropy_with_logits(probe(Xt).squeeze(-1), yt) \
+            + 1e-3 * probe.weight.pow(2).sum()                   # tiny L2
+        loss.backward(); po.step()
+    with torch.no_grad():
+        acc = float(((probe(Xv).squeeze(-1) > 0).float() == yv).float().mean())
     ok = acc >= 0.90
     json.dump({"probe_acc": round(acc, 4), "threshold": 0.90, "pass": ok, "n": len(X)},
               open(os.path.join(_HERE, "g3_0d_result.json"), "w"), indent=2)
