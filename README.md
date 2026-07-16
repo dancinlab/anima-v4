@@ -3,11 +3,14 @@
 **A⇄G where the tension IS the thinking** — the opposition must compute a cognitive operation,
 not gate the mouth.
 
-> **STAGE = FALSIFIER REPAIR.** 7 candidate mechanisms are enumerated. None is selected, none is
-> built. The bet's falsifier was pre-registered and audited *before* being built, and the audit
-> killed it — **H_001 🟢 SUPPORTED** (7/7, closed-form, $0): mech-3's L2 clause returns DEAD for
-> every possible mechanism. Next gate = repair the falsifiers against the corrected evidence
-> (`ARCHITECTURE.json` → `evidence-integrity`), then re-select. Nothing in this repo is a claim.
+> **STAGE = H_003 RUNNING (verdict pending).** The bet (mech-3) died three ways for $0 — its
+> falsifier is vacuous (**H_001 🟢**), its objective is tautological (literature gate), and its
+> Korean premise is not in the measurement (**H_002 🟢**). The one survivor is *atomicity of the
+> negator token* (`salvage.L4`), and **H_003** isolates it to one variable (encoder span policy:
+> atomic vs shattered). H_003 is **pre-register FROZEN** — encoder one-variable GREEN 67/67, panels
+> F7 PASS, G-0 PASS, G-1 PASS, drill 못=0 — and the training run is executing; `collect_verdict.py`
+> renders F1/F2/F6 when it lands. Three design defects and one windower bug were caught $0 before
+> any GPU spend. **Nothing in this repo is a claim until the run's verdict returns** (verdict-integrity).
 
 ## The ask
 
