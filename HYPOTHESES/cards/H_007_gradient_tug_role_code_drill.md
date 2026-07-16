@@ -63,9 +63,12 @@ inherited, GF(2)-rank audit, length-parity check.
 
 ## $0 gates before any training (freeze-blocking)
 
-- **Lit-verify**: 3-scan verification pass on the MEMORY-tagged rows (PCGrad/GradNorm, Caruana, ELECTRA,
-  SCAN) — the gradient-surgery literature treats conflict as a PATHOLOGY to remove, so mech-5's bet is
-  genuinely contrarian and both answers are informative.
+- **Lit-verify ✅ (2026-07-17, `sidecar research`)**: the LOAD-BEARING contrarian premise is VERIFIED —
+  PCGrad (Yu 2020, arXiv 2001.06782), GradNorm (Chen, 1711.02257), and Recon (2302.11289, "mitigate the
+  influence of conflicting gradients") all treat gradient conflict (cos<0) as a PATHOLOGY to REMOVE, so
+  mech-5's bet (conflict is the forge) is genuinely contrarian → both answers informative. Caruana 1997
+  (MTL, pre-arXiv), SCAN (Lake&Baroni 2018), ELECTRA (Clark 2020) are foundational supporting priors
+  (well-attested, used non-critically for the C-dup/C-shuf controls + DEAD-is-live). GATE CLEARED.
 - **G-0**: closed-form panel/codebook/leak audit + a STRUCTURAL BAN on head-G ever supervising the gold bit
   (the raw-hon-φ scaffolding-certifier trap from G3-a, named up front).
 - **G-1**: d=64 kill-only smoke — no early gradient conflict, OR no probe separation vs C-dup ⇒ KILL at ~$0.
