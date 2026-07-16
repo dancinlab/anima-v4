@@ -15,7 +15,8 @@
           "children": [
             {
               "id": "scope.stage",
-              "role": "STAGE = H_003 RUNNING. mech-3 died 3 ways ($0); the survivor (atomicity) became H_003, FROZEN 2026-07-16 (encoder GREEN 67/67 · F7 PASS · G-0 PASS · G-1 PASS · drill 못=0), driver built + smoke GREEN. The full d=384 run (2 seeds x 5 arms, ~6-8h local MPS) is IN FLIGHT in the background, writing train_result_full.json with F1(Δ≥0.15)·F2(≥0.85)·F6(<0.05). NO VERDICT until it returns — nothing in this tree is a claim yet."
+              "type": "gate",
+              "role": "STAGE = H_003 FALSIFIED (2026-07-16) — mech-3 is dead in all FOUR of its parts. The one-variable atomicity drill returned F1 Δd_acc(A-atom−A-shat) = −0.1146 (s0) / +0.0468 (s1), both < 0.05 DEAD floor, on a CLEAN measurement (F2 liveness 0.8594 both seeds ≥0.85 · F6 placebo gap ≤0.05 · C-scaf≈0.5 grid-clean · C-perm in-band harness-clean). Atomicity of the negator token carries NO held-out-recombination advantage under a fixed jamo-BPE codec; v1's salvage.L4 causal attribution does not survive isolation. This is a real write-side null, not an admissibility defect (verdict-integrity cleared). Prior mech-3 deaths: falsifier vacuous (H_001 🟢), objective tautological (literature gate), L5 bound/free premise not in the measurement (H_002 🟢). NEXT: leave the codec axis — mech-1 파서 결투 / mech-7 반사실 편집자 are the other two independent tension families. Artifacts: state/h003_atomicity_fixed_codec_drill_2026-07-16/train_result_full.json + verdict.json + collect_verdict.py."
             },
             {
               "id": "scope.origin",
@@ -121,7 +122,14 @@
             },
             {
               "id": "L4.what-was-actually-causal",
-              "role": "ATOMICITY of the negator token — one token id per negator — and nothing else. NOT identity (C3: collapsing all 4 negators to one shared id scores the same as M). NOT pretraining exposure (C2: scrubbing the held-out stem from the pretraining corpus entirely scores the same as M). NOT the jamo alphabet per se — jamo is the vehicle that makes atomicity reachable, since in raw utf-8 the negators collide (ㅇㅏㄴ is a jamo prefix of ㅇㅏㄴㅣ) and no clean slot can form."
+              "role": "ATOMICITY of the negator token — one token id per negator — was v1's attributed cause. NOT identity (C3: collapsing all 4 negators to one shared id scores the same as M). NOT pretraining exposure (C2: scrubbing the held-out stem from the pretraining corpus entirely scores the same as M). NOT the jamo alphabet per se — jamo is the vehicle that makes atomicity reachable, since in raw utf-8 the negators collide (ㅇㅏㄴ is a jamo prefix of ㅇㅏㄴㅣ) and no clean slot can form. ⚠️ This attribution is FALSIFIED under isolation — see L4.atomicity-isolated-is-null.",
+              "children": [
+                {
+                  "id": "L4.atomicity-isolated-is-null",
+                  "type": "gate",
+                  "role": "🔴 FALSIFIED (H_003, 2026-07-16). The v1 attribution rested on C2/C3 ablations that shared v1's codec+corpus+curriculum; H_003 isolated atomicity to ONE variable (encoder span policy atomic vs shattered, same K=2048 codec / same NSMC corpus / same d=384 L=4 model / per-seed) and measured F1 Δd_acc(A-atom−A-shat) = −0.1146 (s0) / +0.0468 (s1) — both below the 0.05 DEAD floor, seed-0 atomic scoring LOWER. Clean measurement (F2 liveness 0.8594 both ≥0.85 · F6 placebo gap ≤0.05 · C-scaf≈0.5 · C-perm in-band), so this is a real null, not a no-train/harness artifact. CONCLUSION: atomicity of the negator token is NOT causal for held-out negation recombination under a fixed codec; whatever carried v1's MORPH-ATOM 🟢 (d_acc 0.9083/0.9167) was CONFOUNDED with atomicity. This confirms L4.atomicity-was-luck-not-method as fact, not suspicion. Source: state/h003_atomicity_fixed_codec_drill_2026-07-16/{train_result_full,verdict}.json."
+                }
+              ]
             },
             {
               "id": "L4.atomicity-was-luck-not-method",
@@ -497,7 +505,7 @@
     },
     {
       "id": "next-gate",
-      "role": "What to run next, and why it is no longer a tension at all. The literature gate + H_001 between them removed the adversary from the critical path: the open question is the MEASUREMENT, not the opposition. Pre-register before building (that discipline is what caught mech-3 for $0).",
+      "role": "⚑ CODEC AXIS CLOSED (2026-07-16). This gate ran as H_003 and came back 🔴 FALSIFIED (see scope.stage · L4.atomicity-isolated-is-null): the fixed-codec span-policy contrast — the measurement this whole node was built to run — shows atomicity is NOT causal for held-out recombination. The children below are the RECORD of how that clean $0-pre-registered measurement was built (admissibility gate, F7 panel audit, drill grid, windower-bug catch) — reusable method, not a live plan. The mechanism-3 codec strategy is now dead in all four parts. NEXT MECHANISM must leave the codec axis: mech-1 파서 결투 (binding — two parse directions disagree per edge) and mech-7 반사실 편집자 (causal abstraction — G writes A's training data) are the other two independent tension families (fake-diversity audit: only 3 axes + mech-5 exist). Same discipline carries forward: research → admissibility-gate → pre-register → falsify.",
       "children": [
         {
           "id": "ng.drop-g",

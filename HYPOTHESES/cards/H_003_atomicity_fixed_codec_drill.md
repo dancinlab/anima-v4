@@ -4,7 +4,7 @@ ssot: ARCHITECTURE.json → next-gate.*, salvage.L4.*  (this card is the pre-reg
 slug: atomicity-fixed-codec-drill
 title: an ATOMIC negator token in a fixed jamo-BPE codec CAUSES held-out negation recombination — the one variable is the encoder's span policy (atomic vs shattered), same vocabulary, same corpus, same model, same seed; predicted Δd_acc ≥ 0.15 (A-atom − A-shat) on an OOD panel whose control sits near 0.5
 domain: verification-design (causal drill · pre-register)
-status: pre-register-frozen
+status: falsified
 exploration_method: design delegated to Fable 5 under fable-mode; span-policy lever derived independently and cross-checked; codec behaviour probed on the real decomposer
 verification_method: deterministic panel audits (F7 · closed-form, pre-training) + trained-arm falsifiers (F1–F8) with a placebo and a leak-ceiling arm
 pre_register_frozen: true
@@ -19,18 +19,19 @@ llm: none in the eval path (design only; the model is trained, the scoring is de
 > and lever live at `next-gate.*`, `salvage.L4.what-was-actually-causal`, `salvage.L4.atomicity-was-
 > luck-not-method`. Human viewer: `python3 serve.py`.
 
-## Status — FROZEN 2026-07-16, NOT YET RUN
+## Status — 🔴 FALSIFIED 2026-07-16 (RAN, clean measurement)
 
-The pre-register is now **FROZEN**: every $0 pre-training gate has PASSED —
-encoder one-variable lever GREEN 67/67, panels F7 PASS (v3 SLOT-CONTRAST), G-0 codec audit PASS 3/3,
-G-1 grammar PASS (owner-delegated LLM judgment, `g1_grammar_verdict.md`), drill grid built with the
-held-out 못 = 0 invariant. It carries **no verdict** — the arms are not trained. The only unrun piece
-is the torch training driver + the ~6–8h run (the multi-session endpoint).
+Pre-registered frozen 2026-07-16 (every $0 pre-training gate PASSED — encoder one-variable lever
+GREEN 67/67, panels F7 PASS v3 SLOT-CONTRAST, G-0 codec audit PASS 3/3, G-1 grammar PASS by
+owner-delegated LLM judgment, drill grid with held-out 못 = 0), then **RAN** to completion on local
+MPS (d=384 L=4 ×2 seeds × 5 arms, ~5.5h). The frozen falsifiers returned **FALSIFIED** on a clean
+measurement — see **## Verdict** below for the arm table and numbers.
 
-It is the first mechanism in the campaign that reaches the build stage, and it does so only because
-three prior $0 gates cleared the ground: `H_001` killed the bet's falsifier, the literature gate killed
-its objective, `H_002` killed the L5 premise — and all three left **one survivor**, atomicity
-(`salvage.L4.what-was-actually-causal`). H_003 tests that survivor directly.
+It was the first mechanism in the campaign to reach the run stage, and it did so only because three
+prior $0 gates cleared the ground: `H_001` killed the bet's falsifier, the literature gate killed its
+objective, `H_002` killed the L5 premise — and all three left **one survivor**, atomicity
+(`salvage.L4.what-was-actually-causal`). H_003 tested that survivor directly, in isolation — and it
+did not hold. mech-3 is now dead in all four parts.
 
 ## Hypothesis
 
@@ -188,5 +189,37 @@ Nothing marked `?` here is tunable after freeze. Enumerated so the freeze is aud
 
 ## Verdict
 
-_None — pre-register, NOT yet frozen. Open Parameters must be resolved first, then the F7 panel audit
-must pass ($0, closed-form), then the arms train. No number in this card is a result._
+**🔴 FALSIFIED (2026-07-16)** — atomicity of the negator token does NOT cause held-out negation
+recombination. The one-variable test (encoder span policy: atomic vs shattered, same K=2048 codec,
+same NSMC corpus, same d=384 L=4 model, per-seed) returns **F1 Δd_acc = A-atom − A-shat = −0.1146
+(seed 0), +0.0468 (seed 1)** — both below the 0.05 DEAD floor; at seed 0 the atomic arm scores
+*lower* than the shattered one. Source: `state/h003_atomicity_fixed_codec_drill_2026-07-16/train_result_full.json`
++ `verdict.json`.
+
+The measurement is CLEAN — this is a real DEAD, not a tool artifact (verdict-integrity cleared):
+
+| arm | seed 0 f2' (d_acc) | seed 1 f2' | falsifier | reads |
+|---|---|---|---|---|
+| A-atom | 0.5677 | 0.6562 | — | atomic negator token |
+| A-shat | 0.6823 | 0.6094 | **F1 primary** | Δ = −0.1146 / +0.0468 → both < 0.05 ⇒ DEAD |
+| C-plc | 0.6458 | 0.6406 | **F6 placebo** | gap = −0.0781 / +0.0156 (≤0.05) ⇒ clean, F1 not void-able |
+| C-scaf | 0.4948 | 0.5000 | **F3 leak** | ≈0.5 both ⇒ grid does not leak |
+| C-perm | 0.5052 | 0.4844 | **F4 harness** | in [0.40,0.60] both ⇒ label/harness does not leak |
+
+- **F2 liveness = f1'(A-atom) = 0.8594 at BOTH seeds ≥ 0.85** — the model learned and the scorer
+  discriminates (contrast the quarantined windower-bug run, which read 0.5 everywhere). The DEAD is a
+  measured null, not a no-train artifact.
+- **F6 placebo clean** — A-shat's loss is not generic embedding-interference the way L1/Honest-Limits
+  feared; the placebo control sits within 0.05 of A-atom, so the F1 pass (had there been one) would not
+  have been void-able. Here there is no F1 pass to void — atomicity simply carries no advantage.
+
+**What this means.** v1's attribution (`salvage.L4.what-was-actually-causal`: "ATOMICITY of the
+negator token — and nothing else") does NOT survive isolation. Under a fixed frequency-trained codec,
+giving each negator its own atomic token id buys nothing on held-out negation recombination versus
+shattering it into jamo singletons. Whatever carried v1's MORPH-ATOM 🟢 (d_acc 0.9083/0.9167) was
+confounded with atomicity — a different codec, corpus, or curriculum — not atomicity per se. This
+retires mech-3's last surviving lever: it died a fourth way, and this one is a clean write-side
+measurement, not an admissibility defect (`salvage.L4.atomicity-was-luck-not-method` is now confirmed,
+not merely suspected). Next direction moves off the codec axis entirely (mech-1 파서 결투 / mech-7 반사실
+편집자 — the other two independent tension families). Recorded to `ARCHITECTURE.json` → `scope.stage`,
+`salvage.L4.what-was-actually-causal` (falsified child), `next-gate`, and REGISTRY tier 🔴.

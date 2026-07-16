@@ -3,14 +3,18 @@
 **A⇄G where the tension IS the thinking** — the opposition must compute a cognitive operation,
 not gate the mouth.
 
-> **STAGE = H_003 RUNNING (verdict pending).** The bet (mech-3) died three ways for $0 — its
-> falsifier is vacuous (**H_001 🟢**), its objective is tautological (literature gate), and its
-> Korean premise is not in the measurement (**H_002 🟢**). The one survivor is *atomicity of the
-> negator token* (`salvage.L4`), and **H_003** isolates it to one variable (encoder span policy:
-> atomic vs shattered). H_003 is **pre-register FROZEN** — encoder one-variable GREEN 67/67, panels
-> F7 PASS, G-0 PASS, G-1 PASS, drill 못=0 — and the training run is executing; `collect_verdict.py`
-> renders F1/F2/F6 when it lands. Three design defects and one windower bug were caught $0 before
-> any GPU spend. **Nothing in this repo is a claim until the run's verdict returns** (verdict-integrity).
+> **STAGE = mech-3 DEAD, all four parts (H_003 🔴 FALSIFIED, 2026-07-16).** The bet (mech-3) died
+> three ways for $0 — its falsifier is vacuous (**H_001 🟢**), its objective is tautological
+> (literature gate), and its Korean premise is not in the measurement (**H_002 🟢**). Its one survivor
+> was *atomicity of the negator token* (`salvage.L4`), and **H_003** isolated it to one variable
+> (encoder span policy: atomic vs shattered, same codec/corpus/model/seed). It came back **FALSIFIED**:
+> F1 Δd_acc(A-atom − A-shat) = **−0.1146 (s0) / +0.0468 (s1)**, both below the 0.05 DEAD floor, on a
+> CLEAN measurement (F2 liveness 0.8594 both seeds ≥0.85 · F6 placebo gap ≤0.05 · C-scaf≈0.5 · C-perm
+> in-band). Atomicity is **not** causal for held-out recombination under a fixed codec — v1's `salvage.L4`
+> attribution does not survive isolation, a real write-side null (verdict-integrity cleared, not a tool
+> artifact). Three design defects and one windower bug were caught $0 before any GPU spend. **NEXT:
+> off the codec axis** — mech-1 (파서 결투) / mech-7 (반사실 편집자), the other two independent tension
+> families. See `ARCHITECTURE.json` → `scope.stage`, `salvage.L4.atomicity-isolated-is-null`, `next-gate`.
 
 ## The ask
 
