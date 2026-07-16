@@ -1,32 +1,34 @@
 #!/usr/bin/env python3
-"""H_005 G3-a driver — LEARNED concord χ̂ replaces hand-computed χ; SUPPORT held FIXED.
+"""H_005 G3-a driver — LEARNED concord χ̂ replaces hand χ; SUPPORT held FIXED.
 
 H_004 (G-2) 🟢 SUPPORTED certified the parse-tension FIELD FORMAT (support × concord) as the causal
-carrier of held-out honorific binding — but the concord χ was HAND-COMPUTED (gc.concord_field:
-χ[i][j]=+1 if hon[i]==hon[j] else −1). G3-a asks: with the SUPPORT (proxy L→R/R→L disagreement,
-gc.t_struct) held FIXED, can a TRAINED χ̂ = tanh(g(hon_i,hon_j)) learn those signs and reproduce the
-field's causal power? One variable vs A-hand = the concord is learned, not hand-set.
+carrier of held-out honorific binding — but the concord χ was HAND-COMPUTED. G3-a asks: with the
+SUPPORT fixed (proxy L→R/R→L disagreement gc.t_struct), can a TRAINED χ̂ learn those signs from what
+the MODEL REPRESENTS and reproduce the field's causal power?
 
-Arms (χ̂ module/init/steps identical everywhere the field is learned):
-  A-hand  : the H_004 A-duel field verbatim (numpy hand χ · anchor)
-  A-χ̂     : SAME support, VALUES = tanh(g(hon_i,hon_j)) trained jointly on the drill
-  C-χ̂plc  : SAME trained g, PERMUTED support (right values, wrong cells) — primary control
-  C-scaf  : T̂≡0 (not-free floor) · C-perm : permuted-gold harness  (both = H_004 paths)
+⚠️ χ̂ reads FROZEN-CPT-TRUNK per-node states φ (NOT raw hon) — Fable fidelity review (g3a_review):
+g(raw hon) is a scaffolding-certifier (learning the equality of the two scalars χ_hand compares is
+trivial and cannot fail → certifies the MLP, not the mechanism). The design of record uses
+φ_i = per-node pooled trunk states, g = bilinear (~2-4k params), so the "can concord be recovered
+from what the model represents" question is the real, falsifiable content — and G3-0d (probe φ→hon
+≥0.9) becomes a live gate that can fail.
 
-Metric = free-slot d_acc {0,1,2,4} (H_004 A2 amendment). Reuses train_h004 machinery verbatim.
+Arms: A-hand (H_004 field verbatim, anchor) · A-χ̂ (learned χ̂=g(φ) on fixed support) ·
+C-χ̂plc (same trained g, permuted support) · C-scaf (T̂≡0) · C-perm (permuted-gold harness).
+F1a = d_acc(A-χ̂)−d_acc(C-χ̂plc) ≥0.15 both · F1a′ = d_acc(A-χ̂) ≥ d_acc(A-hand)−0.05 both ·
+F5 (carried) = the VALUES-matter control (strip resolution → d_acc must collapse). Metric = free-slot.
 
-⚠️ THE wiring risk (this session's 3-defect lesson): the χ̂ grad MUST reach g through the struct
-injection. The smoke ASSERTS model.chi has a non-None gradient after one A-χ̂ drill backward — a
-detached struct (silent) would leave g at init and the run would be a wiring failure, not a verdict.
-
-Run:  python3 .../train_g3a.py --smoke          # wiring + grad-flow assert (CPU, minutes)
-      python3 .../train_g3a.py --full-check      # $0 plumbing at d=64 on target device
-      python3 .../train_g3a.py                    # full d=384 (ONLY after H_005 pre_register_frozen)
+Run:  python3 .../train_g3a.py --smoke        # wiring: χ̂ grad→g reaches U/V · φ-encoder FROZEN
+      python3 .../train_g3a.py --full-check    # $0 plumbing at d=64 on target device
+      python3 .../train_g3a.py --g3-0d         # $0 admissibility gate: probe φ→hon bit ≥0.90
+      python3 .../train_g3a.py                  # full d=384 (ONLY after H_005 pre_register_frozen)
 """
 from __future__ import annotations
 
 import argparse
+import copy
 import json
+import math
 import os
 import sys
 
@@ -35,40 +37,70 @@ sys.path.insert(0, _HERE)
 
 import numpy as np
 import g1_core_check as gc
-import train_h004 as H          # reuse verbatim: _item_T, _node_layout, _seq_bytes, _arm_tensor,
-                                # dacc machinery, CPT, drill objective, free-slot metric, _load
+import train_h004 as H
 
 ARMS_G3A = ["A-hand", "A-χ̂", "C-χ̂plc", "C-scaf", "C-perm"]
+_R_CHI = 4                                       # bilinear rank for g (U,V ∈ R^{r×d})
 
 
-def _chi_hat(model, torch, hon, device):
-    """χ̂ (n,n) = tanh(g([hon_i, hon_j])) — grad-enabled through model.chi (the learned concord g)."""
-    n = len(hon)
-    h = torch.tensor(np.asarray(hon), dtype=torch.float32, device=device)          # (n,)
-    hi = h[:, None].expand(n, n)                                                     # (n,n) row = hon_i
-    hj = h[None, :].expand(n, n)                                                     # (n,n) col = hon_j
-    pair = torch.stack([hi, hj], dim=-1).reshape(n * n, 2)                           # (n*n,2)
-    return torch.tanh(model.chi(pair)).reshape(n, n)                                 # (n,n) grad-enabled
+class ChiBilinear:
+    """χ̂[i][j] = tanh((U φ_i)·(V φ_j)/√r + b) — the learned concord g (~2rd+1 params). torch module."""
+    def __init__(self, torch, d, r=_R_CHI):
+        self.U = torch.nn.Linear(d, r, bias=False)
+        self.V = torch.nn.Linear(d, r, bias=False)
+        self.b = torch.nn.Parameter(torch.zeros(1))
+        self.r = r
+
+    def as_module(self, torch):
+        m = torch.nn.Module()
+        m.U, m.V, m.b = self.U, self.V, self.b
+        return m
 
 
-def _hon_of(item):
-    """The per-node honorific scalar the hand χ keys on — mirrors train_h004._item_T exactly."""
+def _phi_encode(fm, torch, tokens):
+    """Frozen forward to the PRE-READOUT state (B,C,T) — replicates the trunk with struct=None
+    (answer-blind + injection-independent, both load-bearing per the review). No grad."""
+    with torch.no_grad():
+        x = fm.embed(tokens)                     # (B,T,C)
+        x = x.transpose(1, 2)                    # (B,C,T)
+        x = fm.embed_conv(x)
+        for layer in fm.trunk:
+            x = layer(x)
+        x, _ = fm.moe(x)
+        x = fm.norm_out(x)                       # (B,C,T) — same interface G3-b's shared f will read
+    return x
+
+
+def _node_phi(fm, torch, item, n, device):
+    """(n, d) per-node φ = mean-pool of the frozen top-layer state over each node's SURFACE bytes
+    (never over gold/answer bytes). A node with no surface span → φ=0."""
+    surf_b = item["surface"].encode("utf-8")
+    toks = torch.tensor(list(surf_b), dtype=torch.long, device=device)[None]
+    x = _phi_encode(fm, torch, toks)[0]          # (C, L)
+    nob = H._node_of_byte(item["surface"], n)    # (L,) node id per surface byte
+    d = x.shape[0]
+    phi = torch.zeros(n, d, device=device)
+    nob_t = torch.tensor(nob, device=device)
+    for k in range(n):
+        sel = (nob_t == k).nonzero(as_tuple=True)[0]
+        if len(sel):
+            phi[k] = x[:, sel].mean(dim=1)
+    return phi                                   # (n,d), no grad (from frozen encoder)
+
+
+def _chi_hat(model, torch, phi):
+    """χ̂ (n,n) grad-enabled through model.chi (U,V,b); φ is the frozen no-grad per-node state."""
+    up = model.chi.U(phi); vp = model.chi.V(phi)                 # (n,r) each — grad → U,V
+    return torch.tanh(up @ vp.t() / math.sqrt(_R_CHI) + model.chi.b)   # (n,n)
+
+
+def _hon_n(item):
     if "conjuncts" in item:
-        K = len(item["conjuncts"]); n = 3 * K + 2
-        hon = np.zeros(n)
-        for k, c in enumerate(item["conjuncts"]):
-            hp = int(c["hp"]); pos1 = 1.0 if int(c["honored_position"]) == 1 else 0.0
-            hon[3 * k] = hp; hon[3 * k + 1] = pos1; hon[3 * k + 2] = 1.0 - pos1
-        return hon, n
-    n = 5
-    hon = np.array([item["honorific_present"],
-                    1.0 if item["n1_lexeme"].endswith("님") else 0.0,
-                    1.0 if item["n2_lexeme"].endswith("님") else 0.0, 0.0, 0.0])
-    return hon, n
+        return 3 * len(item["conjuncts"]) + 2
+    return 5
 
 
 def _support(item, n):
-    """The FIXED proxy-parser disagreement support (gc.t_struct) — identical to what hand χ multiplies."""
     if "conjuncts" in item:
         import build_tension as bt
         ha, hg = bt._heads()
@@ -76,33 +108,28 @@ def _support(item, n):
     return gc.t_struct(n, gc.HEAD_A, gc.HEAD_G)
 
 
-def _struct_g3a(model, torch, item, arm, set_id, idx, seq_bytes_len, device):
-    """(seq_bytes_len,64) struct rows — grad-enabled T̂ for the learned-χ̂ arms, numpy path otherwise.
-
-    Returns (struct, gold). For A-χ̂/C-χ̂plc the struct carries grad to model.chi; the H_004 arms
-    (A-hand=A-duel, C-scaf, C-perm) fall through to the sealed numpy path."""
+def _struct_g3a(model, phi_enc, torch, item, arm, set_id, idx, seq_bytes_len, device):
+    """(seq_bytes_len,64) struct — grad-enabled T̂=support⊙χ̂(g(φ)) for χ̂ arms, numpy path otherwise."""
     if arm not in ("A-χ̂", "C-χ̂plc"):
         h004_arm = {"A-hand": "A-duel", "C-scaf": "C-scaf", "C-perm": "C-perm"}[arm]
         st, gold, _ = H._struct_for(model, torch, item, h004_arm, set_id, idx, seq_bytes_len)
         return st.to(device), gold
-    # learned-χ̂ arms
-    hon, n = _hon_of(item)
+    n = _hon_n(item)
     _, gold, _ = H._item_T(item)
-    support = _support(item, n)                                                      # (n,n) numpy fixed
-    if arm == "C-χ̂plc":                                                             # right values, wrong cells
+    support = _support(item, n)
+    if arm == "C-χ̂plc":                                          # right values, wrong cells
         perm = np.random.default_rng(9000 + 1000 * set_id + idx).permutation(n)
         support = support[np.ix_(perm, perm)]
+    phi = _node_phi(phi_enc, torch, item, n, device)             # (n,d) frozen
     sup = torch.tensor(support, dtype=torch.float32, device=device)
-    That = sup * _chi_hat(model, torch, hon, device)                                 # (n,n) grad → g
-    emb = model.node_embed(That)                                                     # (n,64) grad-enabled
+    That = sup * _chi_hat(model, torch, phi)                     # (n,n) grad → g
+    emb = model.node_embed(That)
     full = H._node_layout(item["surface"], n, gold, seq_bytes_len)
-    struct = emb[torch.tensor(full, device=device)]                                 # (seq_len,64)
-    return struct, gold
+    return emb[torch.tensor(full, device=device)], gold
 
 
-def _drill_batch_g3a(model, torch, items, arm, device, pad):
-    """Grad-PRESERVING padded batch — struct is stacked via torch.cat (NOT in-place into a zeros leaf,
-    which would silently DETACH χ̂'s gradient). tokens/targets/masks are numpy like H._drill_batch."""
+def _drill_batch_g3a(model, phi_enc, torch, items, arm, device, pad):
+    """Grad-PRESERVING padded batch (torch.cat, not in-place into a zeros leaf → would detach g)."""
     B = len(items)
     tok = np.zeros((B, pad), np.int64); tgt = np.zeros((B, pad), np.int64)
     mask = np.zeros((B, pad), np.float32); amask = np.zeros((B, pad), np.float32)
@@ -110,7 +137,7 @@ def _drill_batch_g3a(model, torch, items, arm, device, pad):
     for bi, (idx, item) in enumerate(items):
         surf_b, gold_b = H._seq_bytes(item)
         seq = (surf_b + gold_b)[:pad]
-        st, gold = _struct_g3a(model, torch, item, arm, 0, idx, len(seq), device)    # (L,64) grad-enabled
+        st, gold = _struct_g3a(model, phi_enc, torch, item, arm, 0, idx, len(seq), device)
         L = len(seq)
         tok[bi, :L] = list(seq); tgt[bi, :L - 1] = list(seq[1:]); mask[bi, :L - 1] = 1.0
         base = len(surf_b); K = len(gold_b) // 3
@@ -119,22 +146,21 @@ def _drill_batch_g3a(model, torch, items, arm, device, pad):
             amask[bi, a0:a1] = 1.0
         pad_rows = pad - st.shape[0]
         st_full = st if pad_rows <= 0 else torch.cat(
-            [st, torch.zeros(pad_rows, st.shape[1], device=device)], dim=0)          # grad-preserving pad
+            [st, torch.zeros(pad_rows, st.shape[1], device=device)], dim=0)
         structs.append(st_full[:pad])
-    struct = torch.stack(structs, dim=0)                                             # (B,pad,64) grad-enabled
+    struct = torch.stack(structs, dim=0)
     return (torch.tensor(tok, device=device), torch.tensor(tgt, device=device), struct,
             torch.tensor(mask, device=device), torch.tensor(amask, device=device))
 
 
-def _dacc_g3a(model, torch, panel, arm, set_id, device, free_only=True):
-    """free-slot d_acc using the g3a struct path (needed so A-χ̂/C-χ̂plc eval through the learned g)."""
+def _dacc_g3a(model, phi_enc, torch, panel, arm, set_id, device, free_only=True):
     fs = H._panel_free_slots(panel) if free_only else None
     accs = []
     for i, it in enumerate(panel):
         surf_b, gold_b = H._seq_bytes(it); base = len(surf_b); K = len(gold_b) // 3
         seq = surf_b + gold_b
         with torch.no_grad():
-            struct, gold = _struct_g3a(model, torch, it, arm, set_id, i, len(seq), device)
+            struct, gold = _struct_g3a(model, phi_enc, torch, it, arm, set_id, i, len(seq), device)
         slots = range(K) if fs is None else fs
 
         def _nll(byte_seq):
@@ -157,27 +183,30 @@ def train_arm_g3a(arm, seed, cfg_tuple, drill, cpt_win, steps, device):
     torch, M, cfg, Struct = cfg_tuple
     torch.manual_seed(seed)
     model = Struct(cfg)
-    model.chi = torch.nn.Sequential(torch.nn.Linear(2, 16), torch.nn.GELU(), torch.nn.Linear(16, 1))
+    chi = ChiBilinear(torch, cfg.d_model); model.chi = chi.as_module(torch)
     model = model.to(device)
-    opt = torch.optim.Adam(model.parameters(), lr=H._BASE_LR)     # includes model.chi ⇒ g trains jointly
+    opt = torch.optim.Adam(model.parameters(), lr=H._BASE_LR)
     import torch.nn.functional as F
     cpt_steps, drill_steps = steps
     bs = 8 if device == "cpu" else 16
-    for step in range(cpt_steps):
+    for step in range(cpt_steps):                                 # CPT (struct=None, trains the trunk)
         idx = torch.randint(0, cpt_win.shape[0], (bs,)); w = cpt_win[idx].to(device)
         out = model(w[:, :-1], targets=w[:, 1:]); opt.zero_grad(); out["loss"].backward(); opt.step()
+    phi_enc = copy.deepcopy(model).eval()                         # FROZEN post-CPT trunk = φ encoder
+    for p in phi_enc.parameters():
+        p.requires_grad_(False)
     d_items = list(enumerate(drill))
     if arm == "C-perm":
         import random
-        drill_gold = [it["gold_pattern"] for _, it in d_items]
+        dg = [it["gold_pattern"] for _, it in d_items]
         perm = list(range(len(d_items))); random.Random(seed).shuffle(perm)
-        d_items = [(idx, {**it, "gold_pattern": drill_gold[perm[i]]}) for i, (idx, it) in enumerate(d_items)]
+        d_items = [(idx, {**it, "gold_pattern": dg[perm[i]]}) for i, (idx, it) in enumerate(d_items)]
     pad = 256 if cfg.d_model == 64 else 320
-    ce_ans = torch.tensor(0.0); chi_grad_seen = False
+    ce_ans = torch.tensor(0.0); chi_grad_seen = False; phi_frozen_ok = True
     for step in range(drill_steps):
         bi = torch.randint(0, len(d_items), (min(bs, len(d_items)),))
         batch = [d_items[i] for i in bi.tolist()]
-        tok, tgt, struct, mask, amask = _drill_batch_g3a(model, torch, batch, arm, device, pad)
+        tok, tgt, struct, mask, amask = _drill_batch_g3a(model, phi_enc, torch, batch, arm, device, pad)
         out = model(tok, struct=struct); logits = out["logits"]
         ce_tok = F.cross_entropy(logits[:, :, :-1].transpose(1, 2).reshape(-1, cfg.vocab_size),
                                  tgt[:, :-1].reshape(-1), reduction="none")
@@ -185,16 +214,16 @@ def train_arm_g3a(arm, seed, cfg_tuple, drill, cpt_win, steps, device):
         ce_surf = (ce_tok * sm).sum() / sm.sum().clamp(min=1)
         ce_ans = (ce_tok * am).sum() / am.sum().clamp(min=1)
         loss = ce_surf + H.LAMBDA_ANS * ce_ans + out["aux_loss"]
-        lr = H._drill_lr(step, drill_steps)
         for g in opt.param_groups:
-            g["lr"] = lr
+            g["lr"] = H._drill_lr(step, drill_steps)
         opt.zero_grad(); loss.backward()
-        if arm == "A-χ̂" and not chi_grad_seen:                    # wiring assert: g MUST receive grad
+        if arm == "A-χ̂" and not chi_grad_seen:                   # g (U,V,b) MUST receive gradient
             chi_grad_seen = any(p.grad is not None and float(p.grad.abs().sum()) > 0
                                 for p in model.chi.parameters())
+            phi_frozen_ok = all(p.grad is None for p in phi_enc.parameters())   # frozen = frozen
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0); opt.step()
     model.eval()
-    return model, float(ce_ans.item()), (chi_grad_seen if arm == "A-χ̂" else None)
+    return model, phi_enc, float(ce_ans.item()), (chi_grad_seen if arm == "A-χ̂" else None), phi_frozen_ok
 
 
 def run_g3a(device, cpt_steps, drill_steps, tag, seeds=(0, 1)):
@@ -208,20 +237,21 @@ def run_g3a(device, cpt_steps, drill_steps, tag, seeds=(0, 1)):
     for seed in seeds:
         for arm in ARMS_G3A:
             print(f"  training {arm}.s{seed} (CPT {cpt_steps} + drill {drill_steps}, d={cfg.d_model})…", flush=True)
-            model, ce, chi_ok = train_arm_g3a(arm, seed, (torch, M, cfg, Struct), drill, cpt_win,
-                                              (cpt_steps, drill_steps), device)
-            rec = {"f2doubleprime": round(_dacc_g3a(model, torch, f2, arm, 1, device), 4),
-                   "f1prime": round(_dacc_g3a(model, torch, f1, arm, 2, device), 4),
-                   "drill_dacc": round(_dacc_g3a(model, torch, drill[:64], arm, 0, device), 4),
+            model, phi_enc, ce, chi_ok, phi_ok = train_arm_g3a(
+                arm, seed, (torch, M, cfg, Struct), drill, cpt_win, (cpt_steps, drill_steps), device)
+            rec = {"f2doubleprime": round(_dacc_g3a(model, phi_enc, torch, f2, arm, 1, device), 4),
+                   "f1prime": round(_dacc_g3a(model, phi_enc, torch, f1, arm, 2, device), 4),
+                   "drill_dacc": round(_dacc_g3a(model, phi_enc, torch, drill[:64], arm, 0, device), 4),
                    "ce_ans_final": round(ce, 4)}
             if chi_ok is not None:
-                rec["chi_grad_seen"] = bool(chi_ok)
+                rec["chi_grad_seen"] = bool(chi_ok); rec["phi_frozen_ok"] = bool(phi_ok)
             results[f"{arm}.s{seed}"] = rec
             print(f"    {arm}.s{seed}: f2″={rec['f2doubleprime']} f1′={rec['f1prime']} "
-                  f"drill={rec['drill_dacc']}" + (f" chi_grad={rec['chi_grad_seen']}" if chi_ok is not None else ""),
-                  flush=True)
+                  f"drill={rec['drill_dacc']}" + (f" chi_grad={rec['chi_grad_seen']} phi_frozen={rec['phi_frozen_ok']}"
+                  if chi_ok is not None else ""), flush=True)
     out = {"config": {"d": cfg.d_model, "L": cfg.n_trunk_layers, "cpt_steps": cpt_steps,
-                      "drill_steps": drill_steps, "tag": tag, "seeds": list(seeds), "metric": "free-slot"},
+                      "drill_steps": drill_steps, "tag": tag, "seeds": list(seeds), "metric": "free-slot",
+                      "chi": "bilinear φ=frozen-trunk-pooled"},
            "results": results}
     fn = "g3a_result_full.json" if tag == "full" else f"g3a_result_{tag}.json"
     with open(os.path.join(_HERE, fn), "w") as fh:
@@ -230,19 +260,49 @@ def run_g3a(device, cpt_steps, drill_steps, tag, seeds=(0, 1)):
     return 0
 
 
+def g3_0d(device):
+    """$0 admissibility gate: is the honorific bit recoverable (≥0.90) from the frozen d=384 CPT trunk's
+    per-node φ? If not, χ̂=g(φ) has nothing to read and G3-a is UNBUILT (the gate doing its job)."""
+    from sklearn.linear_model import LogisticRegression
+    torch, M, cfg, Struct = H._load(smoke=False)                 # d=384 real trunk
+    drill = json.load(open(os.path.join(_HERE, "drill_grid_multi.json"), encoding="utf-8"))
+    cpt_win = H._cpt_windows(H._nsmc_lines(120000), 512, torch)
+    torch.manual_seed(0); model = Struct(cfg)
+    model.chi = ChiBilinear(torch, cfg.d_model).as_module(torch); model = model.to(device)
+    opt = torch.optim.Adam(model.parameters(), lr=H._BASE_LR)
+    print(f"g3-0d: CPT 8000 (d=384) then probe φ→hon bit … (device={device})", flush=True)
+    for step in range(8000):
+        idx = torch.randint(0, cpt_win.shape[0], (16,)); w = cpt_win[idx].to(device)
+        out = model(w[:, :-1], targets=w[:, 1:]); opt.zero_grad(); out["loss"].backward(); opt.step()
+    fm = model.eval()
+    X, y = [], []
+    for it in drill[:200]:
+        n = _hon_n(it)
+        phi = _node_phi(fm, torch, it, n, device).cpu().numpy()
+        for k, c in enumerate(it["conjuncts"]):
+            X.append(phi[3 * k]); y.append(int(c["hp"]))          # hp = the honorific bit at the head node
+    X = np.asarray(X); y = np.asarray(y); ntr = int(0.7 * len(X))
+    clf = LogisticRegression(max_iter=1000).fit(X[:ntr], y[:ntr])
+    acc = float(clf.score(X[ntr:], y[ntr:]))
+    ok = acc >= 0.90
+    json.dump({"probe_acc": round(acc, 4), "threshold": 0.90, "pass": ok, "n": len(X)},
+              open(os.path.join(_HERE, "g3_0d_result.json"), "w"), indent=2)
+    print(f"\nG3-0d probe φ→hon: held-out acc={round(acc,4)} (≥0.90: {'PASS' if ok else 'FAIL'}) · "
+          f"{'χ̂ can read concord ⇒ build' if ok else 'φ washes out the concord ⇒ G3-a UNBUILT'}")
+    return 0 if ok else 1
+
+
 def smoke(device="cpu"):
-    """Wiring + THE grad-flow assert: after A-χ̂ drill, model.chi must have received gradient."""
     torch, M, cfg, Struct = H._load(smoke=True)
     drill = json.load(open(os.path.join(_HERE, "drill_grid_multi.json"), encoding="utf-8"))
     cpt_win = H._cpt_windows(H._nsmc_lines(2000), 128, torch)
-    print("=" * 70 + "\nH_005 G3-a SMOKE — learned χ̂ wiring + grad-flow assert\n" + "=" * 70)
-    model, ce, chi_ok = train_arm_g3a("A-χ̂", 0, (torch, M, cfg, Struct), drill[:32], cpt_win, (5, 30), device)
-    print(f"  A-χ̂ trained 30 drill steps · ce_ans={round(ce,4)} · chi_grad_seen={chi_ok}")
-    assert chi_ok, "WIRING FAILURE — model.chi received NO gradient; χ̂ is detached from the loss (g never trains)"
-    # χ̂ must move a d_acc away from a fixed hand field: sanity that the two arms differ in code path
-    d_chi = _dacc_g3a(model, torch, drill[:16], "A-χ̂", 0, device)
-    print(f"  A-χ̂ drill-subset d_acc={round(d_chi,4)} (smoke scale; not a result)")
-    print("\nSMOKE: GREEN — learned χ̂ grad reaches g (chi_grad_seen=True), struct path wired")
+    print("=" * 70 + "\nH_005 G3-a SMOKE — learned χ̂=g(φ), φ=frozen-trunk-pooled\n" + "=" * 70)
+    model, phi_enc, ce, chi_ok, phi_ok = train_arm_g3a(
+        "A-χ̂", 0, (torch, M, cfg, Struct), drill[:32], cpt_win, (5, 30), device)
+    print(f"  A-χ̂ 30 drill steps · ce_ans={round(ce,4)} · chi_grad_seen={chi_ok} · phi_frozen_ok={phi_ok}")
+    assert chi_ok, "WIRING FAILURE — g (U,V,b) got NO gradient; χ̂ detached from loss"
+    assert phi_ok, "WIRING FAILURE — φ-encoder received gradient; the frozen trunk is NOT frozen"
+    print("\nSMOKE: GREEN — χ̂ grad reaches g AND φ-encoder stays frozen (no raw-hon shortcut)")
     return 0
 
 
@@ -259,11 +319,14 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--smoke", action="store_true")
     ap.add_argument("--full-check", action="store_true")
+    ap.add_argument("--g3-0d", action="store_true")
     a = ap.parse_args()
     import torch
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     if a.smoke:
         return smoke(device="cpu")
+    if a.g3_0d:
+        return g3_0d(device)
     if a.full_check:
         print(f"FULL-CHECK: run_g3a plumbing at d=64 on {device} …")
         return run_g3a(device, cpt_steps=20, drill_steps=120, tag="check", seeds=(0,))

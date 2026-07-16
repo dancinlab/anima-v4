@@ -33,11 +33,19 @@ H_006/G3-b, gated behind this.
 
 - **A-hand** — the H_004 A-duel field verbatim: T = t_struct(support) ⊙ χ_hand(hon). The anchor (E≈0.95 free-slot).
 - **A-χ̂** — SAME support t_struct, but VALUES from a trained module: T̂ = t_struct(support) ⊙ χ̂, where
-  χ̂[i][j] = tanh(g(φᵢ,φⱼ)), g a small MLP over per-node honorific features φ (the 3-dim hon block per node),
-  trained jointly on the drill (χ̂ is IN the resolver's forward graph so its gradient trains g). One variable
-  vs A-hand: the concord is learned instead of hand-set; support/panel/model/steps/seed byte-identical.
+  χ̂[i][j] = tanh((Uφᵢ)·(Vφⱼ)/√r + b) is a BILINEAR g (U,V ∈ R^{4×d}, ~2–4k params), and **φᵢ = per-node
+  mean-pooled state of the FROZEN post-CPT trunk** over node i's SURFACE bytes (answer-blind, struct-free —
+  the same top-layer interface G3-b's shared readout will read). g trains jointly on the drill (χ̂ is IN the
+  resolver's forward graph); φ is frozen (no grad). One variable vs A-hand: the concord is learned from what
+  the model REPRESENTS instead of hand-set; support/panel/model/steps/seed byte-identical. **Why φ=trunk not
+  raw hon** (Fable fidelity review g3a_review): g(raw hon) cannot fail — learning the equality of the two
+  scalars χ_hand compares is trivial, so A-χ̂≡A-hand and F1a/K2/K3 become unreachable; it would certify the
+  MLP, not the mechanism (the exact `dont`). Reading trunk φ makes "is concord recoverable from the model's
+  representation" the real, falsifiable content, and keeps G3-a a genuine kill-gate for G3-b (which reads
+  learned tower states).
 - **C-χ̂plc** (primary control) — the SAME trained g, but on per-item-PERMUTED support (right learned values,
-  wrong cells). Isolates "g learned the concord" from "g memorized gold on the contested cells".
+  wrong cells). Isolates alignment-not-capacity. (The VALUES-matter control is **F5 carried** — the
+  strip-resolution substitution on A-χ̂ must collapse d_acc, as H_004 measured 1.0→0.5.)
 - **C-scaf** (T̂≡0) · **C-perm** (permuted-gold harness) — carried verbatim from H_004.
 
 ## Falsifiers + admissibility (arithmetic, before any training)
@@ -54,9 +62,18 @@ H_006/G3-b, gated behind this.
 
 ## $0 gate before training (G3-0d) — must pass before freeze
 
-Linear probe: is the honorific bit recoverable (≥0.90) from a frozen G-2 A-duel trunk's per-node state?
-If the trunk does not even represent the concord input, χ̂ = g(φ) has nothing to read and G3-a is unbuilt.
-(Requires a saved G-2 trunk checkpoint — add checkpoint-save to a minimal A-duel retrain, or probe φ directly.)
+Logistic probe: is the honorific bit recoverable (≥0.90, held-out split) from the FROZEN d=384 CPT trunk's
+per-node φ? If the trunk does not represent the concord, χ̂ = g(φ) has nothing to read and G3-a is UNBUILT
+(the gate doing its job, not a setback). No H_004 checkpoint needed — G3-a's OWN CPT stage is the same
+recipe; run one CPT per seed and probe (tens of minutes, $0 cash). `train_g3a.py --g3-0d`.
+
+## Honest-limit (Fable fidelity review) — when G3-a is STILL a scaffolding-certifier
+
+Even rewired, name it on the frozen record: (a) if G3-0d probes ≈1.0 because the templatic drill register
+preserves byte identity nearly verbatim in top-layer states, then g(φ) is one linear unmix from g(raw hon)
+and a green F1a certifies "concord is recoverable from trunk representations **on the drill register**,
+nothing about learned SUPPORT" — scope it, and RECORD the probe's actual number; (b) if F5 on A-χ̂ fails to
+collapse d_acc, the signs were epiphenomenal on this rig and the "values" framing is vacuous regardless of F1a.
 
 ## Honest kill criteria (Fable K2/K3 — G-2 is a defensible resting place)
 
