@@ -2,7 +2,7 @@
  "$schema": "c4",
  "role": "anima-v4 — Architecture (JSON tree · SSOT)",
  "title": "anima-v4 — Architecture",
- "updated": "2026-07-16",
+ "updated": "2026-07-17",
  "ssot_note": "JSON=SSOT (AI/tool parse); humans view architecture.html via `python3 serve.py`. Update in-place (not append). History/decisions/dates → CHANGELOG.md + git (never in tree). Hierarchy decomposes via `children` (commons single-doc); one fact per node, deeper detail → child nodes.",
  "children": [
   {
@@ -433,7 +433,7 @@
     },
     {
      "id": "fd.family-residual-rewrite",
-     "role": "mech-2 and mech-4 are the SAME VERB — 'residual/contradiction rewrites state'. They differ only in the write target (activations vs memory)."
+     "role": "mech-2 and mech-4 are the SAME VERB — 'residual/contradiction rewrites state'. They differ only in the write target (activations vs memory). → CLOSED AT THIS SUBSTRATE 2026-07-17 (walled, unreached-not-falsified — ng.family-2-4-walled): both stagings inadmissible on mech-1's measured record (hand = H_004 redux, learned = G3-b's ceiling arithmetic transferred)."
     },
     {
      "id": "fd.family-environment-rewrite",
@@ -719,6 +719,18 @@
     {
      "id": "ng.verdict-collector-built",
      "role": "VERDICT COLLECTOR built + wiring-verified $0 (collect_verdict.py, tested against the quarantined invalid result → correctly returns DEAD-liveness). When the run writes train_result_full.json it emits SUPPORTED/PARTIAL/FALSIFIED per the frozen F1(Δ≥0.15 both seeds)/F2(f1'≥0.85)/F6(placebo<0.05) rules → verdict.json. The measurement path is confirmed CLEAN (A-atom.s0 f1'=0.8594 ≥ 0.85 = the model learns the drilled rule; the windower bug is behind us). Early per-arm numbers are IN (A-atom.s0 f2'=0.5677/f1'=0.8594 · A-shat.s0 f2'=0.6823/f1'=0.5781) but NOT a verdict — verdict-integrity forbids prejudging on 1 seed + partial arms; the full 2-seed run + placebo decides."
+    },
+    {
+     "id": "ng.mech5-is-next",
+     "type": "gate",
+     "state": "seed-delivered",
+     "role": "SELECTED NEXT (2026-07-17, research-gate seed: state/h007_gradient_tug_role_code_drill_2026-07-17/DESIGN_fable5_seed.md): mech-5 경사 줄다리기 — the ROLE-TUG drill. Grounds: mech-1 measured this substrate's two regimes (corpus-scale trunk training WORKS, A-hand fit 1.0/1.0; drill-identified trained modules are WALLED, H_005 0.824/0.710 vs hand 1.0 + fit instability 0.832), and mech-5 is the only open candidate whose trained component is the trunk under corpus-scale objectives — no delivered field (so it cannot collapse into H_004's sealed FORMAT claim), no module-through-drill-CE (so G3-b's ceiling arithmetic does not bound it). Design: one shared trunk, head-A forward byte-CE + head-G role-SWAP-aligned byte-CE (fixed-byte-length noun pools make swap(x) positionally aligned); one variable = head-G's target; F1 = Δd_acc(A-tug − C-dup compute/param-matched duplicate-objective control) ≥ 0.15 both seeds on a SWAP-XOR panel (gold = class(subject) ⊕ form(object-marker), scrambling-counterbalanced, heuristics 0.5 closed-form); reachability 1.0 − 0.62(A-rank1 worst control read) = 0.38 ≥ 2×bar. The audit's 'is it thinking' weakness is converted into instruments: P-conflict precondition (early cos(∇CE_A,∇CE_G) < 0 measured present, else any green is scoped to auxiliary transfer — no mechanism claim) + C-shuf role-placebo + inherited v1-killers F4 (role-code eff-rank ≥ 2) and F5 (probe-subspace projection ablation must move d_acc). $0-first: G-0 closed-form panel/codebook audit → G-1 d=64 kill-only smoke (no early conflict OR no probe separation vs C-dup ⇒ kill at near-$0) → G-2 = the H_003/H_004 envelope. Register as H_007 (H_006 stays burned = the never-opened G3-b earmark)."
+    },
+    {
+     "id": "ng.family-2-4-walled",
+     "type": "gate",
+     "state": "closed-at-substrate",
+     "role": "REJECTED AT $0 (2026-07-17, same seed §0): mech-2 역행 조각가 and mech-4 모순 법정 — the whole residual-rewrite family — have NO admissible falsifier at 3.7M/byte/Korean/templatic. (T1) Hand-staged (hand inverse on the deterministic drill): every contrast degenerates — A-settle vs A-frozen is more-gold-vs-less-gold whose green the sealed record already guarantees (H_004 consumption 1.0 · trunk XOR band 0.49–0.62 measured) so DEAD is unreachable in substance; A-settle vs A-endpoint (± transient schedule, same content) is predicted ≈0 by mech-2 itself — vacuous for the transient claim; all hand-stagings collapse into H_004's sealed FORMAT claim (H_001's shape at design time). (T2) Learned-staged (trained inverse q̂ in the loop — the only staging carrying the distinctive transient content): the verdict path contains a drill-identified module reading trunk states = G3-a's measured channel — value ceiling ≤ 0.767/0.824, live open-loop control floor ≥ 0.55 ⇒ E[Δ] ≤ ~0.22·ρ with loop-degradation ρ<1 unanchored ⇒ no bar certifiable at 2× headroom; plus measured 1-in-2 fit instability on a strictly easier optimization ⇒ expected precond quarantine; no $0 gate can raise the measured ceiling (REGATE_g3b logic transferred verbatim). mech-4 adds slot-memory/retrieval machinery absent from the rig, a long-range corpus the single-sentence drill register cannot supply, and the set's highest pre-flagged L1-recurrence risk. VERDICT: walled — UNREACHED, not falsified. Reopen conditions identical to mech-1's support half, recorded once: ≥8M params and/or jamo passing an F1a′-analog · non-templatic register (probe < 1.0) · external-oracle premise. Pre-declared per fd precedent so it cannot be re-litigated."
     }
    ]
   },
