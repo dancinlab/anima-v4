@@ -45,9 +45,9 @@ bx = tg2.bx
 
 
 def _load_panels():
-    drill = json.load(open(os.path.join(_HERE, "swapb_drill.json")))["drill"]
-    f2 = json.load(open(os.path.join(_HERE, "swapb_f2.json")))["panel"]
-    raw = json.load(open(os.path.join(_HERE, "swapb_budgets.json")))
+    drill = json.load(open(os.path.join(_HERE, "swapc_drill.json")))["drill"]
+    f2 = json.load(open(os.path.join(_HERE, "swapc_f2.json")))["panel"]
+    raw = json.load(open(os.path.join(_HERE, "swapc_budgets.json")))
     budgets = {int(k): set(v) for k, v in raw.items()}
     return drill, f2, budgets
 
@@ -92,6 +92,7 @@ def train_control(arm, k, seed, cfg_tuple, drill, budgets, f2, cpt_win, steps, d
         opt.zero_grad(); loss.backward(); opt.step()
 
     rng = np.random.RandomState(seed); Bsz = 32
+    ce_curve = []
     for step in range(drill_steps):
         bidx = rng.randint(0, len(drill), size=Bsz)
         items = [drill[i] for i in bidx]
@@ -102,8 +103,15 @@ def train_control(arm, k, seed, cfg_tuple, drill, budgets, f2, cpt_win, steps, d
         ceG = g1._masked_ce(torch, lg, tgtG, mG)
         loss = ceA + lam_g * ceG + aux
         opt.zero_grad(); loss.backward(); opt.step()
+        if step % 500 == 0 or step == drill_steps - 1:
+            ce_curve.append({"step": step, "ceA": round(float(ceA.detach()), 4)})
 
-    return round(g1._f2_dacc(torch, model, f2, device, pad), 4)
+    f2_d = round(g1._f2_dacc(torch, model, f2, device, pad), 4)
+    # in-sample budget-fit d_acc: score the ANSWERED B(k) items (memorized-or-not) — the corrected
+    # reachability read from the lab-full adjudication (reachability by in-sample fit, not held-out level).
+    ans_items = [drill[i] for i in sorted(answered)]
+    insample = round(g1._f2_dacc(torch, model, ans_items, device, pad), 4)
+    return {"f2_dacc": f2_d, "insample_dacc": insample, "ce_curve": ce_curve}
 
 
 def _jobs(phase):
@@ -143,11 +151,14 @@ def main():
     results = json.load(open(out_path)).get("jobs", []) if os.path.exists(out_path) else []
     for arm, k, seed in _jobs(args.phase):
         print(f"\n--- {arm} k={k} seed={seed} …", flush=True)
-        dacc = train_control(arm, k, seed, cfg_tuple, drill, budgets, f2, cpt_win, steps, device)
-        band = 0.60 <= dacc <= 0.80
-        rec = {"arm": arm, "k": k, "seed": seed, "f2_dacc": dacc, "in_band": band}
+        r = train_control(arm, k, seed, cfg_tuple, drill, budgets, f2, cpt_win, steps, device)
+        dacc = r["f2_dacc"]; band = 0.60 <= dacc <= 0.80
+        last_ce = r["ce_curve"][-1]["ceA"] if r["ce_curve"] else None
+        rec = {"arm": arm, "k": k, "seed": seed, "f2_dacc": dacc, "insample_dacc": r["insample_dacc"],
+               "in_band": band, "last_ceA": last_ce, "ce_curve": r["ce_curve"]}
         results.append(rec)
-        print(f"  {arm} k={k} s{seed}: f2_dacc={dacc}  in_band[0.60,0.80]={band}", flush=True)
+        print(f"  {arm} k={k} s{seed}: f2_dacc={dacc} in_sample={r['insample_dacc']} in_band={band} "
+              f"last_ceA={last_ce}", flush=True)
         json.dump({"config": {"d": cfg.d_model, "steps": steps, "band": [0.60, 0.80]}, "jobs": results},
                   open(out_path, "w"), ensure_ascii=False, indent=1)
 
