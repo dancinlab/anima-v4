@@ -79,7 +79,21 @@ inherited, GF(2)-rank audit, length-parity check.
   overlap; fixed with a DETERMINISTIC-BALANCED construction (each lexeme balanced across the marker bit ⇒
   exact decorrelation, H_004's orthogonal-array discipline) — G-0 caught both before any spend. GATE
   CLEARED. Artifacts: `swap_xor_f2.json` / `swap_xor_f1.json` / `swap_xor_reserved.json`.
-- **G-1**: d=64 kill-only smoke — no early gradient conflict, OR no probe separation vs C-dup ⇒ KILL at ~$0.
+- **G-1 ✅ PROCEED-CANDIDATE (weak-positive) (2026-07-17, `train_g1_smoke.py`, d=64 MPS, 1 seed)**: NOT
+  killed — both kill instruments came back positive-direction. (i) **P-conflict measured present & role-
+  specific**: differential cos(∇CE_A,∇CE_G) vs the C-dup control = +0.2716 ≥ τ (A-tug cos_mean_early
+  0.005 stays conflicted then RESOLVES late; C-dup +0.276, its two heads converge) — the raw absolute cos
+  is confounded by the two heads being separate readouts (C-dup showed cos≈A-tug at init), so the
+  instrument was corrected to the DIFFERENTIAL vs C-dup, which the smoke earned. (ii) **faithful role-
+  binding metric** = f2 forced-choice d_acc (the G-2 metric): A-tug 0.5677 > C-dup 0.4948 (≈chance),
+  sep +0.0729. The subject-class linear probe (0.9655 BOTH arms) is a FREE-INGREDIENT diagnostic — it
+  cannot license a kill (H_005's φ→hon ceiling trap; the first probe-only run falsely read KILL until
+  repointed at the composition). **Honest caveat**: +0.073 is BELOW the F1 bar (0.15) and single-seed at
+  undertrained d=64 — the direction is right and the gate is cleared, but this promises nothing; G-2 at
+  d=384 must roughly double the separation. Sets E[A-tug d_acc]≈0.57, τ=0.05 for the freeze.
+
+**All 3 freeze-blocking $0 gates CLEARED** (lit-verify ✅ · G-0 ✅ · G-1 ✅). Next: `pre_register_frozen:
+true` with the G-1 anchors, then the ~7h d=384 × 2-seed × 5-arm G-2 run.
 
 ## Honest kill criteria
 
