@@ -2,6 +2,36 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-17 — H_008 pre-register gate: supervision-budget/sample-efficiency OPEN-GATED (reopen door [b] instantiated)
+
+- **Pre-register gate for the ONE non-twin reopen door** the terminal campaign result left (supervision-
+  budget / sample-efficiency, CAMPAIGN_RESULT.md §4 [b]): SELECT = **OPEN H_008, gated** — the near-$0
+  CLOSE was weighed argument-by-argument (seed §0) and every closed-form close-argument either narrows
+  the design or is exactly what the mandatory band-existence pre-run referees at ~1.5h/$0-cash. Seed:
+  `state/h008_supervision_budget_sample_efficiency_2026-07-17/DESIGN_fable5_seed.md`; card ⚪ UNFROZEN;
+  registry H_008 `supervision-budget-sample-efficiency`. Campaign stays CONCLUDED unless all gates green.
+- **NEW measured fact found at gate time — the H_007 SWAP-XOR panel cannot carry a budget knob**: f2
+  subjects 사장/학생 have ZERO answered subject occurrences in the drill (subjects 교수/부장/회장/친구/
+  동생/이웃), yet C-dup.s0 f2 = 1.0000 (`state/h007_.../verdict_g2.json`) — a budget-INDEPENDENT class
+  side channel (shared-syllable byte families 장/생 + NSMC CPT semantics of real nouns) grounds class
+  without answers. Fix: **SWAP-XOR-B** — byte-orthogonal synthetic non-corpus pools (A7 audit),
+  coverage-complete grid (f2-subjects ⊆ drill-subjects, k_min = 24), nested deterministic budget
+  constructor B(k)=24·r with B1–B6 audits, answers TRUNCATED (not masked) outside B(k), head-G aux never
+  rationed — the knob varies DISTINCT supervised examples only (~333 answered exposures/item at every k).
+- **Admissibility rebalanced from the measured record**: bar 0.10 (not 0.15), band [0.60, 0.80] — width
+  0.20 exceeds every measured per-arm cross-seed spread (0.0677–0.1458, H_003/H_007) where a 0.15 bar
+  would leave [0.60, 0.70] ⇒ K1 by arithmetic. Controls-first sequencing structural: G-1.5a seed-0 C-dup
+  sweep {24, 96, 192} at d=384 target scale (kill-capable, ~1.5h) → G-1.5b 4-point cross-seed stability +
+  plateau → G-1.5c placebo/scaffold pricing (K1b if C-shuf > 0.80 — scarce-label generic-aux transfer is
+  the best-attested boring story) → freeze → verdict run reuses the pre-run controls byte-identically.
+  Hard cap 8 pre-run drills (no knee-fishing). C-perm fixed to GLOBAL derangement (H_007 flag priced).
+  L1/L2 carried trap-aware: F4 needs an A-tug probe SURPLUS vs C-dup (F4 passed in BOTH arms at full
+  budget), F5 upgraded to INLP-style iterative erasure (single rank-2 projection measured Δ = 0.0).
+- **Kill ledger honest both ways**: K1 no-band ⇒ near-$0 close, reopen door shuts MEASURED; K2 null ⇒ the
+  mech-5 family graduates unmeasured → MEASURED-NULL; K-scope: even full green claims sample-efficiency
+  ONLY — mech-1's seal, mech-5's retirement, and the PARTIAL thesis boundary unmoved. Tree:
+  `ng.h008-budget-band-gate` + `cr.reopen-conditions` updated in lockstep.
+
 ## 2026-07-17 — mech-6 research-gate: DON'T-OPEN (twin-redundant + walled) — the map is fully disposed
 
 - **Feasibility/admissibility gate for mech-6 제약 시장 (constraint-market), the last untested mechanism**
