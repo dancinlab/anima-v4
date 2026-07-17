@@ -4,7 +4,8 @@
   "band_candidates": [],
   "cdup": {
     "24": {
-      "0": 0.5417
+      "0": 0.5417,
+      "1": 0.526
     },
     "96": {
       "0": 0.7448
@@ -17,12 +18,5 @@
     }
   },
   "cscaf": {},
-  "cshuf": {},
-  "swapxorC_disambiguation": {
-    "result": "PARITY TRAP FIXED — panel reachable, sample-efficiency curve emerged (seed 0).",
-    "measured": "C-dup on SWAP-XOR-C: k=24 f2=0.5417/in_sample=1.0; k=96 f2=0.7448/in_sample=0.9896; k=192 f2=0.9167/in_sample=1.0; k=384 f2=0.6302/in_sample=0.638.",
-    "reading": "in_sample≥0.95 at k≤192 ⇒ the control MEMORIZES the answered rule (SWAP-XOR-B could not: in_sample 0.5) — the A7′ fix (48 distinct syllables, per-lexeme class) removed the parity conjunction. f2 rises 0.54→0.74→0.92 with budget = a genuine sample-efficiency/generalization curve; at k=192 f2=0.92 means the forward control DOES compose at high supervision. BAND CANDIDATE k*=96 (f2=0.74 ∈ [0.60,0.80], in_sample 0.99 reachable). k=192 saturates (>0.80). ANOMALY at k=384: in_sample dropped to 0.64 + higher ceA (0.0105) — full-budget optimization instability, single-seed; flagged, resolve at phase b (2nd seed).",
-    "corrected_gate_status": "reachability by in-sample fit ✓ (≥0.95 at k≤192); ceiling ≤0.80 ✓ at k*=96; the dropped 0.60 held-out floor was the right call (k=24 at 0.54 is sub-floor yet the curve is real).",
-    "next": "phase b (seed 1) at k∈{24,96,192,384} for CROSS-SEED STABILITY at k*=96 (and to resolve the k=384 anomaly), then phase c (C-scaf + C-shuf @ k*, ≤0.80) → freeze if stable."
-  }
+  "cshuf": {}
 }
