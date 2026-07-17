@@ -811,6 +811,39 @@
      "role": "v1's p7 (no perplexity verdict — CE/perplexity is a Goodhart trap, never truth) is the ONE purity principle anima-v4 inherits. Per L9 the other seven manufactured the disease and are discarded."
     }
    ]
+  },
+  {
+   "id": "campaign-result",
+   "type": "verdict",
+   "role": "⛳ TERMINAL (2026-07-17) — the map is fully disposed: mech-1 🟢 SEALED (the one positive) · mech-2/4 🧱 $0-walled · mech-3/7 ☠️ dead · mech-5 ⚫ retired-inadmissible · mech-6 ⛔ don't-open. One clean sealed positive (scoped), five honest closes, two reusable admissibility gates. Write-up: state/campaign_result_2026-07-17/CAMPAIGN_RESULT.md.",
+   "children": [
+    {
+     "id": "cr.terminal-finding",
+     "role": "A hand-staged parse-disagreement FIELD, injected write-side pre-trunk, CAUSES held-out compositional honorific binding beyond its rank-1 compression: F1 Δd_acc(A-duel−A-rank1)=0.3789/0.3802 both seeds (A-duel 1.0 vs A-rank1 0.6211/0.6198, free-slot, d=384 ×2seed ×5arm; state/h004_parser_duel_tension_rank_drill_2026-07-16/train_result_full.json + verdict.json). F4 offtop 0.6467/0.6963 (high-rank, not v1's seam) · F5 strip 1.0→0.5 (resolution needed, not capacity). Claim = FIELD-FORMAT causal on a rank-6 multi-bind superposition; χ hand-computed — NOT a learned-tension claim."
+    },
+    {
+     "id": "cr.thesis-verdict",
+     "role": "PARTIAL — placement proven, autonomy unreached. v1 died readout-side rank-1 (1 bit); mech-1 escapes that WRITE-SIDE with F4/F5 measured (the two v1 deaths both cleared). But the field was hand-staged: H_005 K3 shows learned VALUES fail non-inferiority both seeds (A-χ̂ 0.82/0.71 vs A-hand 1.0, margin −0.176/−0.290, cost 0.18–0.29; verdict_g3a.json), and H_006 (learned SUPPORT) is closed-form inadmissible (E[A-tduel]≈0.53+0.24r, negative headroom; REGATE_g3b_feasibility_fable5.md). The campaign proves the ARCHITECTURE-PLACEMENT claim, not the self-organizing-tension claim — that boundary is the crux of every citation."
+    },
+    {
+     "id": "cr.disposed-map",
+     "role": "All 3 true axes (fd.true-axes) dispositioned. structure-conflict-resolution: mech-1 SEALED · mech-6 twin-redundant (mech-1's G-2 was already N>2-shaped, K=6 rank-6) + 3-horn walled (state/mech6_regate_dont_open_2026-07-17/). residual-rewrite: mech-2/4 $0-walled — learned staging inherits H_005's channel (E[Δ]≤~0.22·ρ, no 2× bar), hand staging collapses into the sealed FORMAT claim (ng.family-2-4-walled). environment-rewrite: mech-3 dead 4 ways (H_001/H_002/lit-gate/H_003 Δ=−0.1146/+0.0468), mech-7 its twin. mech-5: RETIRED-INADMISSIBLE, control saturated (C-scaf 0.8073, C-dup 1.0000, headroom 0; h007 g2_full.out) — unmeasured, not falsified.",
+     "children": [
+      {
+       "id": "cr.map.wall-types",
+       "role": "Two wall types, opposite directions, neither a mechanism verdict. SUBSTRATE (moves at scale/register/parser): H_005/H_006 + mech-2/4 — identification-not-capacity at 3.7M/byte/Korean/templatic (bigger module worsens the drill→held-out gap). SATURATION/MEASUREMENT: mech-5/H_007 — substrate too CAPABLE for the panel family, trained-control band EMPTY. STRUCTURAL (does not move at scale): mech-6 twin-redundancy + no-admissible-falsifier for joint non-decomposability; mech-3's four deaths."
+      }
+     ]
+    },
+    {
+     "id": "cr.method-lessons",
+     "role": "Three reusable disciplines. (1) Admissibility = TWO halves: reachability arithmetic (H_001, ≥2× headroom vs ceiling−control) AND trained-control ceiling (H_007 → verification.trained-control-ceiling: controls first at target scale, f2 ≤ 1−2×bar; anchors never inherited — E[C-dup]=0.62 was fiction, truth 1.00; smokes don't transfer, +0.073→−0.010). (2) Metric-ceiling defects inflate every arm: GF(2)-rank-4 codebook + teacher-forcing = field-blind 0.667 ceiling; free-slot scoring mandatory, recomputed per panel. (3) d_acc discipline: bounded 1.0, chance 0.5, f1/f2 are PANEL names; every number cited with arm + source path."
+    },
+    {
+     "id": "cr.reopen-conditions",
+     "role": "Two doors, both gated. [b] supervision-budget/sample-efficiency — the ONE non-twin residue (varies answer-supervision BUDGET, an axis no mech occupied); opens ONLY on a G-1.5 band-EXISTENCE pre-run: compute-matched control stably sub-ceiling (f2 ≤ 0.70) and ≥ chance+margin across seeds at a measured few-shot plateau, priced vs the 0.161 cross-seed spread; fail ⇒ closes near-$0. Scaled successor for the learned-tension claim: ≥8M and/or jamo/word substrate passing an F1a′-analog FIRST (values→support order), non-templatic register with probe<1.0, or external parser as new premise — inheriting G-1.5 + free-slot audit as standing gates."
+    }
+   ]
   }
  ],
  "convergence": {
