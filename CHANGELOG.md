@@ -2,6 +2,36 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-17 — mech-6 research-gate: DON'T-OPEN (twin-redundant + walled) — the map is fully disposed
+
+- **Feasibility/admissibility gate for mech-6 제약 시장 (constraint-market), the last untested mechanism**
+  ($0, closed-form on the sealed record):
+  `state/mech6_regate_dont_open_2026-07-17/REGATE_mech6_constraint_market_fable5.md`. Verdict:
+  **DON'T-OPEN** — no H_008 for mech-6. Classification: TWIN-REDUNDANT with mech-1 (primary) · learned
+  staging substrate-walled (H_005/G3-b transferred) · curriculum staging saturation-walled (H_007
+  transferred). UNREACHED, not falsified.
+- **The twin flag is confirmed tighter than the audit knew**: mech-1's sealed G-2 measurement was
+  already N>2-shaped — the K=6 MULTI-BIND field is a rank-6 superposition of constraint conjuncts
+  (T = Σ c_k M_k; off-top 0.8333 pre-run, F4 offtop 0.6467/0.6963 trained), so "a superposition of N
+  constraint fields beats its low-rank summary" IS H_004's verdict (F1 Δ 0.3789/0.3802). Heterogeneous
+  specialists vary field CONTENT, not the resolver verb.
+- **The genuine N>2-only residue (joint non-decomposability — cycles, pairwise-satisfiable/jointly-not)
+  is named and has NO admissible falsifier**: stacked-independent panels give A-pairsum ≡ A-market
+  (Δ=0, vacuous); cyclic panels make the contrast more-gold-vs-less-gold (mech-2 T1's degenerate shape
+  — DEAD unreachable, fails both-answers-reachable); the non-degenerate form needs a REAL auctioneer →
+  learned = H_005/G3-b's measured ceiling (strictly harder than χ̂; 0.71–0.82 vs hand 1.0, fit
+  instability 1.0/0.832), whose N-way violation-gradient is mech-5's just-refuted instrument
+  (C-shuf +0.539 > A-tug +0.329). Conflict-forcing curriculum (mech-6.l2-defense's own crux) =
+  trained-vs-trained on a drilled templatic alphabet ⇒ H_007's wall; **predicted G-1.5 outcome:
+  control saturates, band empty**. mech-6's pre-registered L1/L2 also fail as written (L1 = free
+  ingredient per H_007's F4-in-both-arms + F5 Δ=0.0; L2 is CE-scored, p7).
+- **Map fully disposed**: mech-1 🟢 SEALED · mech-2/4 🧱 walled · mech-3/7 ☠️ dead · mech-5 ⚫ retired ·
+  mech-6 ⛔ don't-open. **mech-1's FIELD-FORMAT result is the campaign's terminal positive finding at
+  3.7M/byte/Korean/templatic.** Next: [c] mech-1 campaign write-up (now unblocked by any open
+  mechanism) + [b] scarce-answer sample-efficiency as the ONE non-twin residue (varies SUPERVISION
+  BUDGET; new H gated on a G-1.5 band-EXISTENCE pre-run, pricing H_007's 0.161 cross-seed-spread
+  fragility). Tree: `ng.mech6-regate-dont-open` + `fd.family-structure-conflict` closure appended.
+
 ## 2026-07-17 — G3-b feasibility RE-GATE: DO NOT OPEN H_006 — mech-1 SEALED at G-2
 
 - **Re-gate after G3-a's K3** ($0, closed-form — no run, no download):
