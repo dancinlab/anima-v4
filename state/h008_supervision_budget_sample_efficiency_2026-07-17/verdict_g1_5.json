@@ -1,22 +1,11 @@
 {
-  "verdict": "INCOMPLETE / K1-leaning — some k in band on one seed but no CROSS-SEED-STABLE candidate yet. Run --phase b at the in-band k. If no k stabilizes in band ⇒ K1.",
-  "k_star": null,
-  "band_candidates": [],
+  "verdict": "INCOMPLETE — phase-b C-dup reads @{48,96}×{0,1} not all present (['C-dup k=48 s=0 MISSING', 'C-dup k=48 s=1 MISSING', 'C-dup k=96 s=1 MISSING']).",
+  "fails": [],
+  "k1b": [],
   "cdup": {
-    "24": {
-      "0": 0.5417,
-      "1": 0.526
-    },
-    "96": {
-      "0": 0.7448
-    },
-    "192": {
-      "0": 0.9167
-    },
-    "384": {
-      "0": 0.6302
-    }
-  },
-  "cscaf": {},
-  "cshuf": {}
+    "48.0": null,
+    "48.1": null,
+    "96.0": 0.7448,
+    "96.1": null
+  }
 }
