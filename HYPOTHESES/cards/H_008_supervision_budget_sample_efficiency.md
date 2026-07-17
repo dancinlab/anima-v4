@@ -113,9 +113,40 @@ mech-5's forced-code claim stays retired, mech-1's seal and the PARTIAL thesis b
   by in-sample fit; ceiling ≤ 0.80 at k\*=96; the dropped 0.60 held-out floor was right). Convergence recorded:
   `audit-wrong-property-parity-1`.
 
+## G-1.5 execution plan + freeze draft (lab-full design 2026-07-17; Fable decisive, Codex trace-only)
+
+- **k=384 anomaly = tail-of-run optimization transient, NON-load-bearing** (k=384 was off-design; §5 specs
+  k∈{24,96,192}). CE curve proves full fit by step 3500 (CE 0.0003) then collapse in the last ≤500 steps
+  (endpoint 0.0105). Candidate "truncation-regularizer removed" is CODE-REFUTED (`_batch_budget` masks the
+  surface for ALL items at every k); bug/capacity excluded by data scans. Recorded FLAGGED; no rerun. The
+  real lesson (now fixed): endpoint-only eval can be spike-corrupted → **plateau precondition** (f2 at
+  60/80/100%, max−min ≤ 0.05) + **F2 validity** (in-sample ≥ 0.95, else rerun-once outcome-blind).
+- **seed-1 salvage (PROVISIONAL, from `g1_5b_c.out`; json was rolled back in the memory-recovery commit)**:
+  k=24 s1 f2 0.526 · **k=96 s1 f2 0.6667 (in band, cross-seed |Δ@96| = 0.0781 ≤ 0.10 ✓)**. Demoted to
+  provenance — the re-instrumented k=96 reads REPLACE these (replacement-not-selection, never pick-better).
+- **Four-point clause forces k=48**: G-1.5b needs k\* AND its factor-2 neighbor in-band, both seeds. k=192
+  is out of band (0.9167) ⇒ **k=48 mandatory** (built ✅, B(48) hash `1a50a0b85d6b`, G-0b-C re-passed).
+  Priced risk: k=48 s1 interpolates ≈ 0.596 — knife-edge under the 0.60 floor = the honest modal K1.
+- **Fixed remaining run-list (cap amended 8→10, `pre_register_frozen:false` = hygiene; overage = 1 off-design
+  k=384 + 1 interruption + 2 instrumentation re-reads, NONE knee-tuning; replacement-not-selection)**:
+  C-dup {k48,k96}×{s0,s1} instrumented (4) → C-scaf/C-shuf @k96×{s0,s1} (4). ~4h on memory recovery.
+
+### Freeze draft (every E instantiated from the instrumented reads before `pre_register_frozen: true`)
+
+- **k\*=96 (r=4), neighbor 48**; B(24/48/96/192/384) SHA-256 recorded. Per-seed E[C-dup@96] (provisional
+  0.7448/0.6667; freeze records per-seed, NEVER a bare average). Headroom 1.0 − max_seed ≥ 0.20 (structural).
+- **F1**: Δ_seed = d_acc(A-tug) − d_acc(C-dup) @k=96 same-seed. SUPPORTED iff Δ ≥ 0.10 both; DEAD iff < 0.05
+  both; split ⇒ INCONCLUSIVE-CONSOLIDATE (no third seed). σ_Δ ≈ 0.051 → both-seeds rule carries the FP control.
+- **Band/stability truth (all, both seeds, instrumented)**: {48,96} ∈ [0.60,0.80] · |Δf2@96| ≤ 0.10 · plateau
+  max−min ≤ 0.05 · F2 in-sample ≥ 0.95 every read. **Phase-c**: C-scaf@96 ≤ 0.80 AND C-shuf@96 ≤ 0.80 both
+  seeds ⇒ else **K1b** (H_007 measured C-shuf differential +0.539 — live risk). **Kills**: K1 (any band/
+  plateau fail; likely k=48 s1<0.60 — no midpoint/3rd-seed/rerun) · K1b · INCONCLUSIVE on F1 split.
+- **K-scope (verbatim)**: a full green claims sample-efficiency of an objective-conflict AUX signal — NOT
+  "tension is the thinking"; no mech-5 reopen; mech-1 seal untouched.
+
 ## Verdict
 
-*(none — pre-registered; lit-verify ✅ + G-0b(defective B) → K1-VOID-FOR-CAUSE → SWAP-XOR-C (A7′) rebuild
-✅ + G-0b-C ✅ + G-1.5a-C ✅ parity fixed, band candidate k\*=96. Next: G-1.5b (seed 1 cross-seed stability at
-k\*=96 + resolve the k=384 anomaly) → G-1.5c (C-scaf/C-shuf ≤ 0.80 pricing) → freeze if stable. Campaign
-stays CONCLUDED on mech-1 until the mechanism arm actually runs.)*
+*(none — pre-registered; lit-verify ✅ · SWAP-XOR-C(A7′) ✅ · G-0b-C(+B48) ✅ · G-1.5a-C ✅ parity fixed, band
+k\*=96 (provisional cross-seed ✓). \$0 prep done (B48 · instrumentation · fixed run-list · freeze draft).
+BLOCKED on local memory (user swap-recovery): execute the 8-run list on recovery → freeze if all truth
+conditions hold, else K1/K1b. Campaign stays CONCLUDED on mech-1 until the mechanism arm runs.)*
