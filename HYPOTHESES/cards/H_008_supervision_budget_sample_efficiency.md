@@ -89,8 +89,23 @@ mech-5's forced-code claim stays retired, mech-1's seal and the PARTIAL thesis b
   answer-truncation structural · B6 determinism (hashes). First build FAILED B2/B3 (budget prefix all
   marker0/SOV ⇒ gold unidentifiable); fixed with class-local phase-rotated budget ordering so every prefix
   is cell-balanced. Artifacts: `swapb_{f2,drill,budgets,pools}.json`.
-- **G-1.5a/b/c** (band-existence controls-first pre-run, ~1.5h ea) — PENDING; freeze blocked here.
+- **G-1.5a ⚠️ K1-VOID-FOR-CAUSE (2026-07-17, lab-full adjudication)** — seed-0 C-dup measured at CHANCE for
+  ALL budgets (k=24 0.5104 · k=96 0.50 · k=192 0.4948 · k=384 0.5156), the OPPOSITE of the H_007 saturation
+  the band guarded. The E-anchor E[C-dup@384]≈1.0 (seed §5) came back 0.52 ⇒ the band arithmetic was built
+  on a refuted presupposition; an inadmissible gate seals nothing (NOT a clean CLOSE). **Root cause
+  (verified)**: `build_swap_xor_b.py` DEVIATED from seed §3.1 (48 DISTINCT syllables, arbitrary per-lexeme
+  class) to 24 syllables paired (each in 2 lexemes, once per class) — to pass A7-as-implemented (best
+  syllable→class = 0.500), which is arithmetically incompatible with 48-distinct. The paired lexicon made
+  class = a 2-syllable PARITY CONJUNCTION; with gold=class⊕marker → 3-way parity = SGD-hard (memorization
+  the shortcut). A mis-specified A7 forced a parity trap — NOT "byte-orthogonality over-corrected." Fix =
+  **SWAP-XOR-C** (48 truly distinct non-corpus syllables, class arbitrary per lexeme; **A7′** = no
+  cross-lexeme syllable sharing + no syllable in CPT, dropping "class is no function of bytes"). Corrected
+  gate: reachability by IN-SAMPLE budget-fit d_acc(B(k)) ≥ 0.95, keep ceiling ≤ 0.80, drop the 0.60 held-out
+  floor. `pre_register_frozen: false` ⇒ amending now (before any mechanism arm) is pre-registration hygiene.
+  (Codex delivered no competing conclusion; Fable adopted.) Full record: `verdict_g1_5.json` adjudication.
 
 ## Verdict
 
-*(none — pre-registered; lit-verify ✅ + G-0b ✅ cleared, freeze still blocked on G-1.5a/b/c band existence)*
+*(none — pre-registered; lit-verify ✅ + G-0b ✅ (on the DEFECTIVE SWAP-XOR-B) cleared, but G-1.5a exposed a
+PARITY-TRAP panel defect ⇒ K1-VOID-FOR-CAUSE. Next: SWAP-XOR-C rebuild (A7′) → re-run G-0b → G-1.5a
+instrumented. Campaign stays CONCLUDED on mech-1 until the corrected pre-run finds a band or a genuine CLOSE.)*

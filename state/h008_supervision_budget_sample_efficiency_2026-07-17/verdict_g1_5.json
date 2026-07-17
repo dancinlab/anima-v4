@@ -17,5 +17,14 @@
     }
   },
   "cscaf": {},
-  "cshuf": {}
+  "cshuf": {},
+  "adjudication": {
+    "stamp": "K1-VOID-FOR-CAUSE — design presupposition refuted (NOT a clean CLOSE)",
+    "by": "lab full (Fable decisive; Codex trace-only, no competing conclusion delivered)",
+    "measured": "C-dup f2 chance at ALL budgets incl k=384 (0.5156) — E-anchor E[C-dup@384]≈1.0 (seed §5) came back 0.52, so the band arithmetic was built on sand; an inadmissible gate seals nothing (admissibility discipline).",
+    "root_cause": "SWAP-XOR-B DEVIATED from seed §3.1 (48 DISTINCT syllables, arbitrary per-lexeme class) to 24 syllables paired (12 POS1 × 12 POS2, each syllable in exactly 2 lexemes once per class) — done to pass A7-as-implemented (best syllable→class = 0.500 exact), which is arithmetically incompatible with 48-distinct (48 distinct → syllable→class deterministic = 1.0). The paired lexicon made class = 'do the two syllables share pairing index' = a 2-syllable PARITY CONJUNCTION; stacked with gold=class⊕marker → 3-way parity = the canonical SGD-hard feature-learning case (info present, no correlational stepping stones, whole-surface memorization the shortcut). NOT 'byte-orthogonality over-corrected' — a mis-specified A7 forced a parity trap.",
+    "fix": "SWAP-XOR-C = the seed's actual spec: 48 truly distinct non-corpus syllables, class arbitrary per lexeme. A7 RESTATED → A7′ = (no cross-lexeme syllable sharing ⇒ an unanswered lexeme's class = 0 bits) AND (no syllable in CPT) — instead of 'class is no function of bytes'. Kills the H_007 side channel AND removes the parity trap (class = per-lexeme lookup SGD learns). Corrected gate: reachability certified by IN-SAMPLE budget-fit d_acc(B(k))≥0.95, not held-out control level; keep ceiling C-dup f2≤0.80; drop the 0.60 held-out floor. Register SWAP-XOR-C rebuild with a fresh explicit cap.",
+    "rig_check": "eval path _f2_dacc + training machinery proven (C-dup=1.0 on H_007 old panel via same helpers); pad=48 no truncation at k=384. Delta is panel-internal. Disambiguation retained: G-1.5a on SWAP-XOR-C will be instrumented with in-sample d_acc + answer-CE curve to catch any residual rig/eval issue (CE→0 with in-sample 0.5 = eval bug; CE-plateau-high + in-sample 0.5 = genuine unreachable).",
+    "codex_dissent": "none delivered — Codex ran a read-only repo trace and did not produce a competing conclusion in the returned output."
+  }
 }
