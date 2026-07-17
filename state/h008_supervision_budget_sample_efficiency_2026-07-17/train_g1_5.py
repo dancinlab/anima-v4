@@ -93,6 +93,11 @@ def train_control(arm, k, seed, cfg_tuple, drill, budgets, f2, cpt_win, steps, d
 
     rng = np.random.RandomState(seed); Bsz = 32
     ce_curve = []
+    ans_items = [drill[i] for i in sorted(answered)]
+    # PLATEAU precondition (lab-full 2026-07-17): held-out f2 must be stable over the last 40% of training
+    # (max−min ≤ 0.05) — guards the endpoint-only-eval trap that let the k=384 tail spike corrupt a read.
+    plateau_steps = {int(drill_steps * 0.60), int(drill_steps * 0.80), drill_steps - 1}
+    plateau = []
     for step in range(drill_steps):
         bidx = rng.randint(0, len(drill), size=Bsz)
         items = [drill[i] for i in bidx]
@@ -103,26 +108,34 @@ def train_control(arm, k, seed, cfg_tuple, drill, budgets, f2, cpt_win, steps, d
         ceG = g1._masked_ce(torch, lg, tgtG, mG)
         loss = ceA + lam_g * ceG + aux
         opt.zero_grad(); loss.backward(); opt.step()
-        if step % 500 == 0 or step == drill_steps - 1:
+        # dense tail CE (final 1000 steps every 100) + coarse elsewhere every 500 — resolves tail transients
+        if step % 500 == 0 or step == drill_steps - 1 or (step >= drill_steps - 1000 and step % 100 == 0):
             ce_curve.append({"step": step, "ceA": round(float(ceA.detach()), 4)})
+        if step in plateau_steps:
+            plateau.append({"step": step, "f2": round(g1._f2_dacc(torch, model, f2, device, pad), 4)})
+            model.train()
 
     f2_d = round(g1._f2_dacc(torch, model, f2, device, pad), 4)
-    # in-sample budget-fit d_acc: score the ANSWERED B(k) items (memorized-or-not) — the corrected
-    # reachability read from the lab-full adjudication (reachability by in-sample fit, not held-out level).
-    ans_items = [drill[i] for i in sorted(answered)]
-    insample = round(g1._f2_dacc(torch, model, ans_items, device, pad), 4)
-    return {"f2_dacc": f2_d, "insample_dacc": insample, "ce_curve": ce_curve}
+    insample = round(g1._f2_dacc(torch, model, ans_items, device, pad), 4)   # reachability = in-sample fit
+    pf = [p["f2"] for p in plateau]
+    plateau_ok = (max(pf) - min(pf) <= 0.05) if len(pf) >= 2 else None
+    return {"f2_dacc": f2_d, "insample_dacc": insample, "ce_curve": ce_curve,
+            "plateau": plateau, "plateau_ok": plateau_ok,
+            "valid": insample >= 0.95}                                        # F2 run-validity guard
 
 
 def _jobs(phase):
     if phase == "tiny":
         return [("C-dup", 96, 0)]
     if phase == "a":
-        return [("C-dup", k, 0) for k in (24, 96, 192, 384)]
+        return [("C-dup", k, 0) for k in (24, 96, 192, 384)]     # phase-a: seed-0 exploratory sweep (done)
     if phase == "b":
-        return [("C-dup", k, 1) for k in (24, 96, 192, 384)]
+        # G-1.5b four-point clause (lab-full 2026-07-17): k*=96 RE-INSTRUMENTED both seeds (replaces the
+        # phase-a k=96 read, replacement-not-selection) + factor-2 neighbor k=48 both seeds. k=192 is out of
+        # band (0.9167) so k=48 is the only admissible neighbor; k=24/384 read no gate.
+        return [("C-dup", k, s) for k in (48, 96) for s in (0, 1)]
     if phase == "c":
-        return [(arm, k, s) for arm in ("C-scaf", "C-shuf") for k in (96, 192) for s in (0, 1)]
+        return [(arm, 96, s) for arm in ("C-scaf", "C-shuf") for s in (0, 1)]   # k=96 ONLY (k=192 out of band)
     raise SystemExit(f"unknown phase {phase}")
 
 
@@ -155,10 +168,11 @@ def main():
         dacc = r["f2_dacc"]; band = 0.60 <= dacc <= 0.80
         last_ce = r["ce_curve"][-1]["ceA"] if r["ce_curve"] else None
         rec = {"arm": arm, "k": k, "seed": seed, "f2_dacc": dacc, "insample_dacc": r["insample_dacc"],
-               "in_band": band, "last_ceA": last_ce, "ce_curve": r["ce_curve"]}
+               "in_band": band, "last_ceA": last_ce, "valid": r["valid"], "plateau_ok": r["plateau_ok"],
+               "plateau": r["plateau"], "ce_curve": r["ce_curve"]}
         results.append(rec)
         print(f"  {arm} k={k} s{seed}: f2_dacc={dacc} in_sample={r['insample_dacc']} in_band={band} "
-              f"last_ceA={last_ce}", flush=True)
+              f"valid={r['valid']} plateau_ok={r['plateau_ok']} last_ceA={last_ce}", flush=True)
         json.dump({"config": {"d": cfg.d_model, "steps": steps, "band": [0.60, 0.80]}, "jobs": results},
                   open(out_path, "w"), ensure_ascii=False, indent=1)
 

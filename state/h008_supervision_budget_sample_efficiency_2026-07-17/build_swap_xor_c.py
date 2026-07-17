@@ -172,7 +172,7 @@ def build_budgets(drill):
     for j, s in enumerate(plain_sorted):
         local[s] = j
 
-    budgets = {24 * r: [] for r in (1, 4, 8, 16)}
+    budgets = {24 * r: [] for r in (1, 2, 4, 8, 16)}
     for s in sorted(by_subj):
         items = by_subj[s]
         objs = []                                    # deterministic object rank
@@ -187,7 +187,7 @@ def build_budgets(drill):
             cell = c["marker"] * 2 + (0 if c["order"] == "SOV" else 1)
             return (objs.index(c["n_obj"]), (cell - ph) % 4)   # obj-major, cell rotated by class-local phase
         ordered = sorted(items, key=key)
-        for r in (1, 4, 8, 16):
+        for r in (1, 2, 4, 8, 16):
             budgets[24 * r].extend(ordered[:r])
     for k in budgets:
         budgets[k] = sorted(budgets[k])
@@ -312,7 +312,7 @@ def audit(drill, f2, budgets):
         and all(gg == (aa ^ bb) for gg, aa, bb in zip(g, a, b)), f"rank={bx._gf2_rank([list(r) for r in r24])}")
 
     # B4 nestedness
-    nested = all(set(budgets[k]) <= set(budgets[k2]) for k, k2 in [(24, 96), (96, 192), (192, 384)])
+    nested = all(set(budgets[k]) <= set(budgets[k2]) for k, k2 in [(24, 48), (48, 96), (96, 192), (192, 384)])
     chk("B4_nested", nested and len(budgets[384]) == len(drill), f"nested={nested} B(384)={len(budgets[384])}")
 
     # B5 answer-truncation structural: a non-budget item carries no gold_token / answer bytes
