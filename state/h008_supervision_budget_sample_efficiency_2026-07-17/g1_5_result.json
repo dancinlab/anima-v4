@@ -15,29 +15,189 @@
    "arm": "C-dup",
    "k": 24,
    "seed": 0,
-   "f2_dacc": 0.5104,
-   "in_band": false
+   "f2_dacc": 0.5417,
+   "insample_dacc": 1.0,
+   "in_band": false,
+   "last_ceA": 0.0003,
+   "ce_curve": [
+    {
+     "step": 0,
+     "ceA": 8.9572
+    },
+    {
+     "step": 500,
+     "ceA": 0.1293
+    },
+    {
+     "step": 1000,
+     "ceA": 0.0337
+    },
+    {
+     "step": 1500,
+     "ceA": 0.0173
+    },
+    {
+     "step": 2000,
+     "ceA": 0.0009
+    },
+    {
+     "step": 2500,
+     "ceA": 0.0007
+    },
+    {
+     "step": 3000,
+     "ceA": 0.0004
+    },
+    {
+     "step": 3500,
+     "ceA": 0.0098
+    },
+    {
+     "step": 3999,
+     "ceA": 0.0003
+    }
+   ]
   },
   {
    "arm": "C-dup",
    "k": 96,
    "seed": 0,
-   "f2_dacc": 0.5,
-   "in_band": false
+   "f2_dacc": 0.7448,
+   "insample_dacc": 0.9896,
+   "in_band": true,
+   "last_ceA": 0.001,
+   "ce_curve": [
+    {
+     "step": 0,
+     "ceA": 8.9465
+    },
+    {
+     "step": 500,
+     "ceA": 0.1337
+    },
+    {
+     "step": 1000,
+     "ceA": 0.0448
+    },
+    {
+     "step": 1500,
+     "ceA": 0.0246
+    },
+    {
+     "step": 2000,
+     "ceA": 0.0021
+    },
+    {
+     "step": 2500,
+     "ceA": 0.014
+    },
+    {
+     "step": 3000,
+     "ceA": 0.0006
+    },
+    {
+     "step": 3500,
+     "ceA": 0.0003
+    },
+    {
+     "step": 3999,
+     "ceA": 0.001
+    }
+   ]
   },
   {
    "arm": "C-dup",
    "k": 192,
    "seed": 0,
-   "f2_dacc": 0.4948,
-   "in_band": false
+   "f2_dacc": 0.9167,
+   "insample_dacc": 1.0,
+   "in_band": false,
+   "last_ceA": 0.0014,
+   "ce_curve": [
+    {
+     "step": 0,
+     "ceA": 8.6728
+    },
+    {
+     "step": 500,
+     "ceA": 0.1397
+    },
+    {
+     "step": 1000,
+     "ceA": 0.0388
+    },
+    {
+     "step": 1500,
+     "ceA": 0.0244
+    },
+    {
+     "step": 2000,
+     "ceA": 0.0039
+    },
+    {
+     "step": 2500,
+     "ceA": 0.0036
+    },
+    {
+     "step": 3000,
+     "ceA": 0.0039
+    },
+    {
+     "step": 3500,
+     "ceA": 0.0004
+    },
+    {
+     "step": 3999,
+     "ceA": 0.0014
+    }
+   ]
   },
   {
    "arm": "C-dup",
    "k": 384,
    "seed": 0,
-   "f2_dacc": 0.5156,
-   "in_band": false
+   "f2_dacc": 0.6302,
+   "insample_dacc": 0.638,
+   "in_band": true,
+   "last_ceA": 0.0105,
+   "ce_curve": [
+    {
+     "step": 0,
+     "ceA": 8.4716
+    },
+    {
+     "step": 500,
+     "ceA": 0.1209
+    },
+    {
+     "step": 1000,
+     "ceA": 0.0204
+    },
+    {
+     "step": 1500,
+     "ceA": 0.0036
+    },
+    {
+     "step": 2000,
+     "ceA": 0.0071
+    },
+    {
+     "step": 2500,
+     "ceA": 0.0008
+    },
+    {
+     "step": 3000,
+     "ceA": 0.0015
+    },
+    {
+     "step": 3500,
+     "ceA": 0.0003
+    },
+    {
+     "step": 3999,
+     "ceA": 0.0105
+    }
+   ]
   }
  ]
 }

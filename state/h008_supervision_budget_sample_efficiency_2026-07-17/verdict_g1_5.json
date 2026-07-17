@@ -1,30 +1,28 @@
 {
-  "verdict": "K1 (CLOSE near-$0) — NO budget places the trained control in [0.60,0.80]; the band does not exist on this panel/scale. H_008 reopen door shut MEASURED; campaign stays CONCLUDED.",
+  "verdict": "INCOMPLETE / K1-leaning — some k in band on one seed but no CROSS-SEED-STABLE candidate yet. Run --phase b at the in-band k. If no k stabilizes in band ⇒ K1.",
   "k_star": null,
   "band_candidates": [],
   "cdup": {
     "24": {
-      "0": 0.5104
+      "0": 0.5417
     },
     "96": {
-      "0": 0.5
+      "0": 0.7448
     },
     "192": {
-      "0": 0.4948
+      "0": 0.9167
     },
     "384": {
-      "0": 0.5156
+      "0": 0.6302
     }
   },
   "cscaf": {},
   "cshuf": {},
-  "adjudication": {
-    "stamp": "K1-VOID-FOR-CAUSE — design presupposition refuted (NOT a clean CLOSE)",
-    "by": "lab full (Fable decisive; Codex trace-only, no competing conclusion delivered)",
-    "measured": "C-dup f2 chance at ALL budgets incl k=384 (0.5156) — E-anchor E[C-dup@384]≈1.0 (seed §5) came back 0.52, so the band arithmetic was built on sand; an inadmissible gate seals nothing (admissibility discipline).",
-    "root_cause": "SWAP-XOR-B DEVIATED from seed §3.1 (48 DISTINCT syllables, arbitrary per-lexeme class) to 24 syllables paired (12 POS1 × 12 POS2, each syllable in exactly 2 lexemes once per class) — done to pass A7-as-implemented (best syllable→class = 0.500 exact), which is arithmetically incompatible with 48-distinct (48 distinct → syllable→class deterministic = 1.0). The paired lexicon made class = 'do the two syllables share pairing index' = a 2-syllable PARITY CONJUNCTION; stacked with gold=class⊕marker → 3-way parity = the canonical SGD-hard feature-learning case (info present, no correlational stepping stones, whole-surface memorization the shortcut). NOT 'byte-orthogonality over-corrected' — a mis-specified A7 forced a parity trap.",
-    "fix": "SWAP-XOR-C = the seed's actual spec: 48 truly distinct non-corpus syllables, class arbitrary per lexeme. A7 RESTATED → A7′ = (no cross-lexeme syllable sharing ⇒ an unanswered lexeme's class = 0 bits) AND (no syllable in CPT) — instead of 'class is no function of bytes'. Kills the H_007 side channel AND removes the parity trap (class = per-lexeme lookup SGD learns). Corrected gate: reachability certified by IN-SAMPLE budget-fit d_acc(B(k))≥0.95, not held-out control level; keep ceiling C-dup f2≤0.80; drop the 0.60 held-out floor. Register SWAP-XOR-C rebuild with a fresh explicit cap.",
-    "rig_check": "eval path _f2_dacc + training machinery proven (C-dup=1.0 on H_007 old panel via same helpers); pad=48 no truncation at k=384. Delta is panel-internal. Disambiguation retained: G-1.5a on SWAP-XOR-C will be instrumented with in-sample d_acc + answer-CE curve to catch any residual rig/eval issue (CE→0 with in-sample 0.5 = eval bug; CE-plateau-high + in-sample 0.5 = genuine unreachable).",
-    "codex_dissent": "none delivered — Codex ran a read-only repo trace and did not produce a competing conclusion in the returned output."
+  "swapxorC_disambiguation": {
+    "result": "PARITY TRAP FIXED — panel reachable, sample-efficiency curve emerged (seed 0).",
+    "measured": "C-dup on SWAP-XOR-C: k=24 f2=0.5417/in_sample=1.0; k=96 f2=0.7448/in_sample=0.9896; k=192 f2=0.9167/in_sample=1.0; k=384 f2=0.6302/in_sample=0.638.",
+    "reading": "in_sample≥0.95 at k≤192 ⇒ the control MEMORIZES the answered rule (SWAP-XOR-B could not: in_sample 0.5) — the A7′ fix (48 distinct syllables, per-lexeme class) removed the parity conjunction. f2 rises 0.54→0.74→0.92 with budget = a genuine sample-efficiency/generalization curve; at k=192 f2=0.92 means the forward control DOES compose at high supervision. BAND CANDIDATE k*=96 (f2=0.74 ∈ [0.60,0.80], in_sample 0.99 reachable). k=192 saturates (>0.80). ANOMALY at k=384: in_sample dropped to 0.64 + higher ceA (0.0105) — full-budget optimization instability, single-seed; flagged, resolve at phase b (2nd seed).",
+    "corrected_gate_status": "reachability by in-sample fit ✓ (≥0.95 at k≤192); ceiling ≤0.80 ✓ at k*=96; the dropped 0.60 held-out floor was the right call (k=24 at 0.54 is sub-floor yet the curve is real).",
+    "next": "phase b (seed 1) at k∈{24,96,192,384} for CROSS-SEED STABILITY at k*=96 (and to resolve the k=384 anomaly), then phase c (C-scaf + C-shuf @ k*, ≤0.80) → freeze if stable."
   }
 }

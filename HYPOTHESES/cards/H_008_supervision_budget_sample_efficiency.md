@@ -104,8 +104,18 @@ mech-5's forced-code claim stays retired, mech-1's seal and the PARTIAL thesis b
   floor. `pre_register_frozen: false` ⇒ amending now (before any mechanism arm) is pre-registration hygiene.
   (Codex delivered no competing conclusion; Fable adopted.) Full record: `verdict_g1_5.json` adjudication.
 
+- **SWAP-XOR-C fix VALIDATED (2026-07-17, G-1.5a-C, seed 0, instrumented)** — the parity trap is gone.
+  C-dup on SWAP-XOR-C: k=24 f2 0.5417 / in-sample 1.0 · **k=96 f2 0.7448 / in-sample 0.99 ← BAND [0.60,0.80]**
+  · k=192 f2 0.9167 / in-sample 1.0 (saturates) · k=384 f2 0.6302 / in-sample 0.638 (full-budget optimization
+  ANOMALY, flagged, single-seed). Reading: in-sample ≥ 0.95 at k ≤ 192 ⇒ control MEMORIZES (reachable, unlike
+  SWAP-XOR-B's 0.5); f2 rises 0.54→0.74→0.92 with budget = a GENUINE sample-efficiency curve (the forward
+  control DOES compose at high supervision). **Band candidate k\*=96.** Corrected gate satisfied (reachability
+  by in-sample fit; ceiling ≤ 0.80 at k\*=96; the dropped 0.60 held-out floor was right). Convergence recorded:
+  `audit-wrong-property-parity-1`.
+
 ## Verdict
 
-*(none — pre-registered; lit-verify ✅ + G-0b ✅ (on the DEFECTIVE SWAP-XOR-B) cleared, but G-1.5a exposed a
-PARITY-TRAP panel defect ⇒ K1-VOID-FOR-CAUSE. Next: SWAP-XOR-C rebuild (A7′) → re-run G-0b → G-1.5a
-instrumented. Campaign stays CONCLUDED on mech-1 until the corrected pre-run finds a band or a genuine CLOSE.)*
+*(none — pre-registered; lit-verify ✅ + G-0b(defective B) → K1-VOID-FOR-CAUSE → SWAP-XOR-C (A7′) rebuild
+✅ + G-0b-C ✅ + G-1.5a-C ✅ parity fixed, band candidate k\*=96. Next: G-1.5b (seed 1 cross-seed stability at
+k\*=96 + resolve the k=384 anomaly) → G-1.5c (C-scaf/C-shuf ≤ 0.80 pricing) → freeze if stable. Campaign
+stays CONCLUDED on mech-1 until the mechanism arm actually runs.)*

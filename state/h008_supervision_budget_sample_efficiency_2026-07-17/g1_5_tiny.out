@@ -4,8 +4,8 @@ BAND target: control f2_dacc ∈ [0.60, 0.80] stable across seeds ⇒ k* exists;
 ================================================================================
 
 --- C-dup k=96 seed=0 …
-  C-dup k=96 s0: f2_dacc=0.5  in_band[0.60,0.80]=False
+  C-dup k=96 s0: f2_dacc=0.4948 in_sample=0.5 in_band=False last_ceA=2.4318
 
 ================================================================================
-  C-dup k=96 s0: 0.5 
+  C-dup k=96 s0: 0.4948 
 wrote g1_5_result.json
