@@ -71,6 +71,26 @@ mech-5's forced-code claim stays retired, mech-1's seal and the PARTIAL thesis b
   (G-1.5, satisfied by construction) · H_007 ⚫ (rig + every trained-control anchor) · H_005 (ungrounded
   mode + probe-ceiling limits) · H_003 (seed-spread pricing 0.1614) · H_004 🟢 (sealed, untouched).
 
+## Gate progress (freeze-blocking)
+
+- **lit-verify ✅ (2026-07-17)**: load-bearing contrarian premise (gradient-conflict-as-forge) carried
+  VERIFIED from H_007 (PCGrad/GradNorm/Recon). The two new MEMORY rows are foundational, well-attested
+  landmark papers used NON-critically (they strengthen the boring C-shuf story, not the mechanism claim):
+  semi-supervised aux under label scarcity (ladder networks, Rasmus 2015) → C-shuf is co-primary; grokking
+  (Power et al. 2022, arXiv 2201.02177) → the band may be a cliff not a knee, motivating the plateau +
+  cross-seed stability requirements. arXiv was rate-limited this session (HTTP 429/503 — infra, quarantined
+  per `infra-wall-noneval`; not a missing-paper verdict); both rows are standard/uncontested.
+- **G-0b ✅ (2026-07-17, `build_swap_xor_b.py` EXIT 0)**: SWAP-XOR-B built — 24 byte-orthogonal synthetic
+  lexemes (rare Hangul, NSMC-absent), coverage-complete drill n=384 (f2-subjects ⊆ drill-subjects), f2
+  n=192, nested budgets B(24/96/192/384). **ALL 16 audits PASS**: A1 free-slot=[0] · A2 GF(2) rank 2 · A3
+  every single-site heuristic 0.500 · A4 length-parity · A5 swap byte-aligned · A6 leak-ban · **A7
+  class-byte-orthogonality 0.500 exact + NSMC-absent (closes the §0.5 side channel)** · B1 coverage · B2
+  within-budget balance (3/cell at k=24) · B3 GF(2) identifiable on B(24) rank 2 · B4 nested · B5
+  answer-truncation structural · B6 determinism (hashes). First build FAILED B2/B3 (budget prefix all
+  marker0/SOV ⇒ gold unidentifiable); fixed with class-local phase-rotated budget ordering so every prefix
+  is cell-balanced. Artifacts: `swapb_{f2,drill,budgets,pools}.json`.
+- **G-1.5a/b/c** (band-existence controls-first pre-run, ~1.5h ea) — PENDING; freeze blocked here.
+
 ## Verdict
 
-*(none — pre-registered, gates pending; freeze order in the seed §5)*
+*(none — pre-registered; lit-verify ✅ + G-0b ✅ cleared, freeze still blocked on G-1.5a/b/c band existence)*
