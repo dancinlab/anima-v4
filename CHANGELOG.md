@@ -2,6 +2,29 @@
 
 All notable changes to anima-v4. Append-only; newest on top.
 
+## 2026-07-17 — anima-v5 FOUNDING DESIGN GATE: MOUNT decided (one lever: the register)
+
+- **Successor gate run the day the campaign concluded**: MOUNT anima-v5 as a single-lever campaign.
+  H5_001 = is H_005's identification wall a register artifact? One variable changed from the sealed
+  v4 configuration (templatic drill -> constructed DELEAKED register at hardness delta*); trunk
+  (3.7M/byte/d=384), hand support, ~3k bilinear chi-hat family, panel machinery all held.
+- **The mount argument**: H_005 K3 was measured under verbatim surface leak (G3-0d probe
+  phi->hon = 1.0, n=1200, honest-limit (a)) so the drill loss carried no identifying pressure —
+  and F1a passed both seeds (0.2982/0.1914), so the learned field is misidentified, not inert.
+  v4 measured BOTH register failure modes separately (leak = H_005; parity-unlearnability =
+  H_008 A7) and never measured whether a window exists between them. G-0k (window-existence
+  pre-check, ~5h MPS/$0: census-at-chance + control in-sample >= 0.95 + probe >= 0.90 at >= 2
+  consecutive delta) is the mount/fold referee — no window => v5 folds at ~$0, measured.
+- **Doors ranked**: (ii) register OPEN NOW · (i) >= 8M/jamo CONDITIONAL (named disagreement with
+  co-equal billing: the one capacity probe worsened the gap; the 8M anchor belongs to support,
+  sequenced behind values) · (iii) external parser REJECTED (delivered fields already sealed).
+- **Citation correction recorded**: the H_008 en-route curve "0.74 at k=96" is the REPLACED
+  phase-a read; the sealed number is 0.651/0.6875 (replacement-not-selection). Anchors are never
+  inherited, including from our own summaries.
+- Artifact: `state/v5_founding_design_2026-07-17/V5_FOUNDING_DESIGN.md` (decision · substrate
+  argument · H5_001 pre-register seed · cost+kill · lesson-enforcement map). SSOT node:
+  `campaign-result -> cr.v5-founding-gate`.
+
 ## 2026-07-17 — H_008 pre-register gate: supervision-budget/sample-efficiency OPEN-GATED (reopen door [b] instantiated)
 
 - **Pre-register gate for the ONE non-twin reopen door** the terminal campaign result left (supervision-
