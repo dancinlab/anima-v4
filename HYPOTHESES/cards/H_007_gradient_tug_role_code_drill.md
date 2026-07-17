@@ -4,10 +4,11 @@ ssot: ARCHITECTURE.json → components.mech-5.gradient-tug-of-war, next-gate.mec
 slug: gradient-tug-role-code-drill
 title: one shared trunk under TWO irreconcilable objectives (forward byte-CE + a role-swapped-rendering target) is FORCED to form a recombinable role-code — measured as held-out SWAP-XOR d_acc above a compute-matched duplicate-objective control; one variable = head-G's target (role-swap vs duplicate-forward), trunk/params/compute/gradient-volume held identical
 domain: verification-design (gradient tug-of-war · weight-space tension · pre-register SEED)
-status: pre-register-seed
+status: pre-registered-frozen
 exploration_method: research-gate delegated to Fable 5 after mech-1 SEALED (DESIGN_fable5_seed.md) — mech-5 SELECTED over mech-2/4 (residual-rewrite family WALLED at $0: hand-staged collapses into H_004's FORMAT claim, learned-staged inherits G3-a/G3-b's substrate wall)
 verification_method: deterministic forced-choice d_acc (free-slot, recomputed not inherited) on a SWAP-XOR OOD panel; full from-scratch trainings per arm (the corpus-scale trunk regime that mech-1 proved WORKS), with a compute-matched duplicate-objective control + the H_004 controls
-pre_register_frozen: false
+pre_register_frozen: true
+frozen_at: 2026-07-17
 deterministic: false
 llm: none in the eval path (design only; the trunk is trained, scoring is deterministic forced-choice)
 ---
@@ -16,10 +17,11 @@ llm: none in the eval path (design only; the trunk is trained, scoring is determ
 
 > **SSOT**: `ARCHITECTURE.json → components.mech-5 · next-gate.mech5-is-next`. Full pre-register detail in
 > `state/h007_gradient_tug_role_code_drill_2026-07-17/DESIGN_fable5_seed.md` (Fable research-gate seed).
-> **NOT FROZEN** — three $0 obligations gate the freeze: (1) 3-scan literature verification of the
-> MEMORY-tagged rows; (2) G-0 closed-form panel/codebook/leak audit; (3) G-1 d=64 kill-only smoke.
-> H_004 (mech-1 FIELD-FORMAT) stays SEALED 🟢; H_006 stays BURNED (do-not-open). This is a NEW independent
-> tension family (weight-space), not an extension of mech-1.
+> **FROZEN 2026-07-17** — all three $0 obligations discharged: (1) lit-verify ✅ (contrarian premise
+> confirmed) · (2) G-0 ✅ (10/10 closed-form audits) · (3) G-1 ✅ (d=64 kill-only smoke = PROCEED-CANDIDATE,
+> weak-positive). Falsifier thresholds below are now pre-registered against the G-1 anchors (τ=0.05,
+> E[A-tug d_acc]≈0.57). H_004 (mech-1 FIELD-FORMAT) stays SEALED 🟢; H_006 stays BURNED (do-not-open).
+> This is a NEW independent tension family (weight-space), not an extension of mech-1.
 
 ## Why mech-5 (and why residual-rewrite mech-2/4 was walled at $0)
 
