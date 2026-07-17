@@ -1,0 +1,21 @@
+{
+  "verdict": "K1 (CLOSE near-$0) — NO budget places the trained control in [0.60,0.80]; the band does not exist on this panel/scale. H_008 reopen door shut MEASURED; campaign stays CONCLUDED.",
+  "k_star": null,
+  "band_candidates": [],
+  "cdup": {
+    "24": {
+      "0": 0.5104
+    },
+    "96": {
+      "0": 0.5
+    },
+    "192": {
+      "0": 0.4948
+    },
+    "384": {
+      "0": 0.5156
+    }
+  },
+  "cscaf": {},
+  "cshuf": {}
+}

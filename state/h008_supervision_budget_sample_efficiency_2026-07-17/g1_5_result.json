@@ -1,0 +1,43 @@
+{
+ "config": {
+  "d": 384,
+  "steps": [
+   3000,
+   4000
+  ],
+  "band": [
+   0.6,
+   0.8
+  ]
+ },
+ "jobs": [
+  {
+   "arm": "C-dup",
+   "k": 24,
+   "seed": 0,
+   "f2_dacc": 0.5104,
+   "in_band": false
+  },
+  {
+   "arm": "C-dup",
+   "k": 96,
+   "seed": 0,
+   "f2_dacc": 0.5,
+   "in_band": false
+  },
+  {
+   "arm": "C-dup",
+   "k": 192,
+   "seed": 0,
+   "f2_dacc": 0.4948,
+   "in_band": false
+  },
+  {
+   "arm": "C-dup",
+   "k": 384,
+   "seed": 0,
+   "f2_dacc": 0.5156,
+   "in_band": false
+  }
+ ]
+}
