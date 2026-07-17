@@ -3,7 +3,7 @@ id: H_008
 ssot: ARCHITECTURE.json → campaign-result.cr.reopen-conditions, next-gate.ng.h008-budget-band-gate
 slug: supervision-budget-sample-efficiency
 title: under a scarce, arm-identical, coverage-complete few-shot answer budget k*, an irreconcilable role-swap co-objective CAUSES higher held-out SWAP-XOR-B composition than the compute/param/gradient-matched duplicate-objective control — Δd_acc ≥ 0.10 both seeds at a budget where the trained control is MEASURED sub-ceiling in [0.60, 0.80]
-domain: verification-design (supervision-budget axis · sample-efficiency · pre-register SEED)
+domain: verification-design (supervision-budget axis · sample-efficiency · CLOSED K1 2026-07-17)
 exploration_method: research-gate delegated to Fable 5 after the TERMINAL campaign result — instantiates reopen door [b] of CAMPAIGN_RESULT.md §4; OPEN-gated, not frozen
 verification_method: deterministic forced-choice d_acc (free-slot, recomputed on SWAP-XOR-B) at a frozen answer budget; controls-first G-1.5 band-existence pre-run at target scale is MANDATORY-BLOCKING before any mechanism arm
 pre_register_frozen: false
@@ -16,7 +16,7 @@ llm: none in the eval path (design only; trunk trained, scoring deterministic fo
 
 > **SSOT**: `ARCHITECTURE.json → campaign-result.cr.reopen-conditions · next-gate.ng.h008-budget-band-gate`.
 > Full pre-register detail: `state/h008_supervision_budget_sample_efficiency_2026-07-17/DESIGN_fable5_seed.md`.
-> **STATUS: ⚪ PRE-REGISTERED — SEED ONLY, NOT FROZEN.** Freeze is blocked, in order, on: lit-verify (2
+> **STATUS: ⚫ CLOSED K1 (2026-07-17) — band too narrow (four-point clause failed at k=48 both seeds); the mechanism arm never ran. Was:** Freeze is blocked, in order, on: lit-verify (2
 > MEMORY rows) → G-0b panel+budget audit exit 0 → G-1.5a band existence (seed-0 sweep, kill-capable ~1.5h)
 > → G-1.5b cross-seed stability + plateau → G-1.5c placebo/scaffold pricing. The campaign stays CONCLUDED
 > unless every gate is green; a K1/K1b close seals this card near-$0 and changes nothing else.
@@ -146,7 +146,30 @@ mech-5's forced-code claim stays retired, mech-1's seal and the PARTIAL thesis b
 
 ## Verdict
 
-*(none — pre-registered; lit-verify ✅ · SWAP-XOR-C(A7′) ✅ · G-0b-C(+B48) ✅ · G-1.5a-C ✅ parity fixed, band
-k\*=96 (provisional cross-seed ✓). \$0 prep done (B48 · instrumentation · fixed run-list · freeze draft).
-BLOCKED on local memory (user swap-recovery): execute the 8-run list on recovery → freeze if all truth
-conditions hold, else K1/K1b. Campaign stays CONCLUDED on mech-1 until the mechanism arm runs.)*
+⚫ **K1 CLOSE (2026-07-17, G-1.5b, both seeds, instrumented) — the band EXISTS but is TOO NARROW to satisfy
+the pre-registered four-point clause. H_008 closes; the mechanism arm never runs. The campaign's one
+non-twin reopen door is shut BY MEASUREMENT.**
+
+Verbatim (`g1_5b.out` · `verdict_g1_5.json`, all reads validity 1.0 + plateau OK):
+
+```
+  C-dup k=48: s0=0.5365 s1=0.5417     ← BOTH below the 0.60 floor (|Δ|=0.0052, reproducible)
+  C-dup k=96: s0=0.651  s1=0.6875     ← BOTH in band [0.60,0.80] (|Δ|=0.0365 ≤ 0.10 — k* is clean)
+  VERDICT: K1 (CLOSE) — band condition failed at k=48 both seeds.
+```
+
+- **What failed**: the four-point clause (k\* AND its factor-2 neighbor in-band at BOTH seeds). k\*=96 itself
+  is textbook — both seeds in band, cross-seed 0.0365, validity 1.0, plateau clean. k=48 is reproducibly
+  below the floor.
+- **Why it matters (the honest reading)**: the control's curve is a **CLIFF, not a knee** — it crosses the
+  entire band between k=48 (0.54) and k=192 (0.92), with only k=96 inside. A band that exists at exactly one
+  budget cannot anchor F1 against the measured cross-seed spread; that is precisely what the knee-not-cliff
+  guard was pre-registered to catch. Fable's $0 prediction ("k=48 is the honest modal K1") landed; the
+  measurement came in LOWER than its 0.596 interpolation.
+- **Rules honored**: no midpoint drill (k=64/72), no third seed, no non-validity rerun — all pre-registered
+  bans. The re-instrumented k=96 reads REPLACED the phase-a read (0.7448 → 0.651) under
+  replacement-not-selection, even though the replacement is worse.
+- **Consequence**: anima-v4 stays CONCLUDED on mech-1's terminal finding (write-side FIELD-FORMAT causal;
+  thesis PARTIAL — placement proven, autonomy unreached). Reopen would need a scaled successor (≥8M /
+  jamo-word / non-templatic register) whose gentler learning curve makes the budget axis a knee — the cliff
+  is a substrate+panel property, not a knob to re-tune (`CAMPAIGN_RESULT.md` §4).
