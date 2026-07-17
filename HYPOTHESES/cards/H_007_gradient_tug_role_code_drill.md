@@ -4,7 +4,7 @@ ssot: ARCHITECTURE.json → components.mech-5.gradient-tug-of-war, next-gate.mec
 slug: gradient-tug-role-code-drill
 title: one shared trunk under TWO irreconcilable objectives (forward byte-CE + a role-swapped-rendering target) is FORCED to form a recombinable role-code — measured as held-out SWAP-XOR d_acc above a compute-matched duplicate-objective control; one variable = head-G's target (role-swap vs duplicate-forward), trunk/params/compute/gradient-volume held identical
 domain: verification-design (gradient tug-of-war · weight-space tension · pre-register SEED)
-status: pre-registered-frozen
+status: retired-inadmissible (G-2 2026-07-17 — control saturated; mech-5 unmeasured-not-falsified)
 exploration_method: research-gate delegated to Fable 5 after mech-1 SEALED (DESIGN_fable5_seed.md) — mech-5 SELECTED over mech-2/4 (residual-rewrite family WALLED at $0: hand-staged collapses into H_004's FORMAT claim, learned-staged inherits G3-a/G3-b's substrate wall)
 verification_method: deterministic forced-choice d_acc (free-slot, recomputed not inherited) on a SWAP-XOR OOD panel; full from-scratch trainings per arm (the corpus-scale trunk regime that mech-1 proved WORKS), with a compute-matched duplicate-objective control + the H_004 controls
 pre_register_frozen: true
@@ -17,11 +17,11 @@ llm: none in the eval path (design only; the trunk is trained, scoring is determ
 
 > **SSOT**: `ARCHITECTURE.json → components.mech-5 · next-gate.mech5-is-next`. Full pre-register detail in
 > `state/h007_gradient_tug_role_code_drill_2026-07-17/DESIGN_fable5_seed.md` (Fable research-gate seed).
-> **FROZEN 2026-07-17** — all three $0 obligations discharged: (1) lit-verify ✅ (contrarian premise
-> confirmed) · (2) G-0 ✅ (10/10 closed-form audits) · (3) G-1 ✅ (d=64 kill-only smoke = PROCEED-CANDIDATE,
-> weak-positive). Falsifier thresholds below are now pre-registered against the G-1 anchors (τ=0.05,
-> E[A-tug d_acc]≈0.57). H_004 (mech-1 FIELD-FORMAT) stays SEALED 🟢; H_006 stays BURNED (do-not-open).
-> This is a NEW independent tension family (weight-space), not an extension of mech-1.
+> **⚫ RETIRED-INADMISSIBLE 2026-07-17 (see Verdict).** Froze 2026-07-17 after all three $0 gates (lit-verify
+> · G-0 10/10 audits · G-1 d=64 weak-positive), then the G-2 d=384 run showed the compute-matched control
+> SATURATES (C-dup ~1.0, C-scaf ≥ 0.60 F3-floor) ⇒ F1 has zero headroom ⇒ mech-5 UNMEASURED-NOT-FALSIFIED.
+> The G-1 weak-positive was an under-training artifact; the missing check is the new gate
+> `verification.trained-control-ceiling`. H_004 (mech-1 FIELD-FORMAT) stays SEALED 🟢; H_006 stays BURNED.
 
 ## Why mech-5 (and why residual-rewrite mech-2/4 was walled at $0)
 
@@ -112,5 +112,126 @@ true` with the G-1 anchors, then the ~7h d=384 × 2-seed × 5-arm G-2 run.
 
 ## Verdict
 
-⚪ PRE-REGISTER SEED (2026-07-17). No number here is a result. Next: lit-verify → G-0 → G-1 (all $0) gate the
-freeze; only then a ~7h from-scratch run yields F1/P-conflict/F4/F5.
+⚫ **G-2 (2026-07-17, d=384 L=4, BOTH seeds complete): F1 INADMISSIBLE-AS-RUN → RETIRED at this scale.
+mech-5 = UNMEASURED-NOT-FALSIFIED — a SATURATION/MEASUREMENT wall, not a substrate wall.**
+Both seeds confirm the wall (seed 1: C-dup 0.9323, C-scaf 0.9531 ≥ 0.60 F3 floor, F1 Δ +0.0052; the
+collector tripped first on HARNESS — C-perm 0.5938/0.5208 outside [0.45,0.55] — but F3-leak + F1-no-headroom
+are the substantive kill). `verdict_g2.json` + `collect_verdict_g2.py` output are the full record.
+
+Verbatim stdout (`g2_full.out`, seed 0):
+
+```
+--- A-tug.s0 …
+  A-tug.s0: f2_dacc=0.9896 f1_dacc=1.0 cos_mean_early=0.2123 | F4 effrank≥2=True | F5 ΔprojF4=0.0
+--- C-dup.s0 …
+  C-dup.s0: f2_dacc=1.0 f1_dacc=1.0 cos_mean_early=0.5408 | F4 effrank≥2=True | F5 ΔprojF4=0.0
+--- C-shuf.s0 …
+  C-shuf.s0: f2_dacc=1.0 f1_dacc=1.0 cos_mean_early=0.0018
+--- C-scaf.s0 …
+  C-scaf.s0: f2_dacc=0.8073 f1_dacc=1.0 cos_mean_early=0.0
+--- C-perm.s0 …
+  C-perm.s0: f2_dacc=0.5938 f1_dacc=0.5781 cos_mean_early=0.1738
+```
+
+### Frozen-falsifier ledger (seed 0, arm+source: `state/h007_gradient_tug_role_code_drill_2026-07-17/g2_log_*.s0.jsonl`)
+
+- **F3 (not-free floor) FAILED — the admissibility kill**: C-scaf f2_dacc 0.8073 ≥ 0.60. The pure-forward
+  baseline (λ_G=0, no second objective at all) solves the held-out composition. The panel is not
+  "measured-dead for the unaided trunk" ⇒ the run certifies the PANEL broken, and nothing below licenses
+  a mechanism verdict (H_001 discipline: an inadmissible falsifier returns no bits).
+- **F1 Δ(A-tug − C-dup) = 0.9896 − 1.0000 = −0.0104** (bar 0.15 · DEAD < 0.05). NOT written as K2
+  ("conflict buys nothing"): with the control at ceiling the headroom is 0, so Δ≈0 is the FORCED outcome
+  under both "mechanism dead" and "mechanism alive" — the number carries no information about mech-5.
+- F2 liveness ✓ (f1(A-tug)=1.0 ≥ 0.85). F6 vs C-shuf = −0.0104 (moot at saturation).
+- harness C-perm f2 = 0.5938 — OUTSIDE the frozen band [0.45,0.55] (+2.6σ at n=192; within-batch label
+  permutation leaves a weak residual signal). Flagged, uninvestigated — moot under F3, but a reopened
+  successor must fix the permutation to a global (not per-batch) derangement.
+- **P-conflict: frozen criterion passes, but role-specificity is REFUTED.** Differential cos(∇A,∇G) vs
+  C-dup: A-tug +0.3285 ≥ τ=0.05 ✓ — but C-shuf (shuffled-swap placebo) shows a LARGER differential
+  (0.5408 − 0.0018 = +0.5390), and raw conflict (cos<0) is nearly absent in A-tug at d=384
+  (cos_frac_neg_early 0.0833, cos_mean_early +0.2123). The gradient-divergence signature is generic
+  "any different second target", not role-tug. (G-1 never ran C-shuf; the d=64 "role-specific" read
+  was an artifact of having only two arms.)
+- **F4 ✓ in BOTH arms** (A-tug probes subj/obj 0.9655/0.8621, C-dup 1.0000/0.7586, cos_dirs ≈ 0.1) —
+  the zero-conflict control carries the SAME probe-readable role ingredients: the free-ingredient trap
+  (H_005 φ→hon) confirmed at scale. **F5 Δ_projF4 = 0.0000 in both arms** — projecting out the probed
+  subspace moves d_acc not at all; the probe-identified "role-code" is causally inert for the readout
+  even in A-tug.
+
+### Root cause (confirmed in code, not conjecture)
+
+`train_g2.py:_batch` line 90: `seq = surf + ans`, head-A's CE target spans the FULL sequence ⇒ **head-A
+is directly supervised on the gold agreement suffix in every arm**, 4000 steps × batch 32 ≈ 333 epochs
+over 384 drill sentences. f2 holds out only PAIRINGS — every lexeme's class, both markers, both orders
+are drilled — so generalization needs only {lexeme→class lookup} + {marker read} + {XOR}, all directly
+gradient-supervised into the trunk through head-A. At d=384 that route reaches ceiling unaided
+(C-scaf 0.81) and at ceiling with a duplicate-gradient boost (C-dup 1.00). The G-1 smoke's +0.073 edge
+was an UNDER-TRAINING artifact (d=64, 2000 steps: C-dup 0.4948 → G-2 1.0000). The pre-registered
+anchor E[C-dup]=0.62 was INHERITED from H_003/H_004's A-rank1 band — a different panel, different task,
+never a trained control on THIS panel at THIS scale.
+
+### Rescue analysis (redesign gate — why F1 is NOT rescuable one-variable at 3.7M/byte/Korean)
+
+The closed loop: **gold's ingredients enter the trunk ONLY through answer supervision** (class is
+distributionally invisible in the surface — pools balanced across marker/order; head-G's swap target is
+byte-copying, needing filler identity + role but never class, by A6's own leak ban). So:
+
+- **(a) mask the answer from head-A's loss** → no arm can ground class OR the arbitrary gold→suffix
+  convention; every arm's forced-choice → 0.5; F2 dies. Masking kills reachability, not saturation —
+  the channel that grounds gold IS the channel that saturates the control. Dead.
+- **(b) difficulty knobs** — held-out LEXEMES: an undrilled noun's class is ungrounded (arbitrary
+  partition) → unreachable for all arms; adding a productive class syllable keeps byte-parity (3B stem +
+  3B class = 6B) but makes class surface-readable → the control saturates HARDER. Held-out ROLE×LEXEME
+  (drilled only as object, tested as subject): gold uses class(subject) only, so its class was never
+  supervised → ungrounded → dead. Distractor NPs / more classes: raises sample complexity, but the
+  control demonstrably learns marker-based binding + XOR to 1.0 under direct supervision — landing it
+  at 0.6–0.7 means tuning steps/data to the control's learning-curve knee: fragile at the priced 0.161
+  cross-seed spread, and since BOTH arms share the eval route (head-A answer CE), any Δ measures
+  training SPEED, not forced code formation. That is a different hypothesis (tension as
+  sample-efficiency regularizer under scarce answer supervision) — pre-registrable as a NEW H, not a
+  rescue of frozen F1.
+- **(c) probe-based read of the frozen trunk** → collapses into F4, and this run shows the trap with
+  numbers: F4 passes in BOTH arms and F5 = 0.0 in both. A LINEAR probe scoring gold directly cannot
+  work (gold = class⊕marker has an interaction term — not linear in lexeme-onehot × marker features,
+  and NEITHER objective pressures the trunk to furnish the bound interaction); an MLP probe computes
+  the XOR itself — it certifies the probe, not the trunk (the scaffolding clears the falsifier).
+  Inherits G3-a/H_005's learned-readout wall. Dead.
+
+**Wall, one sentence**: on a finite drilled alphabet, any supervision channel strong enough to ground
+the composition's ingredients in the trunk is strong enough for the unaided forward trunk at
+3.7M/d=384 to learn the entire composition to ceiling — the discriminating band for the trained
+control is EMPTY for this panel family at this scale. Classification: saturation/measurement wall
+(the substrate is too CAPABLE for the panel — the exact opposite of H_005's wall).
+
+### Reopen conditions (any future campaign)
+
+1. **Scarce-answer register**: answer supervision rationed to a fixed few-shot budget identical across
+   arms; claim honestly reframed as sample-efficiency/OOD-speed — a NEW hypothesis with its own
+   pre-registration and the trained-control-first gate below.
+2. **Non-templatic corpus-scale register** where the rule is diffuse and un-memorizable — loses the
+   closed-form A3 heuristic audits; needs a new audit method first.
+3. A readout that is causally load-bearing WITHOUT direct answer supervision — none known that is not
+   F4/G3-a in disguise; this is the honest blocker.
+
+### Meta — the missing admissibility half (campaign-general)
+
+The $0 gates certified what an UNTRAINED reader can extract (field-blind heuristics = 0.500, closed
+form). They cannot certify what a TRAINED control reaches — a trained ceiling is only measurable by
+training the control. **New blocking gate G-1.5 "trained-control ceiling" for every future mechanism:
+before any full-panel spend, run the zero-mechanism arms ONLY (C-scaf + the compute-matched control) at
+TARGET scale and step budget, 1 seed, and require control f2_dacc ≤ 1 − 2×(F1 bar) (here ≤ 0.70) and ≥
+chance + margin.** Cost here: 2 of 10 arm-runs ≈ 1.5h of 7h — cheap, not $0, and that is the point.
+Corollaries: (i) admissibility anchors must be trained-control values measured on THIS panel at THIS
+scale, never inherited from another experiment's band (0.62 was fiction; truth was 1.00); (ii) a small-
+scale smoke under-trains — d=64 numbers are not d=384 anchors unless the transfer has itself been
+validated once (here it inverted: +0.073 → −0.010); (iii) sequencing: controls first, mechanism arms
+only after the band is confirmed non-empty.
+
+### Honest limits
+
+1. Seed 1 was mid-flight at record time — appended when the watcher fires; it cannot change F3.
+2. C-perm's 0.5938 band violation is flagged but uninvestigated (moot under F3; fix = global derangement).
+3. "Not rescuable" is scoped to THIS substrate scale + templatic drilled-alphabet family; the
+   scarce-answer reframing is a live (different) hypothesis, not evidence about mech-5's original claim.
+4. P-conflict role-specificity refutation rests on cos means over trunk-param gradients at 20-step
+   sampling; a finer instrument could read differently — recorded as measured-but-moot, not a kill.
